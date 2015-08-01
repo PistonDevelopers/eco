@@ -1,16 +1,18 @@
-"pistoncore-input": {
-    "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
-    "override-version": "0.7.0"
-},
+{
+    "pistoncore-input": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
+        "override-version": "0.7.0"
+    },
 
-"pistoncore-window": {
-    "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/window/Cargo.toml"
-},
+    "pistoncore-window": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/window/Cargo.toml"
+    },
 
-"pistoncore-event_loop": {
-    "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/event_loop/Cargo.toml"
-},
+    "pistoncore-event_loop": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/event_loop/Cargo.toml"
+    },
 
-"piston": {
-    "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/Cargo.toml"
+    "piston": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/Cargo.toml"
+    }
 }
