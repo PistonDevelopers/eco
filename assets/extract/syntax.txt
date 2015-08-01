@@ -1,5 +1,5 @@
-1 "library" [.."{"!"package" w? "{" w? s?([w? "," w?]){{
+1 "library" [t!"package" w? ":" w? "{" w? s?([w? "," w?]){{
     ["\"url\"" w? ":" w? t!"url"]
     ["\"override-version\"" w? ":" w? t!"version"]
 }} w? "}"]
-0 "document" [w? l([@"library""library" w?])]
+0 "document" [w? s?([w? "," w?]){[@"library""library" w?]}]

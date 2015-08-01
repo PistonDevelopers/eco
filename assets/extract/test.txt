@@ -1,16 +1,16 @@
-pistoncore-input {
+"pistoncore-input": {
     "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
     "override-version": "0.7.0"
-}
+},
 
-pistoncore-window {
+"pistoncore-window": {
     "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/window/Cargo.toml"
-}
+},
 
-pistoncore-event_loop {
+"pistoncore-event_loop": {
     "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/event_loop/Cargo.toml"
-}
+},
 
-piston {
+"piston": {
     "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/Cargo.toml"
 }
