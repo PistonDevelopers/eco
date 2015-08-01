@@ -1,0 +1,11 @@
+[package]
+name = "eco"
+version = "0.1.0"
+
+[[bin]]
+name = "eco"
+path = "src/main.rs"
+
+[dependencies]
+piston_meta = "0.10.6"
+
