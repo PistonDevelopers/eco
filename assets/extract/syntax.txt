@@ -2,4 +2,4 @@
     ["\"url\"" w? ":" w? t!"url"]
     ["\"override-version\"" w? ":" w? t!"version"]
 }} w? "}"]
-0 "document" [w? s?([w? "," w?]){[@"library""library" w?]}]
+0 "document" [w? "{" w? s?([w? "," w?]){[@"library""library" w?]} "}" w?]
