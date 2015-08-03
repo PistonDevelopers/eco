@@ -1,0 +1,39 @@
+{
+    "pistoncore-input": {
+        "version": "0.4.0",
+        "dependencies": {}
+    },
+    "pistoncore-window": {
+        "version": "0.6.0",
+        "dependencies": {
+            "pistoncore-input": {
+                "version": "0.4.0"
+            }
+        }
+    },
+    "pistoncore-event_loop": {
+        "version": "0.7.0",
+        "dependencies": {
+            "pistoncore-input": {
+                "version": "0.4.0"
+            },
+            "pistoncore-window": {
+                "version": "0.6.0"
+            }
+        }
+    },
+    "piston": {
+        "version": "0.7.0",
+        "dependencies": {
+            "pistoncore-input": {
+                "version": "0.4.0"
+            },
+            "pistoncore-window": {
+                "version": "0.6.0"
+            },
+            "pistoncore-event_loop": {
+                "version": "0.7.0"
+            }
+        }
+    }
+}
