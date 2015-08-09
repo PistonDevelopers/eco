@@ -1,6 +1,26 @@
+#![deny(missing_docs)]
+
+//! A tool for reasoning about breaking changes in Rust ecosystems
+
 extern crate piston_meta;
 
-use piston_meta::*;
+use std::rc::Rc;
+
+/// Stores extract information.
+pub struct Extract {
+    /// The url of the Cargo.toml.
+    pub url: String,
+    /// Whether to override the library version to simulate breaking change.
+    pub override_version: Option<String>,
+}
+
+/// Stores dependency information.
+pub struct Dependency {
+    /// The package name.
+    pub name: Rc<String>,
+    /// The semver version of the library.
+    pub version: String,
+}
 
 fn main() {
 
