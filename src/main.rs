@@ -85,8 +85,17 @@ mod tests {
     }
 
     #[test]
+    fn cargo_toml() {
+        let _data = load_syntax_data("assets/cargo-toml/syntax.txt",
+            "assets/cargo-toml/test.txt");
+        // json::print(&_data);
+    }
+
+    /*
+    #[test]
     fn from_url() {
         let data = load_text_file_from_url("https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml");
         assert!(data.is_ok());
     }
+    */
 }
