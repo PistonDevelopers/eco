@@ -1,0 +1,61 @@
+{
+ "pistoncore-input": {
+  "version": "0.5.0",
+  "dependencies": {
+   "rustc-serialize": {
+    "version": "0.3.15"
+   },
+   "bitflags": {
+    "version": "0.3.2"
+   },
+   "piston-viewport": {
+    "version": "0.1.0"
+   }
+  }
+ },
+ "pistoncore-window": {
+  "version": "0.9.0",
+  "dependencies": {
+   "pistoncore-input": {
+    "version": "0.5.0"
+   },
+   "libc": {
+    "version": "0.1"
+   },
+   "shader_version": {
+    "version": "0.2.0"
+   }
+  }
+ },
+ "pistoncore-event_loop": {
+  "version": "0.10.0",
+  "dependencies": {
+   "pistoncore-window": {
+    "version": "0.9.0"
+   },
+   "pistoncore-input": {
+    "version": "0.5.0"
+   },
+   "clock_ticks": {
+    "version": "0.0.6"
+   },
+   "piston-viewport": {
+    "version": "0.1.0"
+   }
+  }
+ },
+ "piston": {
+  "version": "0.10.0",
+  "dependencies": {
+   "pistoncore-input": {
+    "version": "0.5.0"
+   },
+   "pistoncore-window": {
+    "version": "0.9.0"
+   },
+   "pistoncore-event_loop": {
+    "version": "0.10.0"
+   }
+  }
+ }
+}

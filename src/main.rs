@@ -2,60 +2,27 @@
 
 //! A tool for reasoning about breaking changes in Rust ecosystems
 
+extern crate range;
 extern crate piston_meta;
 extern crate hyper;
 
-use std::rc::Rc;
-
-/// Stores extract information.
-pub struct Extract {
-    /// The url of the Cargo.toml.
-    pub url: String,
-    /// Whether to override the library version to simulate breaking change.
-    pub override_version: Option<String>,
-}
-
-/// Stores dependency information.
-pub struct Dependency {
-    /// The package name.
-    pub name: Rc<String>,
-    /// The semver version of the library.
-    pub version: String,
-}
-
-/// Loads a text file from url.
-pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
-    use hyper::client::Client;
-    use hyper::{Url};
-    use hyper::status::StatusCode;
-    use std::io::Read;
-
-    let url_address = try!(Url::parse(url)
-        .map_err(|e| format!("Error parsing url: {}", e)));
-    let client = Client::new();
-    let request = client.get(url_address);
-    let mut response = try!(request.send()
-        .map_err(|e| format!("Error fetching file over http {}: {}",
-            url, e.to_string())));
-    if response.status == StatusCode::Ok {
-        let mut data = String::new();
-        try!(response.read_to_string(&mut data)
-            .map_err(|e| format!("Error fetching file over http {}: {}",
-            url, e.to_string())));
-        Ok(data)
-    } else {
-        Err(format!("Error fetching file over http {}: {}",
-            url, response.status))
-    }
-}
+pub mod extract;
 
 fn main() {
+    use std::io::Read;
+    use std::fs::File;
 
+    // Load extract info from file.
+    let mut extract_info_file = File::open("assets/extract/test.txt").unwrap();
+    let mut extract_info = String::new();
+    extract_info_file.read_to_string(&mut extract_info).unwrap();
+
+    let res = extract::extract_dependency_info_from(&extract_info).unwrap();
+    println!("{}", res);
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use piston_meta::*;
 
     #[test]
@@ -81,6 +48,8 @@ mod tests {
     fn dependencies() {
         let _data = load_syntax_data("assets/dependencies/syntax.txt",
             "assets/dependencies/test.txt");
+        let _data = load_syntax_data("assets/dependencies/syntax.txt",
+            "assets/dependencies/test2.txt");
         // json::print(&_data);
     }
 
@@ -94,6 +63,8 @@ mod tests {
     /*
     #[test]
     fn from_url() {
+        use super::*;
+        
         let data = load_text_file_from_url("https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml");
         assert!(data.is_ok());
     }

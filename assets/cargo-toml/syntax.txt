@@ -12,4 +12,5 @@
     @"dependency_list_item""dependency"
 })]
 4 "dependencies" [l({@"dependency""dependency" @"dependency_list" ..."\n"?})]
-5 "document" [w? @"package""package" w? @"dependencies""dependencies" ...""?]
+5 "package_node" [@"package" w? @"dependencies"]
+5 "document" [w? @"package_node""package" ...""?]
