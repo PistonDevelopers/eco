@@ -1,0 +1,15 @@
+0 "," [w? "," w?]
+1 "bump" ["\"bump\"" w? ":" w? "{" w? s?(@","){{
+    ["\"old\"" w? ":" w? t!"old"]
+    ["\"new\"" w? ":" w? t!"new"]
+}} w? "}"]
+2 "dependency" [t!"name" w? ":" w? "{" w? @"bump""bump" w? "}"]
+3 "dependencies" ["\"dependencies\"" w? ":" w? "{" w?
+    s?(@","){@"dependency""dependency"}
+w? "}"]
+4 "library" [t!"name" w? ":" w? "{" w? s?(@","){{
+    ["\"order\"" w? ":" w? $]
+    @"bump""bump"
+    @"dependencies""dependencies"
+}} w? "}"]
+5 "document" [w? "{" w? s?(@","){@"library""library"} w? "}" w?]

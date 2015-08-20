@@ -60,11 +60,24 @@ mod tests {
         // json::print(&_data);
     }
 
+    #[test]
+    fn update_is_json() {
+        let _ = load_syntax_data("assets/json/syntax.txt",
+            "assets/update/test.txt");
+    }
+
+    #[test]
+    fn update() {
+        let _data = load_syntax_data("assets/update/syntax.txt",
+            "assets/update/test.txt");
+        json::print(&_data);
+    }
+
     /*
     #[test]
     fn from_url() {
         use super::*;
-        
+
         let data = load_text_file_from_url("https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml");
         assert!(data.is_ok());
     }
