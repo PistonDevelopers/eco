@@ -1,0 +1,17 @@
+{
+    "piston2d-gfx_graphics": {
+        "order": 0,
+        "bump": {
+            "old": "0.4.0",
+            "new": "0.5.0"
+        },
+        "dependencies": {
+            "piston2d-graphics": {
+                "bump": {
+                    "old": "0.4.0",
+                    "new": "0.5.0"
+                }
+            }
+        }
+    }
+}
