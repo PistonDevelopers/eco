@@ -53,7 +53,7 @@ mod tests {
             "assets/dependencies/test.txt");
         let _data = load_syntax_data("assets/dependencies/syntax.txt",
             "assets/dependencies/test2.txt");
-        // json::print(&_data);
+        json::print(&_data);
     }
 
     #[test]
