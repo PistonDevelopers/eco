@@ -1,7 +1,56 @@
+//! Dependency info.
+
 use range::Range;
-use piston_meta::MetaData;
+use piston_meta::{ json, MetaData };
 
 use std::rc::Rc;
+use std::io::Write;
+
+/// Writes the dependency info.
+pub fn write<W: Write>(package_data: &[Package], w: &mut W) {
+    writeln!(w, "{{").unwrap();
+    let n0 = package_data.len();
+    for (i0, package) in package_data.iter().enumerate() {
+        // Package name.
+        write!(w, " ").unwrap();
+        json::write_string(w, &package.name).unwrap();
+        writeln!(w, ": {{").unwrap();
+
+        // Version.
+        write!(w, "  \"version\": ").unwrap();
+        json::write_string(w, &package.version).unwrap();
+        writeln!(w, ",").unwrap();
+
+        // Dependencies.
+        writeln!(w, "  \"dependencies\": {{").unwrap();
+        let n1 = package.dependencies.len();
+        for (i1, dependency) in package.dependencies.iter().enumerate() {
+            write!(w, "   ").unwrap();
+            json::write_string(w, &dependency.name).unwrap();
+            writeln!(w, ": {{").unwrap();
+            // Version.
+            write!(w, "    \"version\": ").unwrap();
+            json::write_string(w, &dependency.version).unwrap();
+            writeln!(w, "").unwrap();
+            write!(w, "   }}").unwrap();
+            if i1 + 1 != n1 {
+                writeln!(w, ",").unwrap();
+            } else {
+                writeln!(w, "").unwrap();
+            }
+        }
+        writeln!(w, "  }}").unwrap();
+
+        // End package.
+        write!(w, " }}").unwrap();
+        if i0 + 1 != n0 {
+            writeln!(w, ",").unwrap();
+        } else {
+            writeln!(w, "").unwrap();
+        }
+    }
+    writeln!(w, "}}").unwrap();
+}
 
 /// Stores package information.
 pub struct Package {

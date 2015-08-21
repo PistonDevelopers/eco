@@ -1,7 +1,7 @@
 //! Extract dependency information from extract info.
 
 use piston_meta::MetaData;
-use dependencies::Package;
+use dependencies::{ self, Package };
 use range::Range;
 use std::rc::Rc;
 
@@ -123,7 +123,6 @@ pub fn convert_cargo_toml(
 /// Extracts dependency info.
 pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String> {
     use piston_meta::*;
-    use std::io::Write;
 
     let extract_meta_syntax = include_str!("../assets/extract/syntax.txt");
     let extract_meta_rules = stderr_unwrap(extract_meta_syntax,
@@ -155,48 +154,7 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
     }
 
     let mut res: Vec<u8> = vec![];
-    writeln!(res, "{{").unwrap();
-    let n0 = package_data.len();
-    for (i0, package) in package_data.iter().enumerate() {
-        // Package name.
-        write!(res, " ").unwrap();
-        json::write_string(&mut res, &package.name).unwrap();
-        writeln!(res, ": {{").unwrap();
-
-        // Version.
-        write!(res, "  \"version\": ").unwrap();
-        json::write_string(&mut res, &package.version).unwrap();
-        writeln!(res, ",").unwrap();
-
-        // Dependencies.
-        writeln!(res, "  \"dependencies\": {{").unwrap();
-        let n1 = package.dependencies.len();
-        for (i1, dependency) in package.dependencies.iter().enumerate() {
-            write!(res, "   ").unwrap();
-            json::write_string(&mut res, &dependency.name).unwrap();
-            writeln!(res, ": {{").unwrap();
-            // Version.
-            write!(res, "    \"version\": ").unwrap();
-            json::write_string(&mut res, &dependency.version).unwrap();
-            writeln!(res, "").unwrap();
-            write!(res, "   }}").unwrap();
-            if i1 + 1 != n1 {
-                writeln!(res, ",").unwrap();
-            } else {
-                writeln!(res, "").unwrap();
-            }
-        }
-        writeln!(res, "  }}").unwrap();
-
-        // End package.
-        write!(res, " }}").unwrap();
-        if i0 + 1 != n0 {
-            writeln!(res, ",").unwrap();
-        } else {
-            writeln!(res, "").unwrap();
-        }
-    }
-    writeln!(res, "}}").unwrap();
+    dependencies::write(&package_data, &mut res);
 
     let res = try!(String::from_utf8(res)
         .map_err(|e| format!("UTF8 error: {}", e)));
