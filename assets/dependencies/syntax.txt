@@ -1,7 +1,7 @@
 0 "," [w? "," w?]
 1 "dependency" [t!"name" w? ":" w? "{" w? "\"version\"" w? ":" w? t!"version" w? "}"]
-1 "library" [t!"name" w? ":" w? "{" w? s?(@","){{
+1 "package" [t!"name" w? ":" w? "{" w? s?(@","){{
     ["\"version\"" w? ":" w? t!"version"]
     ["\"dependencies\"" w? ":" w? "{" w? s?(@","){@"dependency""dependency"} w? "}"]
 }} w? "}"]
-2 "document" [w? "{" w? s?(@","){[@"library""library" w?]} "}" w?]
+2 "document" [w? "{" w? s?(@","){[@"package""package" w?]} "}" w?]

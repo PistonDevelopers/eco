@@ -52,6 +52,28 @@ pub fn write<W: Write>(package_data: &[Package], w: &mut W) {
     writeln!(w, "}}").unwrap();
 }
 
+/// Converts from meta data to dependency information.
+pub fn convert(
+    mut data: &[(Range, MetaData)],
+    ignored: &mut Vec<Range>
+) -> Result<Vec<Package>, ()> {
+    use piston_meta::bootstrap::update;
+
+    let mut offset = 0;
+    let mut res = vec![];
+    loop {
+        if let Ok((range, package)) = Package::from_meta_data(data, offset, ignored) {
+            update(range, &mut data, &mut offset);
+            res.push(package);
+        } else if offset < data.len() {
+            return Err(());
+        } else {
+            break;
+        }
+    }
+    Ok(res)
+}
+
 /// Stores package information.
 pub struct Package {
     /// The package name.
