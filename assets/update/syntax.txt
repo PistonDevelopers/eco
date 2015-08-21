@@ -7,9 +7,9 @@
 3 "dependencies" ["\"dependencies\"" w? ":" w? "{" w?
     s?(@","){@"dependency""dependency"}
 w? "}"]
-4 "library" [t!"name" w? ":" w? "{" w? s?(@","){{
-    ["\"order\"" w? ":" w? $]
+4 "package" [t!"name" w? ":" w? "{" w? s?(@","){{
+    ["\"order\"" w? ":" w? $"order"]
     @"bump""bump"
     @"dependencies""dependencies"
 }} w? "}"]
-5 "document" [w? "{" w? s?(@","){@"library""library"} w? "}" w?]
+5 "document" [w? "{" w? s?(@","){@"package""package"} w? "}" w?]

@@ -5,8 +5,11 @@
 extern crate range;
 extern crate piston_meta;
 extern crate hyper;
+extern crate semver;
 
 pub mod extract;
+pub mod update;
+pub mod dependencies;
 
 fn main() {
     use std::io::Read;
@@ -70,7 +73,7 @@ mod tests {
     fn update() {
         let _data = load_syntax_data("assets/update/syntax.txt",
             "assets/update/test.txt");
-        json::print(&_data);
+        // json::print(&_data);
     }
 
     /*
