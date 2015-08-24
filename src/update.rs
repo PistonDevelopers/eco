@@ -101,8 +101,8 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         // Get latest version used by any dependency.
         for dep in &package.dependencies {
             let version = try!(Version::parse(&dep.version)
-                .map_err(|_| format!("Could not parse version `{}` for `{}`",
-                    &dep.version, &dep.name)));
+                .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name)));
             let v = new_versions.get(&dep.name).map(|v| v.clone());
             match v {
                 None => {
@@ -139,8 +139,8 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         // Find dependencies that needs update.
         for dep in &package.dependencies {
             let old_version = try!(Version::parse(&dep.version)
-                .map_err(|_| format!("Could not parse version `{}` for `{}`",
-                    &dep.version, &dep.name)));
+                .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name)));
             let new_version = new_versions.get(&dep.name).unwrap();
             if *new_version > old_version {
                 update_dependencies.push(Dependency {

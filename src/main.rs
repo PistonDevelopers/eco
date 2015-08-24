@@ -20,8 +20,10 @@ fn main() {
     let mut extract_info = String::new();
     extract_info_file.read_to_string(&mut extract_info).unwrap();
 
-    let res = extract::extract_dependency_info_from(&extract_info).unwrap();
-    println!("{}", res);
+    let dependency_info = extract::extract_dependency_info_from(&extract_info).unwrap();
+    // println!("{}", res);
+    let update_info = update::generate_update_info_from(&dependency_info).unwrap();
+    println!("{}", update_info);
 }
 
 #[cfg(test)]
