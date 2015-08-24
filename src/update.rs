@@ -39,25 +39,29 @@ pub struct Package {
 pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String> {
     use piston_meta::*;
 
+    type PackageIndex = usize;
+    type Depth = u32;
+
     fn depth_of(
-        package: &dependencies::Package,
-        depth: &mut HashMap<Rc<String>, u32>,
+        package_index: PackageIndex,
+        depths: &mut HashMap<PackageIndex, Depth>,
         dependencies_data: &[dependencies::Package]
-    ) -> u32 {
-        let d = depth.get(&package.name).map(|d| *d);
+    ) -> Depth {
+        let package = &dependencies_data[package_index];
+        let d = depths.get(&package_index).map(|d| *d);
         match d {
             None => {
                 // The depth of a package equals maximum depth of the dependencies + 1.
-                let new_depth: u32 = package.dependencies.iter().map(|dep| {
-                        // Get depth of dependency.
-                        // If none of the dependencies are listed, treat it as zero.
-                        dependencies_data.iter().filter(|p| {
-                                p.name == dep.name
-                            }).next().map(|p| {
-                                depth_of(p, depth, dependencies_data)
-                            }).unwrap_or(0)
+                let new_depth: Depth = package.dependencies.iter().map(|dep| {
+                        let mut depth = 0;
+                        for (i, p) in dependencies_data.iter().enumerate() {
+                            if p.name == dep.name {
+                                depth = depth_of(i, depths, dependencies_data);
+                            }
+                        }
+                        depth
                     }).max().unwrap_or(0) + 1;
-                depth.insert(package.name.clone(), new_depth);
+                depths.insert(package_index, new_depth);
                 new_depth
             }
             Some(x) => x
@@ -75,9 +79,9 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         .map_err(|_| String::from("Could not convert dependency info")));
 
     // Store the depths of libraries.
-    let mut depths: HashMap<Rc<String>, u32> = HashMap::new();
-    for package in &dependencies_data {
-        let _depth = depth_of(package, &mut depths, &dependencies_data);
+    let mut depths: HashMap<PackageIndex, Depth> = HashMap::new();
+    for i in 0 .. dependencies_data.len() {
+        let _depth = depth_of(i, &mut depths, &dependencies_data);
     }
 
     let mut new_versions: HashMap<Rc<String>, Version> = HashMap::new();
