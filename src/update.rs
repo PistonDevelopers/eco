@@ -3,7 +3,7 @@
 use std::rc::Rc;
 use std::collections::HashMap;
 
-use semver::Version;
+use semver::{ self, Version };
 
 use dependencies;
 
@@ -66,6 +66,17 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         }
     }
 
+    // Tries appending zero to version to make it parse.
+    fn parse_version(text: &str) -> Result<Version, semver::ParseError> {
+        match Version::parse(text) {
+            Err(_) => {
+                let append_zero = format!("{}.0", text);
+                Version::parse(&append_zero)
+            }
+            x => x
+        }
+    }
+
     // Increment first non-zero number.
     fn increment_version(version: &mut Version) {
         if version.major != 0 { version.increment_major(); }
@@ -100,7 +111,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     for package in &dependencies_data {
         // Get latest version used by any dependency.
         for dep in &package.dependencies {
-            let version = try!(Version::parse(&dep.version)
+            let version = try!(parse_version(&dep.version)
                 .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
                     &dep.version, &dep.name, &package.name)));
             let v = new_versions.get(&dep.name).map(|v| v.clone());
@@ -138,7 +149,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
         // Find dependencies that needs update.
         for dep in &package.dependencies {
-            let old_version = try!(Version::parse(&dep.version)
+            let old_version = try!(parse_version(&dep.version)
                 .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
                     &dep.version, &dep.name, &package.name)));
             let new_version = new_versions.get(&dep.name).unwrap();
