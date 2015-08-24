@@ -38,12 +38,14 @@ pub struct Package {
 /// Generates update info.
 pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String> {
     use piston_meta::*;
+    use std::iter::FromIterator;
 
     type PackageIndex = usize;
     type Depth = u32;
 
     fn depth_of(
         package_index: PackageIndex,
+        package_indices: &HashMap<Rc<String>, PackageIndex>,
         depths: &mut HashMap<PackageIndex, Depth>,
         dependencies_data: &[dependencies::Package]
     ) -> Depth {
@@ -53,13 +55,9 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
             None => {
                 // The depth of a package equals maximum depth of the dependencies + 1.
                 let new_depth: Depth = package.dependencies.iter().map(|dep| {
-                        let mut depth = 0;
-                        for (i, p) in dependencies_data.iter().enumerate() {
-                            if p.name == dep.name {
-                                depth = depth_of(i, depths, dependencies_data);
-                            }
-                        }
-                        depth
+                        package_indices.get(&dep.name).map(|&p| {
+                                depth_of(p, package_indices, depths, dependencies_data)
+                            }).unwrap_or(0)
                     }).max().unwrap_or(0) + 1;
                 depths.insert(package_index, new_depth);
                 new_depth
@@ -78,10 +76,17 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     let dependencies_data = try!(dependencies::convert(&dependency_info, &mut ignored)
         .map_err(|_| String::from("Could not convert dependency info")));
 
+    // Stores the package indices using package name as key.
+    let package_indices: HashMap<Rc<String>, PackageIndex> =
+        HashMap::from_iter(dependencies_data.iter().enumerate().map(
+            |(i, p)| {
+                (p.name.clone(), i)
+            }));
+
     // Store the depths of libraries.
     let mut depths: HashMap<PackageIndex, Depth> = HashMap::new();
     for i in 0 .. dependencies_data.len() {
-        let _depth = depth_of(i, &mut depths, &dependencies_data);
+        let _depth = depth_of(i, &package_indices, &mut depths, &dependencies_data);
     }
 
     let mut new_versions: HashMap<Rc<String>, Version> = HashMap::new();
