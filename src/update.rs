@@ -74,9 +74,39 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     let dependencies_data = try!(dependencies::convert(&dependency_info, &mut ignored)
         .map_err(|_| String::from("Could not convert dependency info")));
 
-    let mut depth: HashMap<Rc<String>, u32> = HashMap::new();
+    // Store the depths of libraries.
+    let mut depths: HashMap<Rc<String>, u32> = HashMap::new();
     for package in &dependencies_data {
-        let _depth = depth_of(package, &mut depth, &dependencies_data);
+        let _depth = depth_of(package, &mut depths, &dependencies_data);
+    }
+
+    let mut new_versions: HashMap<Rc<String>, Version> = HashMap::new();
+    for package in &dependencies_data {
+        // Get latest version used by any dependency.
+        for dep in &package.dependencies {
+            let version = try!(Version::parse(&dep.version)
+                .map_err(|_| format!("Could not parse version `{}` for `{}`",
+                    &dep.version, &dep.name)));
+            let v = new_versions.get(&dep.name).map(|v| v.clone());
+            match v {
+                None => {
+                    new_versions.insert(dep.name.clone(), version);
+                }
+                Some(v) => {
+                    if v < version {
+                        new_versions.insert(dep.name.clone(), version);
+                    }
+                }
+            }
+        }
+    }
+
+    // Overwrite the versions used by packages.
+    for package in &dependencies_data {
+        let version = try!(Version::parse(&package.version)
+            .map_err(|_| format!("Could not parse version `{}` for `{}`",
+                &package.version, &package.name)));
+        new_versions.insert(package.name.clone(), version);
     }
 
     Ok(String::from(""))
