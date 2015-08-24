@@ -1,0 +1,125 @@
+{
+    "pistoncore-input": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
+    },
+
+    "pistoncore-window": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/window/Cargo.toml"
+    },
+
+    "pistoncore-event_loop": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/event_loop/Cargo.toml"
+    },
+
+    "piston": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/Cargo.toml"
+    },
+
+    "shader_version": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/shader_version/master/Cargo.toml"
+    },
+
+    "piston-viewport": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/viewport/master/Cargo.toml"
+    },
+
+    "pistoncore-glutin_window": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml"
+    },
+
+    "pistoncore-sdl2_window": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/sdl2_window/master/Cargo.toml"
+    },
+
+    "pistoncore-glfw_window": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/glfw_window/master/Cargo.toml"
+    },
+
+    "piston2d-graphics": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/graphics/master/Cargo.toml"
+    },
+
+    "piston-texture": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/texture/master/Cargo.toml"
+    },
+
+    "piston2d-gfx_graphics": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_graphics/master/Cargo.toml"
+    },
+
+    "piston2d-opengl_graphics": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/opengl_graphics/master/Cargo.toml"
+    },
+
+    "piston2d-glium_graphics": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/glium_graphics/master/Cargo.toml"
+    },
+
+    "piston-ai_behavior": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/ai_behavior/master/Cargo.toml"
+    },
+
+    "piston2d-sprite": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/sprite/master/Cargo.toml"
+    },
+
+    "interpolation": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/interpolation/master/Cargo.toml"
+    },
+
+    "vecmath": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/vecmath/master/Cargo.toml"
+    },
+
+    "piston2d-cam": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/cam/master/Cargo.toml"
+    },
+
+    "quaternion": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/quaternion/master/Cargo.toml"
+    },
+
+    "camera_controllers": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/camera_controllers/master/Cargo.toml"
+    },
+
+    "drag_controller": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/drag_controller/master/Cargo.toml"
+    },
+
+    "range": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/range/master/Cargo.toml"
+    },
+
+    "piston_meta": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/meta/master/Cargo.toml"
+    },
+
+    "piston_meta_search": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/meta/master/src/search/Cargo.toml"
+    },
+
+    "read_token": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/read_token/master/Cargo.toml"
+    },
+
+    "read_color": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/read_color/master/Cargo.toml"
+    },
+
+    "piston_window": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston_window/master/Cargo.toml"
+    },
+
+    "conrod": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/Cargo.toml"
+    },
+
+    "elmesque": {
+        "url": "https://raw.githubusercontent.com/mitchmindtree/elmesque/master/Cargo.toml"
+    },
+
+    "find_folder": {
+        "url": "https://raw.githubusercontent.com/mitchmindtree/find_folder/master/Cargo.toml"
+    }
+}
