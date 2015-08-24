@@ -66,6 +66,13 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         }
     }
 
+    // Increment first non-zero number.
+    fn increment_version(version: &mut Version) {
+        if version.major != 0 { version.increment_major(); }
+        else if version.minor != 0 { version.increment_minor(); }
+        else { version.increment_patch(); }
+    }
+
     // Parse and convert to dependencies data.
     let dependencies_meta_syntax = include_str!("../assets/dependencies/syntax.txt");
     let dependencies_meta_rules = stderr_unwrap(dependencies_meta_syntax,
@@ -116,6 +123,55 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
             .map_err(|_| format!("Could not parse version `{}` for `{}`",
                 &package.version, &package.name)));
         new_versions.insert(package.name.clone(), version);
+    }
+
+    // Create list of sorted package indices by depth.
+    let mut sorted_depths: Vec<_> = depths.iter().collect();
+    sorted_depths.sort_by(|&(_, da), &(_, db)| da.cmp(db));
+
+    // Stores the update info.
+    let mut update_packages: Vec<Package> = vec![];
+
+    for (&package_index, &order) in sorted_depths {
+        let package = &dependencies_data[package_index];
+        let mut update_dependencies = vec![];
+
+        // Find dependencies that needs update.
+        for dep in &package.dependencies {
+            let old_version = try!(Version::parse(&dep.version)
+                .map_err(|_| format!("Could not parse version `{}` for `{}`",
+                    &dep.version, &dep.name)));
+            let new_version = new_versions.get(&dep.name).unwrap();
+            if *new_version > old_version {
+                update_dependencies.push(Dependency {
+                        name: dep.name.clone(),
+                        bump: Bump {
+                            old: old_version,
+                            new: new_version.clone(),
+                        }
+                    });
+            }
+        }
+
+        // If any dependency needs update, then the package needs update.
+        if update_dependencies.len() > 0 {
+            let old_version = try!(Version::parse(&package.version)
+                .map_err(|_| format!("Could not parse version `{}` for `{}`",
+                    &package.version, &package.name)));
+            let new_version = new_versions.get_mut(&package.name).unwrap();
+            if *new_version == old_version {
+                increment_version(new_version);
+            }
+            update_packages.push(Package {
+                    name: package.name.clone(),
+                    order: order,
+                    bump: Bump {
+                        old: old_version,
+                        new: new_version.clone(),
+                    },
+                    dependencies: update_dependencies,
+                });
+        }
     }
 
     Ok(String::from(""))
