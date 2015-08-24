@@ -69,6 +69,12 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
     // Tries appending zero to version to make it parse.
     fn parse_version(text: &str) -> Result<Version, semver::ParseError> {
+        // Ignore `>=`.
+        let text = if text.starts_with(">=") {
+            &text[2..]
+        } else {
+            text
+        };
         match Version::parse(text) {
             Err(_) => {
                 let append_zero = format!("{}.0", text);
@@ -168,6 +174,8 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         // Find dependencies that needs update.
         for dep in &package.dependencies {
             if ignore_version(&dep.version) { continue; }
+            // Do not generate update info for dependencies starting with `>=`.
+            if dep.version.starts_with(">=") { continue; }
 
             let old_version = try!(parse_version(&dep.version)
                 .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
