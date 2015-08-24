@@ -2,6 +2,7 @@
 
 use std::rc::Rc;
 use std::collections::HashMap;
+use std::io::Write;
 
 use semver::{ self, Version };
 
@@ -80,6 +81,16 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     // Whether the version should be ignored.
     fn ignore_version(text: &str) -> bool {
         text == "*"
+    }
+
+    // Returns true if two different versions means a breaking change.
+    fn breaks(a: &Version, b: &Version) -> bool {
+        if a.major != b.major { true }
+        else if a.major != 0 { false }
+        else if a.minor != b.minor { true }
+        else if a.minor != 0 { false }
+        else if a.patch != b.patch { true }
+        else { false }
     }
 
     // Increment first non-zero number.
@@ -162,7 +173,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
                     &dep.version, &dep.name, &package.name)));
             let new_version = new_versions.get(&dep.name).unwrap();
-            if *new_version > old_version {
+            if breaks(new_version, &old_version) {
                 update_dependencies.push(Dependency {
                         name: dep.name.clone(),
                         bump: Bump {
@@ -194,5 +205,57 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         }
     }
 
-    Ok(String::from(""))
+    let mut w: Vec<u8> = vec![];
+    writeln!(w, "{{").unwrap();
+    let n0 = update_packages.len();
+    for (i0, update_package) in update_packages.iter().enumerate() {
+        write!(w, "  ").unwrap();
+        json::write_string(&mut w, &update_package.name).unwrap();
+        writeln!(w, ": {{").unwrap();
+        writeln!(w, "    \"order\": {},", update_package.order).unwrap();
+
+        // Bump package.
+        writeln!(w, "    \"bump\": {{").unwrap();
+        write!(w, "      \"old\": ").unwrap();
+        json::write_string(&mut w, &format!("{}", update_package.bump.old)).unwrap();
+        writeln!(w, ",").unwrap();
+        write!(w, "      \"new\": ").unwrap();
+        json::write_string(&mut w, &format!("{}", update_package.bump.new)).unwrap();
+        writeln!(w, "").unwrap();
+        writeln!(w, "    }},").unwrap();
+
+        // Dependencies.
+        writeln!(w, "    \"dependencies\": {{").unwrap();
+        let n1 = update_package.dependencies.len();
+        for (i1, dep) in update_package.dependencies.iter().enumerate() {
+            write!(w, "      ").unwrap();
+            json::write_string(&mut w, &dep.name).unwrap();
+            writeln!(w, ": {{").unwrap();
+            writeln!(w, "        \"bump\": {{").unwrap();
+            write!(w, "          \"old\": ").unwrap();
+            json::write_string(&mut w, &format!("{}", dep.bump.old)).unwrap();
+            writeln!(w, ",").unwrap();
+            write!(w, "          \"new\": ").unwrap();
+            json::write_string(&mut w, &format!("{}", dep.bump.new)).unwrap();
+            writeln!(w, "").unwrap();
+            writeln!(w, "        }}").unwrap();
+            write!(w, "      }}").unwrap();
+            if i1 + 1 < n1 {
+                writeln!(w, ",").unwrap();
+            } else {
+                writeln!(w, "").unwrap();
+            }
+        }
+        writeln!(w, "    }}").unwrap();
+
+        write!(w, "  }}").unwrap();
+        if i0 + 1 < n0 {
+            writeln!(w, ",").unwrap();
+        } else {
+            writeln!(w, "").unwrap();
+        }
+    }
+    writeln!(w, "}}").unwrap();
+
+    Ok(String::from_utf8(w).unwrap())
 }

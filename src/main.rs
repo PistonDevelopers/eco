@@ -75,6 +75,8 @@ mod tests {
     fn update() {
         let _data = load_syntax_data("assets/update/syntax.txt",
             "assets/update/test.txt");
+        let _data = load_syntax_data("assets/update/syntax.txt",
+            "assets/update/test2.txt");
         // json::print(&_data);
     }
 

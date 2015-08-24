@@ -1,0 +1,89 @@
+{
+  "read_token": {
+    "order": 2,
+    "bump": {
+      "old": "0.2.2",
+      "new": "0.3.0"
+    },
+    "dependencies": {
+      "range": {
+        "bump": {
+          "old": "0.1.1",
+          "new": "0.2.0"
+        }
+      }
+    }
+  },
+  "piston2d-gfx_graphics": {
+    "order": 3,
+    "bump": {
+      "old": "0.5.0",
+      "new": "0.6.0"
+    },
+    "dependencies": {
+      "freetype-rs": {
+        "bump": {
+          "old": "0.1.0",
+          "new": "0.2.1"
+        }
+      }
+    }
+  },
+  "piston_meta": {
+    "order": 3,
+    "bump": {
+      "old": "0.12.1",
+      "new": "0.13.0"
+    },
+    "dependencies": {
+      "read_token": {
+        "bump": {
+          "old": "0.2.2",
+          "new": "0.3.0"
+        }
+      },
+      "range": {
+        "bump": {
+          "old": "0.1.1",
+          "new": "0.2.0"
+        }
+      }
+    }
+  },
+  "piston_meta_search": {
+    "order": 4,
+    "bump": {
+      "old": "0.2.0",
+      "new": "0.3.0"
+    },
+    "dependencies": {
+      "piston_meta": {
+        "bump": {
+          "old": "0.12.0",
+          "new": "0.13.0"
+        }
+      },
+      "range": {
+        "bump": {
+          "old": "0.1.1",
+          "new": "0.2.0"
+        }
+      }
+    }
+  },
+  "piston_window": {
+    "order": 6,
+    "bump": {
+      "old": "0.16.0",
+      "new": "0.17.0"
+    },
+    "dependencies": {
+      "piston2d-gfx_graphics": {
+        "bump": {
+          "old": "0.5.0",
+          "new": "0.6.0"
+        }
+      }
+    }
+  }
+}
