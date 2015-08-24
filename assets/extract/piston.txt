@@ -121,5 +121,85 @@
 
     "find_folder": {
         "url": "https://raw.githubusercontent.com/mitchmindtree/find_folder/master/Cargo.toml"
+    },
+
+    "freetype-rs": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/freetype-rs/master/Cargo.toml"
+    },
+
+    "freetype-sys": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/freetype-sys/master/Cargo.toml"
+    },
+
+    "glutin": {
+        "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml"
+    },
+
+    "glfw": {
+        "url": "https://raw.githubusercontent.com/bjz/glfw-rs/master/Cargo.toml"
+    },
+
+    "sdl2": {
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml"
+    },
+
+    "piston-gfx_texture": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_texture/master/Cargo.toml"
+    },
+
+    "piston-gfx_voxel": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_voxel/master/Cargo.toml"
+    },
+
+    "hematite": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite/master/Cargo.toml"
+    },
+
+    "fps_counter": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/fps_counter/master/Cargo.toml"
+    },
+
+    "gfx_meta": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/Cargo.toml"
+    },
+
+    "gfx": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml"
+    },
+
+    "gfx_device_gl": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml"
+    },
+
+    "gfx_window_glutin": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/glutin/Cargo.toml"
+    },
+
+    "gfx_window_glfw": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/glfw/Cargo.toml"
+    },
+
+    "draw_state": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml"
+    },
+
+    "glium": {
+        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml"
+    },
+
+    "piston-examples": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/Cargo.toml"
+    },
+
+    "piston-example-user_input": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/user_input/Cargo.toml"
+    },
+
+    "piston-example-freetype": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/freetype/Cargo.toml"
+    },
+
+    "getting-started-spinning-square": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/Piston-Tutorials/master/getting-started/Cargo.toml"
     }
 }
