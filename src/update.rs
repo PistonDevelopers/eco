@@ -77,6 +77,11 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         }
     }
 
+    // Whether the version should be ignored.
+    fn ignore_version(text: &str) -> bool {
+        text == "*"
+    }
+
     // Increment first non-zero number.
     fn increment_version(version: &mut Version) {
         if version.major != 0 { version.increment_major(); }
@@ -111,6 +116,8 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     for package in &dependencies_data {
         // Get latest version used by any dependency.
         for dep in &package.dependencies {
+            if ignore_version(&dep.version) { continue; }
+
             let version = try!(parse_version(&dep.version)
                 .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
                     &dep.version, &dep.name, &package.name)));
@@ -149,6 +156,8 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
         // Find dependencies that needs update.
         for dep in &package.dependencies {
+            if ignore_version(&dep.version) { continue; }
+
             let old_version = try!(parse_version(&dep.version)
                 .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
                     &dep.version, &dep.name, &package.name)));
