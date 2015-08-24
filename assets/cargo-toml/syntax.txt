@@ -1,16 +1,17 @@
-0 "package" ["[package]" w? l({
-    ["name" w? "=" w? t!"name" w?]
-    ["version" w? "=" w? t!"version" w?]
-    [.."="? w? "=" w? ..."\n"? w?]
+0 "w" {[w? "#" ..."\n"?] w!}
+0 "package" ["[package]" ?@"w" l({
+    ["name" ?@"w" "=" ?@"w" t!"name" ?@"w"]
+    ["version" ?@"w" "=" ?@"w" t!"version" ?@"w"]
+    [.."="? ?@"w" "=" ?@"w" ..."\n"? ?@"w"]
 })]
-1 "dependency" ["[dependencies." .."]"!"name" "]" w? l({
-    ["version" w? "=" w? t!"version" w?]
-    [.."="? w? "=" w? ..."\n"? w?]
+1 "dependency" ["[dependencies." .."]"!"name" "]" ?@"w" l({
+    ["version" ?@"w" "=" ?@"w" t!"version" ?@"w"]
+    [.."="? ?@"w" "=" ?@"w" ..."\n"? ?@"w"]
 })]
-2 "dependency_list_item" [.."="!"name" w? "=" w? t!"version" w?]
-3 "dependency_list" ["[dependencies]" w? l({
+2 "dependency_list_item" [.."="!"name" ?@"w" "=" ?@"w" t!"version" ?@"w"]
+3 "dependency_list" ["[dependencies]" ?@"w" l({
     @"dependency_list_item""dependency"
 })]
 4 "dependencies" [l({@"dependency""dependency" @"dependency_list" ..."\n"?})]
-5 "package_node" [@"package" w? @"dependencies"]
-5 "document" [w? @"package_node""package" ...""?]
+5 "package_node" [@"package" ?@"w" @"dependencies"]
+5 "document" [r?(@"w") @"package_node""package" ...""?]
