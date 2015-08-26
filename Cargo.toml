@@ -2,9 +2,9 @@
 name = "eco"
 version = "0.1.0"
 
-[[bin]]
+[lib]
 name = "eco"
-path = "src/main.rs"
+path = "src/lib.rs"
 
 [dependencies]
 piston_meta = "0.12.1"
