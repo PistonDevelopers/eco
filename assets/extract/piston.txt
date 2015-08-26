@@ -120,7 +120,7 @@
     },
 
     "find_folder": {
-        "url": "https://raw.githubusercontent.com/mitchmindtree/find_folder/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/find_folder/master/Cargo.toml"
     },
 
     "freetype-rs": {
