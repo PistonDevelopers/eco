@@ -135,6 +135,19 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         } else {
             text
         };
+        let text = if text.starts_with("^") {
+            &text[1..]
+        } else {
+            text
+        };
+        let text = {
+            let n = text.len();
+            if text.ends_with(".*") {
+                &text[..n - 2]
+            } else {
+                text
+            }
+        };
         match Version::parse(text) {
             Err(_) => {
                 let append_zero = format!("{}.0", text);
