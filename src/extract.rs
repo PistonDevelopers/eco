@@ -154,7 +154,7 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
     }
 
     let mut res: Vec<u8> = vec![];
-    dependencies::write(&package_data, &mut res);
+    dependencies::write(&package_data, &mut res).unwrap();
 
     let res = try!(String::from_utf8(res)
         .map_err(|e| format!("UTF8 error: {}", e)));
