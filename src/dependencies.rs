@@ -4,52 +4,56 @@ use range::Range;
 use piston_meta::{ json, MetaData };
 
 use std::rc::Rc;
-use std::io::Write;
+use std::io::{ self, Write };
 
 /// Writes the dependency info.
-pub fn write<W: Write>(package_data: &[Package], w: &mut W) {
-    writeln!(w, "{{").unwrap();
+pub fn write<W: Write>(
+    package_data: &[Package],
+    w: &mut W
+) -> Result<(), io::Error> {
+    try!(writeln!(w, "{{"));
     let n0 = package_data.len();
     for (i0, package) in package_data.iter().enumerate() {
         // Package name.
-        write!(w, " ").unwrap();
-        json::write_string(w, &package.name).unwrap();
-        writeln!(w, ": {{").unwrap();
+        try!(write!(w, " "));
+        try!(json::write_string(w, &package.name));
+        try!(writeln!(w, ": {{"));
 
         // Version.
-        write!(w, "  \"version\": ").unwrap();
-        json::write_string(w, &package.version).unwrap();
-        writeln!(w, ",").unwrap();
+        try!(write!(w, "  \"version\": "));
+        try!(json::write_string(w, &package.version));
+        try!(writeln!(w, ","));
 
         // Dependencies.
-        writeln!(w, "  \"dependencies\": {{").unwrap();
+        try!(writeln!(w, "  \"dependencies\": {{"));
         let n1 = package.dependencies.len();
         for (i1, dependency) in package.dependencies.iter().enumerate() {
-            write!(w, "   ").unwrap();
-            json::write_string(w, &dependency.name).unwrap();
-            writeln!(w, ": {{").unwrap();
+            try!(write!(w, "   "));
+            try!(json::write_string(w, &dependency.name));
+            try!(writeln!(w, ": {{"));
             // Version.
-            write!(w, "    \"version\": ").unwrap();
-            json::write_string(w, &dependency.version).unwrap();
-            writeln!(w, "").unwrap();
-            write!(w, "   }}").unwrap();
+            try!(write!(w, "    \"version\": "));
+            try!(json::write_string(w, &dependency.version));
+            try!(writeln!(w, ""));
+            try!(write!(w, "   }}"));
             if i1 + 1 != n1 {
-                writeln!(w, ",").unwrap();
+                try!(writeln!(w, ","));
             } else {
-                writeln!(w, "").unwrap();
+                try!(writeln!(w, ""));
             }
         }
-        writeln!(w, "  }}").unwrap();
+        try!(writeln!(w, "  }}"));
 
         // End package.
-        write!(w, " }}").unwrap();
+        try!(write!(w, " }}"));
         if i0 + 1 != n0 {
-            writeln!(w, ",").unwrap();
+            try!(writeln!(w, ","));
         } else {
-            writeln!(w, "").unwrap();
+            try!(writeln!(w, ""));
         }
     }
-    writeln!(w, "}}").unwrap();
+    try!(writeln!(w, "}}"));
+    Ok(())
 }
 
 /// Converts from meta data to dependency information.
