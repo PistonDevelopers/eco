@@ -67,6 +67,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/interpolation/master/Cargo.toml"
     },
 
+    "button_controller": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/button_controller/master/Cargo.toml"
+    },
+
     "vecmath": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/vecmath/master/Cargo.toml"
     },
@@ -79,6 +83,30 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/quaternion/master/Cargo.toml"
     },
 
+    "dual_quaternion": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/dual_quaternion/master/Cargo.toml"
+    },
+
+    "texture_packer": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/texture_packer/master/Cargo.toml"
+    },
+
+    "table": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/table/master/Cargo.toml"
+    },
+
+    "piston2d-shapes": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/shapes/master/Cargo.toml"
+    },
+
+    "array": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/array/master/Cargo.toml"
+    },
+
+    "select_color": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/select_color/master/Cargo.toml"
+    },
+
     "camera_controllers": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/camera_controllers/master/Cargo.toml"
     },
@@ -89,6 +117,18 @@
 
     "range": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/range/master/Cargo.toml"
+    },
+
+    "piston-shaders": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/shaders/master/Cargo.toml"
+    },
+
+    "piston-shaders_graphics2d": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/shaders/master/graphics2d/Cargo.toml"
+    },
+
+    "piston-float": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/float/master/Cargo.toml"
     },
 
     "piston_meta": {
@@ -117,6 +157,22 @@
 
     "elmesque": {
         "url": "https://raw.githubusercontent.com/mitchmindtree/elmesque/master/Cargo.toml"
+    },
+
+    "image": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/image/master/Cargo.toml"
+    },
+
+    "gif": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-gif/master/Cargo.toml"
+    },
+
+    "png": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-png/master/Cargo.toml"
+    },
+
+    "color_quant": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/color_quant/master/Cargo.toml"
     },
 
     "find_folder": {
@@ -155,8 +211,64 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite/master/Cargo.toml"
     },
 
+    "hematite_nbt": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_nbt/master/Cargo.toml"
+    },
+
+    "hematite_server": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_server/master/Cargo.toml"
+    },
+
     "fps_counter": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/fps_counter/master/Cargo.toml"
+    },
+
+    "opengex": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/opengex/master/Cargo.toml"
+    },
+
+    "dev_menu": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/dev_menu/master/Cargo.toml"
+    },
+
+    "gfx_debug_draw": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx-debug-draw/master/Cargo.toml"
+    },
+
+    "gfx_window_shared": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_window_shared/master/Cargo.toml"
+    },
+
+    "skeletal_animation": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation/master/Cargo.toml"
+    },
+
+    "gfx_text": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_text/master/Cargo.toml"
+    },
+
+    "asset_store": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/asset_store/master/Cargo.toml"
+    },
+
+    "current": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/current/master/Cargo.toml"
+    },
+
+    "music": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/music/master/Cargo.toml"
+    },
+
+    "collada": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston_collada/master/Cargo.toml"
+    },
+
+    "wavefront_obj": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/wavefront_obj/master/Cargo.toml"
+    },
+
+    "mush": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/mush/master/Cargo.toml"
     },
 
     "gfx_meta": {

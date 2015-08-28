@@ -143,8 +143,15 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
         syntax(cargo_toml_syntax));
     for extract in &list {
         let config = try!(load_text_file_from_url(&extract.url));
-        let cargo_toml_data = stderr_unwrap(&config,
-            parse(&cargo_toml_rules, &config));
+        let cargo_toml_data = match parse(&cargo_toml_rules, &config) {
+            Ok(val) => val,
+            Err((range, err)) => {
+                let mut w: Vec<u8> = vec![];
+                ParseErrorHandler::new(&config).write(&mut w, range, err);
+                return Err(format!("{}: Syntax error in Cargo.toml for url `{}`\n{}",
+                    &extract.package, &extract.url, &String::from_utf8(w).unwrap()));
+            }
+        };
 
         let mut ignored = vec![];
         let package = try!(convert_cargo_toml(
