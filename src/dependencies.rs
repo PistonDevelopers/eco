@@ -42,6 +42,26 @@ pub fn write<W: Write>(
                 try!(writeln!(w, ""));
             }
         }
+        try!(writeln!(w, "  }},"));
+
+        // Dev dependencies.
+        try!(writeln!(w, "  \"dev-dependencies\": {{"));
+        let n1 = package.dev_dependencies.len();
+        for (i1, dependency) in package.dev_dependencies.iter().enumerate() {
+            try!(write!(w, "   "));
+            try!(json::write_string(w, &dependency.name));
+            try!(writeln!(w, ": {{"));
+            // Version.
+            try!(write!(w, "    \"version\": "));
+            try!(json::write_string(w, &dependency.version));
+            try!(writeln!(w, ""));
+            try!(write!(w, "   }}"));
+            if i1 + 1 != n1 {
+                try!(writeln!(w, ","));
+            } else {
+                try!(writeln!(w, ""));
+            }
+        }
         try!(writeln!(w, "  }}"));
 
         // End package.
@@ -86,6 +106,8 @@ pub struct Package {
     pub version: Rc<String>,
     /// Dependencies.
     pub dependencies: Vec<Dependency>,
+    /// Dev dependencies.
+    pub dev_dependencies: Vec<Dependency>,
 }
 
 impl Package {
@@ -105,6 +127,7 @@ impl Package {
         let mut name: Option<Rc<String>> = None;
         let mut version: Option<Rc<String>> = None;
         let mut dependencies = vec![];
+        let mut dev_dependencies = vec![];
         loop {
             if let Ok(range) = end_node(node, data, offset) {
                 update(range, &mut data, &mut offset);
@@ -115,9 +138,12 @@ impl Package {
             } else if let Ok((range, val)) = meta_string("version", data, offset) {
                 update(range, &mut data, &mut offset);
                 version = Some(val);
-            } else if let Ok((range, dependency)) = Dependency::from_meta_data(data, offset, ignored) {
+            } else if let Ok((range, dependency)) = Dependency::from_meta_data("dependency", data, offset, ignored) {
                 update(range, &mut data, &mut offset);
                 dependencies.push(dependency);
+            } else if let Ok((range, dev_dependency)) = Dependency::from_meta_data("dev_dependency", data, offset, ignored) {
+                update(range, &mut data, &mut offset);
+                dev_dependencies.push(dev_dependency);
             } else {
                 let range = ignore(data, offset);
                 update(range, &mut data, &mut offset);
@@ -131,6 +157,7 @@ impl Package {
             name: name,
             version: version,
             dependencies: dependencies,
+            dev_dependencies: dev_dependencies,
         }))
     }
 }
@@ -146,6 +173,7 @@ pub struct Dependency {
 impl Dependency {
     /// Converts from meta data.
     pub fn from_meta_data(
+        node: &str,
         mut data: &[(Range, MetaData)],
         mut offset: usize,
         ignored: &mut Vec<Range>
@@ -153,7 +181,6 @@ impl Dependency {
         use piston_meta::bootstrap::*;
 
         let start_offset = offset;
-        let node = "dependency";
         let start_range = try!(start_node(node, data, offset));
         update(start_range, &mut data, &mut offset);
 
