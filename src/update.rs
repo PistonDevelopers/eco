@@ -249,6 +249,26 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 }
             }
         }
+
+        // Get latest version used by any dev dependency.
+        for dep in &package.dev_dependencies {
+            if ignore_version(&dep.version) { continue; }
+
+            let version = try!(parse_version(&dep.version)
+                .map_err(|_| format!("Could not parse version `{}` for dev dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name)));
+            let v = new_versions.get(&dep.name).map(|v| v.clone());
+            match v {
+                None => {
+                    new_versions.insert(dep.name.clone(), version);
+                }
+                Some(v) => {
+                    if v < version {
+                        new_versions.insert(dep.name.clone(), version);
+                    }
+                }
+            }
+        }
     }
 
     // Overwrite the versions used by packages.
@@ -269,7 +289,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     for (&package_index, &order) in sorted_depths {
         let package = &dependencies_data[package_index];
         let mut update_dependencies = vec![];
-        let update_dev_dependencies = vec![];
+        let mut update_dev_dependencies = vec![];
 
         // Find dependencies that needs update.
         for dep in &package.dependencies {
@@ -283,6 +303,27 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
                 update_dependencies.push(Dependency {
+                        name: dep.name.clone(),
+                        bump: Bump {
+                            old: old_version,
+                            new: new_version.clone(),
+                        }
+                    });
+            }
+        }
+
+        // Find dev dependencies that needs update.
+        for dep in &package.dev_dependencies {
+            if ignore_version(&dep.version) { continue; }
+            // Do not generate update info for dependencies starting with `>=`.
+            if dep.version.starts_with(">=") { continue; }
+
+            let old_version = try!(parse_version(&dep.version)
+                .map_err(|_| format!("Could not parse version `{}` for dev dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name)));
+            let new_version = new_versions.get(&dep.name).unwrap();
+            if breaks(new_version, &old_version) {
+                update_dev_dependencies.push(Dependency {
                         name: dep.name.clone(),
                         bump: Bump {
                             old: old_version,
