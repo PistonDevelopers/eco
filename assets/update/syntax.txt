@@ -7,9 +7,13 @@
 3 "dependencies" ["\"dependencies\"" w? ":" w? "{" w?
     s?(@","){@"dependency""dependency"}
 w? "}"]
-4 "package" [t!"name" w? ":" w? "{" w? s?(@","){{
+4 "dev_dependencies" ["\"dev-dependencies\"" w? ":" w? "{" w?
+    s?(@","){@"dependency""dependency"}
+w? "}"]
+5 "package" [t!"name" w? ":" w? "{" w? s?(@","){{
     ["\"order\"" w? ":" w? $"order"]
     @"bump""bump"
     @"dependencies""dependencies"
+    @"dev_dependencies""dev_dependencies"
 }} w? "}"]
-5 "document" [w? "{" w? s?(@","){@"package""package"} w? "}" w?]
+6 "document" [w? "{" w? s?(@","){@"package""package"} w? "}" w?]

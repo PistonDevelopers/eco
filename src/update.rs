@@ -55,6 +55,30 @@ pub fn write<W: Write>(
                 try!(writeln!(w, ""));
             }
         }
+        try!(writeln!(w, "    }},"));
+
+        // Dev dependencies.
+        try!(writeln!(w, "    \"dev-dependencies\": {{"));
+        let n1 = update_package.dev_dependencies.len();
+        for (i1, dep) in update_package.dev_dependencies.iter().enumerate() {
+            try!(write!(w, "      "));
+            try!(json::write_string(w, &dep.name));
+            try!(writeln!(w, ": {{"));
+            try!(writeln!(w, "        \"bump\": {{"));
+            try!(write!(w, "          \"old\": "));
+            try!(json::write_string(w, &format!("{}", dep.bump.old)));
+            try!(writeln!(w, ","));
+            try!(write!(w, "          \"new\": "));
+            try!(json::write_string(w, &format!("{}", dep.bump.new)));
+            try!(writeln!(w, ""));
+            try!(writeln!(w, "        }}"));
+            try!(write!(w, "      }}"));
+            if i1 + 1 < n1 {
+                try!(writeln!(w, ","));
+            } else {
+                try!(writeln!(w, ""));
+            }
+        }
         try!(writeln!(w, "    }}"));
 
         try!(write!(w, "  }}"));
@@ -94,6 +118,8 @@ pub struct Package {
     pub bump: Bump,
     /// The dependencies.
     pub dependencies: Vec<Dependency>,
+    /// The dev dependencies.
+    pub dev_dependencies: Vec<Dependency>,
 }
 
 /// Generates update info.
@@ -243,6 +269,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     for (&package_index, &order) in sorted_depths {
         let package = &dependencies_data[package_index];
         let mut update_dependencies = vec![];
+        let update_dev_dependencies = vec![];
 
         // Find dependencies that needs update.
         for dep in &package.dependencies {
@@ -282,6 +309,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                         new: new_version.clone(),
                     },
                     dependencies: update_dependencies,
+                    dev_dependencies: update_dev_dependencies,
                 });
         }
     }
