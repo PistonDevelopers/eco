@@ -56,13 +56,17 @@ mod tests {
             "assets/cargo-toml/test.txt");
         let _data = load_syntax_data("assets/cargo-toml/syntax.txt",
             "assets/cargo-toml/test2.txt");
-        json::print(&_data);
+        // json::print(&_data);
     }
 
     #[test]
     fn update_is_json() {
         let _ = load_syntax_data("assets/json/syntax.txt",
             "assets/update/test.txt");
+        let _ = load_syntax_data("assets/json/syntax.txt",
+            "assets/update/test2.txt");
+        let _ = load_syntax_data("assets/json/syntax.txt",
+            "assets/update/test3.txt");
     }
 
     #[test]
@@ -71,6 +75,8 @@ mod tests {
             "assets/update/test.txt");
         let _data = load_syntax_data("assets/update/syntax.txt",
             "assets/update/test2.txt");
+        let _data = load_syntax_data("assets/update/syntax.txt",
+            "assets/update/test3.txt");
         // json::print(&_data);
     }
 
