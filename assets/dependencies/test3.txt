@@ -1,0 +1,33 @@
+{
+ "elmesque": {
+  "version": "0.6.0",
+  "dependencies": {
+   "num": {
+    "version": "*"
+   },
+   "piston2d-graphics": {
+    "version": "0.7.1"
+   },
+   "rand": {
+    "version": "*"
+   },
+   "rustc-serialize": {
+    "version": "*"
+   },
+   "vecmath": {
+    "version": "0.1.1"
+   }
+  },
+  "dev-dependencies": {
+   "find_folder": {
+    "version": "0.2.0"
+   },
+   "piston": {
+    "version": "0.10.0"
+   },
+   "piston_window": {
+    "version": "0.18.0"
+   }
+  }
+ }
+}

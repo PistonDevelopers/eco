@@ -33,6 +33,10 @@ mod tests {
     fn dependencies_is_json() {
         let _ = load_syntax_data("assets/json/syntax.txt",
             "assets/dependencies/test.txt");
+        let _ = load_syntax_data("assets/json/syntax.txt",
+            "assets/dependencies/test2.txt");
+        let _ = load_syntax_data("assets/json/syntax.txt",
+            "assets/dependencies/test3.txt");
     }
 
     #[test]
@@ -41,6 +45,8 @@ mod tests {
             "assets/dependencies/test.txt");
         let _data = load_syntax_data("assets/dependencies/syntax.txt",
             "assets/dependencies/test2.txt");
+        let _data = load_syntax_data("assets/dependencies/syntax.txt",
+            "assets/dependencies/test3.txt");
         // json::print(&_data);
     }
 
@@ -48,7 +54,9 @@ mod tests {
     fn cargo_toml() {
         let _data = load_syntax_data("assets/cargo-toml/syntax.txt",
             "assets/cargo-toml/test.txt");
-        // json::print(&_data);
+        let _data = load_syntax_data("assets/cargo-toml/syntax.txt",
+            "assets/cargo-toml/test2.txt");
+        json::print(&_data);
     }
 
     #[test]

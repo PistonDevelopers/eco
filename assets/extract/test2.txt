@@ -1,0 +1,5 @@
+{
+    "elmesque": {
+        "url": "https://raw.githubusercontent.com/mitchmindtree/elmesque/master/Cargo.toml"
+    }
+}
