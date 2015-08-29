@@ -1,7 +1,7 @@
 {
     "pistoncore-input": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
-        "override-version": "0.7.0"
+        "ignore-version": "0.7.0"
     },
 
     "pistoncore-window": {
