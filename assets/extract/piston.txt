@@ -196,7 +196,8 @@
     },
 
     "sdl2": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
+        "ignore-version": "0.8.0"
     },
 
     "piston-gfx_texture": {

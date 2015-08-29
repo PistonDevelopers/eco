@@ -12,7 +12,7 @@ pub struct Extract {
     /// The url of the Cargo.toml.
     pub url: Rc<String>,
     /// Whether to override the library version to simulate breaking change.
-    pub override_version: Option<Rc<String>>,
+    pub ignore_version: Option<Rc<String>>,
 }
 
 impl Extract {
@@ -31,7 +31,7 @@ impl Extract {
 
         let mut package: Option<Rc<String>> = None;
         let mut url: Option<Rc<String>> = None;
-        let mut override_version: Option<Rc<String>> = None;
+        let mut ignore_version: Option<Rc<String>> = None;
         loop {
             if let Ok(range) = end_node(node, data, offset) {
                 update(range, &mut data, &mut offset);
@@ -42,9 +42,9 @@ impl Extract {
             } else if let Ok((range, val)) = meta_string("url", data, offset) {
                 update(range, &mut data, &mut offset);
                 url = Some(val);
-            } else if let Ok((range, val)) = meta_string("override_version", data, offset) {
+            } else if let Ok((range, val)) = meta_string("ignore_version", data, offset) {
                 update(range, &mut data, &mut offset);
-                override_version = Some(val);
+                ignore_version = Some(val);
             } else {
                 let range = ignore(data, offset);
                 update(range, &mut data, &mut offset);
@@ -57,7 +57,7 @@ impl Extract {
         Ok((Range::new(start_offset, offset - start_offset), Extract {
             package: package,
             url: url,
-            override_version: override_version,
+            ignore_version: ignore_version,
         }))
     }
 }
@@ -157,6 +157,9 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
         let package = try!(convert_cargo_toml(
             &cargo_toml_data, &mut ignored)
             .map_err(|_| format!("Could not convert Cargo.toml data for url `{}`", &extract.url)));
+        if let Some(ref ignore_version) = extract.ignore_version {
+            if ignore_version == &package.version { continue; }
+        }
         package_data.push(package);
     }
 
