@@ -244,6 +244,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation/master/Cargo.toml"
     },
 
+    "skeletal_animation_demo": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation_demo/master/Cargo.toml"
+    },
+
     "gfx_text": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_text/master/Cargo.toml"
     },
