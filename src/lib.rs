@@ -10,7 +10,7 @@ extern crate semver;
 pub mod extract;
 pub mod update;
 pub mod dependencies;
-
+pub mod todo;
 
 #[cfg(test)]
 mod tests {
