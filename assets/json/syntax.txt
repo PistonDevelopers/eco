@@ -1,13 +1,13 @@
-0 "," [w? "," w?]
-1 "object" ["{" w? s?(@","){[t? w? ":" w? @"value" w?]} "}"]
-2 "array" ["[" w? s?(@","){@"value"} "]"]
-3 "value" [{
-    t?
-    $
-    @"object"
-    @"array"
+0 , = [.w? "," .w?]
+1 object = ["{" .w? .s?(, [.t? .w? ":" .w? value .w?]) "}"]
+2 array = ["[" .w? .s?(, value) .w? "]"]
+3 value = [{
+    .t?
+    .$
+    object
+    array
     "true"
     "false"
     "null"
 }]
-4 "document" [w? @"object" w?]
+4 document = [.w? object .w?]

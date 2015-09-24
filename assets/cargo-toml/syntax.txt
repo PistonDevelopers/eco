@@ -1,30 +1,30 @@
-0 "w" {[w? "#" ..."\n"?] w!}
-1 "package" ["[package]" ?@"w" l({
-    ["name" ?@"w" "=" ?@"w" t!"name" ?@"w"]
-    ["version" ?@"w" "=" ?@"w" t!"version" ?@"w"]
-    [.."="? ?@"w" "=" ?@"w" ..."\n"? ?@"w"]
+0 w = {[.w? "#" ..."\n"?] .w!}
+1 package = ["[package]" ?w .l({
+    ["name" ?w "=" ?w .t!:"name" ?w]
+    ["version" ?w "=" ?w .t!:"version" ?w]
+    [.."="? ?w "=" ?w ..."\n"? ?w]
 })]
-2 "dependency" ["[dependencies." .."]"!"name" "]" ?@"w" l({
-    ["version" ?@"w" "=" ?@"w" t!"version" ?@"w"]
-    [.."="? ?@"w" "=" ?@"w" ..."\n"? ?@"w"]
+2 dependency = ["[dependencies." .."]"!:"name" "]" ?w .l({
+    ["version" ?w "=" ?w .t!:"version" ?w]
+    [.."="? ?w "=" ?w ..."\n"? ?w]
 })]
-3 "dev_dependency" ["[dev-dependencies." .."]"!"name" "]" ?@"w" l({
-    ["version" ?@"w" "=" ?@"w" t!"version" ?@"w"]
-    [.."="? ?@"w" "=" ?@"w" ..."\n"? ?@"w"]
+3 dev_dependency = ["[dev-dependencies." .."]"!:"name" "]" ?w .l({
+    ["version" ?w "=" ?w .t!:"version" ?w]
+    [.."="? ?w "=" ?w ..."\n"? ?w]
 })]
-4 "dependency_list_item" [.."="!"name" ?@"w" "=" ?@"w" t!"version" ?@"w"]
-5 "dependency_list" ["[dependencies]" ?@"w" l({
-    @"dependency_list_item""dependency"
+4 dependency_list_item = [.."="!:"name" ?w "=" ?w .t!:"version" ?w]
+5 dependency_list = ["[dependencies]" ?w .l({
+    dependency_list_item:"dependency"
 })]
-6 "dev_dependency_list" ["[dev-dependencies]" ?@"w" l({
-    @"dependency_list_item""dev_dependency"
+6 dev_dependency_list = ["[dev-dependencies]" ?w .l({
+    dependency_list_item:"dev_dependency"
 })]
-7 "dependencies" [l({
-    @"dependency""dependency"
-    @"dependency_list"
-    @"dev_dependency""dev_dependency"
-    @"dev_dependency_list"
+7 dependencies = [.l({
+    dependency:"dependency"
+    dependency_list
+    dev_dependency:"dev_dependency"
+    dev_dependency_list
     ..."\n"?
 })]
-9 "package_node" [@"package" ?@"w" @"dependencies"]
-10 "document" [r?(@"w") @"package_node""package" ...""?]
+9 package_node = [package ?w dependencies]
+10 document = [.r?(w) package_node:"package" ...""?]
