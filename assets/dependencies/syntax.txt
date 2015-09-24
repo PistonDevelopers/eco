@@ -1,8 +1,8 @@
-0 "," [w? "," w?]
-1 "dependency" [t!"name" w? ":" w? "{" w? "\"version\"" w? ":" w? t!"version" w? "}"]
-1 "package" [t!"name" w? ":" w? "{" w? s?(@","){{
-    ["\"version\"" w? ":" w? t!"version"]
-    ["\"dependencies\"" w? ":" w? "{" w? s?(@","){@"dependency""dependency"} w? "}"]
-    ["\"dev-dependencies\"" w? ":" w? "{" w? s?(@","){@"dependency""dev_dependency"} w? "}"]
-}} w? "}"]
-2 "document" [w? "{" w? s?(@","){[@"package""package" w?]} "}" w?]
+0 , = [.w? "," .w?]
+1 dependency = [.t!:"name" .w? ":" .w? "{" .w? "\"version\"" .w? ":" .w? .t!:"version" .w? "}"]
+1 package = [.t!:"name" .w? ":" .w? "{" .w? .s?(, {
+    ["\"version\"" .w? ":" .w? .t!:"version"]
+    ["\"dependencies\"" .w? ":" .w? "{" .w? .s?(, dependency:"dependency") .w? "}"]
+    ["\"dev-dependencies\"" .w? ":" .w? "{" .w? .s?(, dependency:"dev_dependency") .w? "}"]
+}) .w? "}"]
+2 document = [.w? "{" .w? .s?(, [package:"package" .w?]) "}" .w?]

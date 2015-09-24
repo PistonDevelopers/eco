@@ -126,7 +126,7 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
 
     let extract_meta_syntax = include_str!("../assets/extract/syntax.txt");
     let extract_meta_rules = stderr_unwrap(extract_meta_syntax,
-        syntax(extract_meta_syntax));
+        syntax2(extract_meta_syntax));
     let extract_data = stderr_unwrap(extract_info,
         parse(&extract_meta_rules, extract_info));
 
@@ -140,14 +140,14 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
     // Extract information.
     let cargo_toml_syntax = include_str!("../assets/cargo-toml/syntax.txt");
     let cargo_toml_rules = stderr_unwrap(cargo_toml_syntax,
-        syntax(cargo_toml_syntax));
+        syntax2(cargo_toml_syntax));
     for extract in &list {
         let config = try!(load_text_file_from_url(&extract.url));
         let cargo_toml_data = match parse(&cargo_toml_rules, &config) {
             Ok(val) => val,
             Err((range, err)) => {
                 let mut w: Vec<u8> = vec![];
-                ParseErrorHandler::new(&config).write(&mut w, range, err);
+                ParseErrorHandler::new(&config).write(&mut w, range, err).unwrap();
                 return Err(format!("{}: Syntax error in Cargo.toml for url `{}`\n{}",
                     &extract.package, &extract.url, &String::from_utf8(w).unwrap()));
             }

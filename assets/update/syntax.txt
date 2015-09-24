@@ -1,19 +1,19 @@
-0 "," [w? "," w?]
-1 "bump" ["\"bump\"" w? ":" w? "{" w? s?(@","){{
-    ["\"old\"" w? ":" w? t!"old"]
-    ["\"new\"" w? ":" w? t!"new"]
-}} w? "}"]
-2 "dependency" [t!"name" w? ":" w? "{" w? @"bump""bump" w? "}"]
-3 "dependencies" ["\"dependencies\"" w? ":" w? "{" w?
-    s?(@","){@"dependency""dependency"}
-w? "}"]
-4 "dev_dependencies" ["\"dev-dependencies\"" w? ":" w? "{" w?
-    s?(@","){@"dependency""dependency"}
-w? "}"]
-5 "package" [t!"name" w? ":" w? "{" w? s?(@","){{
-    ["\"order\"" w? ":" w? $"order"]
-    @"bump""bump"
-    @"dependencies""dependencies"
-    @"dev_dependencies""dev_dependencies"
-}} w? "}"]
-6 "document" [w? "{" w? s?(@","){@"package""package"} w? "}" w?]
+0 , = [.w? "," .w?]
+1 bump = ["\"bump\"" .w? ":" .w? "{" .w? .s?(, {
+    ["\"old\"" .w? ":" .w? .t!:"old"]
+    ["\"new\"" .w? ":" .w? .t!:"new"]
+}) .w? "}"]
+2 dependency = [.t!:"name" .w? ":" .w? "{" .w? bump:"bump" .w? "}"]
+3 dependencies = ["\"dependencies\"" .w? ":" .w? "{" .w?
+    .s?(, dependency:"dependency")
+.w? "}"]
+4 dev_dependencies = ["\"dev-dependencies\"" .w? ":" .w? "{" .w?
+    .s?(, dependency:"dependency")
+.w? "}"]
+5 package = [.t!:"name" .w? ":" .w? "{" .w? .s?(, {
+    ["\"order\"" .w? ":" .w? .$:"order"]
+    bump:"bump"
+    dependencies:"dependencies"
+    dev_dependencies:"dev_dependencies"
+}) .w? "}"]
+6 document = [.w? "{" .w? .s?(, package:"package") .w? "}" .w?]
