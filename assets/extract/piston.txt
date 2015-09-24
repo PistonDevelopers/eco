@@ -318,5 +318,9 @@
 
     "getting-started-spinning-square": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/Piston-Tutorials/master/getting-started/Cargo.toml"
+    },
+
+    "eco": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/eco/master/Cargo.toml"
     }
 }
