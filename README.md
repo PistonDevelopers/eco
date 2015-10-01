@@ -9,6 +9,15 @@ Currently supported:
 - Dependency info: Version info about packages and their dependencies.
 - Update info: Actions to improve the integration of the ecosystem.
 
+### Help out with updating!
+
+Breaking changes happen all the time, and keeping libraries updated is important.
+Here we keep a list of various ecosystems important for Rust gamedev.
+
+- Piston: `cargo run --example piston > todo.txt`
+
+Eco generates a list of updates, which you follow as instructions and then make PR to the respective repos.
+
 ### Motivation
 
 Rust ecosystems often consist of many smaller crates following semver versioning.
