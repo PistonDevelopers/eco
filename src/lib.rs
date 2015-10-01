@@ -56,6 +56,8 @@ mod tests {
             "assets/cargo-toml/test.txt");
         let _data = load_syntax_data2("assets/cargo-toml/syntax.txt",
             "assets/cargo-toml/test2.txt");
+        let _data = load_syntax_data2("assets/cargo-toml/syntax.txt",
+            "assets/cargo-toml/test3.txt");
         // json::print(&_data);
     }
 

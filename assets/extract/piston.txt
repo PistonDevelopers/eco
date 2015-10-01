@@ -304,6 +304,10 @@
         "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml"
     },
 
+    "gl-rs": {
+        "url": "https://raw.githubusercontent.com/bjz/gl-rs/master/gl/Cargo.toml"
+    },
+
     "piston-examples": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/Cargo.toml"
     },
