@@ -3,7 +3,7 @@
 use range::Range;
 use piston_meta::{ json, MetaData };
 
-use std::rc::Rc;
+use std::sync::Arc;
 use std::io::{ self, Write };
 
 /// Writes the dependency info.
@@ -101,9 +101,9 @@ pub fn convert(
 /// Stores package information.
 pub struct Package {
     /// The package name.
-    pub name: Rc<String>,
+    pub name: Arc<String>,
     /// The version.
-    pub version: Rc<String>,
+    pub version: Arc<String>,
     /// Dependencies.
     pub dependencies: Vec<Dependency>,
     /// Dev dependencies.
@@ -124,8 +124,8 @@ impl Package {
         let start_range = try!(start_node(node, data, offset));
         update(start_range, &mut data, &mut offset);
 
-        let mut name: Option<Rc<String>> = None;
-        let mut version: Option<Rc<String>> = None;
+        let mut name: Option<Arc<String>> = None;
+        let mut version: Option<Arc<String>> = None;
         let mut dependencies = vec![];
         let mut dev_dependencies = vec![];
         loop {
@@ -165,9 +165,9 @@ impl Package {
 /// Stores dependency information.
 pub struct Dependency {
     /// The package name.
-    pub name: Rc<String>,
+    pub name: Arc<String>,
     /// The semver version of the library.
-    pub version: Rc<String>,
+    pub version: Arc<String>,
 }
 
 impl Dependency {
@@ -184,8 +184,8 @@ impl Dependency {
         let start_range = try!(start_node(node, data, offset));
         update(start_range, &mut data, &mut offset);
 
-        let mut name: Option<Rc<String>> = None;
-        let mut version: Option<Rc<String>> = None;
+        let mut name: Option<Arc<String>> = None;
+        let mut version: Option<Arc<String>> = None;
         loop {
             if let Ok(range) = end_node(node, data, offset) {
                 update(range, &mut data, &mut offset);
