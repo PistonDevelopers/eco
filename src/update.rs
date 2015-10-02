@@ -1,6 +1,6 @@
 //! Generate update information from dependency information.
 
-use std::rc::Rc;
+use std::sync::Arc;
 use std::collections::HashMap;
 use std::io::{ self, Write };
 
@@ -103,7 +103,7 @@ pub struct Bump {
 /// Stores update info for dependency.
 pub struct Dependency {
     /// The library name.
-    pub name: Rc<String>,
+    pub name: Arc<String>,
     /// Bump info.
     pub bump: Bump,
 }
@@ -111,7 +111,7 @@ pub struct Dependency {
 /// Stores information about a package.
 pub struct Package {
     /// The package name.
-    pub name: Rc<String>,
+    pub name: Arc<String>,
     /// The order to update library.
     pub order: u32,
     /// Update information.
@@ -132,7 +132,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
     fn depth_of(
         package_index: PackageIndex,
-        package_indices: &HashMap<Rc<String>, PackageIndex>,
+        package_indices: &HashMap<Arc<String>, PackageIndex>,
         depths: &mut HashMap<PackageIndex, Depth>,
         dependencies_data: &[dependencies::Package]
     ) -> Depth {
@@ -216,7 +216,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         .map_err(|_| String::from("Could not convert dependency info")));
 
     // Stores the package indices using package name as key.
-    let package_indices: HashMap<Rc<String>, PackageIndex> =
+    let package_indices: HashMap<Arc<String>, PackageIndex> =
         HashMap::from_iter(dependencies_data.iter().enumerate().map(
             |(i, p)| {
                 (p.name.clone(), i)
@@ -228,7 +228,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         let _depth = depth_of(i, &package_indices, &mut depths, &dependencies_data);
     }
 
-    let mut new_versions: HashMap<Rc<String>, Version> = HashMap::new();
+    let mut new_versions: HashMap<Arc<String>, Version> = HashMap::new();
     for package in &dependencies_data {
         // Get latest version used by any dependency.
         for dep in &package.dependencies {

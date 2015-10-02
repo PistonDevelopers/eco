@@ -3,16 +3,16 @@
 use piston_meta::MetaData;
 use dependencies::{ self, Package };
 use range::Range;
-use std::rc::Rc;
+use std::sync::Arc;
 
 /// Stores extract information.
 pub struct Extract {
     /// The package name.
-    pub package: Rc<String>,
+    pub package: Arc<String>,
     /// The url of the Cargo.toml.
-    pub url: Rc<String>,
+    pub url: Arc<String>,
     /// Whether to override the library version to simulate breaking change.
-    pub ignore_version: Option<Rc<String>>,
+    pub ignore_version: Option<Arc<String>>,
 }
 
 impl Extract {
@@ -29,9 +29,9 @@ impl Extract {
         let start_range = try!(start_node(node, data, offset));
         update(start_range, &mut data, &mut offset);
 
-        let mut package: Option<Rc<String>> = None;
-        let mut url: Option<Rc<String>> = None;
-        let mut ignore_version: Option<Rc<String>> = None;
+        let mut package: Option<Arc<String>> = None;
+        let mut url: Option<Arc<String>> = None;
+        let mut ignore_version: Option<Arc<String>> = None;
         loop {
             if let Ok(range) = end_node(node, data, offset) {
                 update(range, &mut data, &mut offset);
@@ -122,6 +122,8 @@ pub fn convert_cargo_toml(
 
 /// Extracts dependency info.
 pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String> {
+    use std::sync::Mutex;
+    use std::thread;
     use piston_meta::*;
 
     let extract_meta_syntax = include_str!("../assets/extract/syntax.txt");
@@ -135,36 +137,45 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
         .map_err(|_| String::from("Could not convert extract data")));
 
     // Stores package and dependency information extracted from Cargo.toml.
-    let mut package_data = vec![];
+    let package_data = Arc::new(Mutex::new(vec![]));
 
     // Extract information.
     let cargo_toml_syntax = include_str!("../assets/cargo-toml/syntax.txt");
-    let cargo_toml_rules = stderr_unwrap(cargo_toml_syntax,
-        syntax2(cargo_toml_syntax));
-    for extract in &list {
-        let config = try!(load_text_file_from_url(&extract.url));
-        let cargo_toml_data = match parse(&cargo_toml_rules, &config) {
-            Ok(val) => val,
-            Err((range, err)) => {
-                let mut w: Vec<u8> = vec![];
-                ParseErrorHandler::new(&config).write(&mut w, range, err).unwrap();
-                return Err(format!("{}: Syntax error in Cargo.toml for url `{}`\n{}",
-                    &extract.package, &extract.url, &String::from_utf8(w).unwrap()));
-            }
-        };
+    let cargo_toml_rules = Arc::new(stderr_unwrap(cargo_toml_syntax,
+        syntax2(cargo_toml_syntax)));
+    let mut handles = vec![];
+    for extract in list.into_iter() {
+        let cargo_toml_rules = cargo_toml_rules.clone();
+        let package_data = package_data.clone();
+        handles.push(thread::spawn(move || {
+            let config = try!(load_text_file_from_url(&extract.url));
+            let cargo_toml_data = match parse(&cargo_toml_rules, &config) {
+                Ok(val) => val,
+                Err((range, err)) => {
+                    let mut w: Vec<u8> = vec![];
+                    ParseErrorHandler::new(&config).write(&mut w, range, err).unwrap();
+                    return Err(format!("{}: Syntax error in Cargo.toml for url `{}`\n{}",
+                        &extract.package, &extract.url, &String::from_utf8(w).unwrap()));
+                }
+            };
 
-        let mut ignored = vec![];
-        let package = try!(convert_cargo_toml(
-            &cargo_toml_data, &mut ignored)
-            .map_err(|_| format!("Could not convert Cargo.toml data for url `{}`", &extract.url)));
-        if let Some(ref ignore_version) = extract.ignore_version {
-            if ignore_version == &package.version { continue; }
-        }
-        package_data.push(package);
+            let mut ignored = vec![];
+            let package = try!(convert_cargo_toml(
+                &cargo_toml_data, &mut ignored)
+                .map_err(|_| format!("Could not convert Cargo.toml data for url `{}`", &extract.url)));
+            if let Some(ref ignore_version) = extract.ignore_version {
+                if ignore_version != &package.version { return Ok(()); }
+            }
+            package_data.lock().unwrap().push(package);
+            Ok(())
+        }))
+    }
+    for handle in handles.into_iter() {
+        try!(handle.join().unwrap().map_err(|e| e));
     }
 
     let mut res: Vec<u8> = vec![];
-    dependencies::write(&package_data, &mut res).unwrap();
+    dependencies::write(&package_data.lock().unwrap(), &mut res).unwrap();
 
     let res = try!(String::from_utf8(res)
         .map_err(|e| format!("UTF8 error: {}", e)));
