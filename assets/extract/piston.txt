@@ -19,6 +19,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/shader_version/master/Cargo.toml"
     },
 
+    "piston-rect": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/rect/master/Cargo.toml"
+    },
+
     "piston-viewport": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/viewport/master/Cargo.toml"
     },
