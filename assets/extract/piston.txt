@@ -240,10 +240,6 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx-debug-draw/master/Cargo.toml"
     },
 
-    "gfx_window_shared": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_window_shared/master/Cargo.toml"
-    },
-
     "skeletal_animation": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation/master/Cargo.toml"
     },
@@ -258,6 +254,14 @@
 
     "asset_store": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/asset_store/master/Cargo.toml"
+    },
+
+    "resources_package": {
+        "url": "https://raw.githubusercontent.com/tomaka/resources_package/master/Cargo.toml"
+    },
+
+    "resources_package_package": {
+        "url": "https://raw.githubusercontent.com/tomaka/resources_package/master/package/Cargo.toml"
     },
 
     "current": {
