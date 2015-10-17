@@ -16,8 +16,9 @@ pub fn todo_from_extract_info(extract_info: &str) -> Result<String, String> {
     let extract_meta_syntax = include_str!("../assets/extract/syntax.txt");
     let extract_meta_rules = stderr_unwrap(extract_meta_syntax,
         syntax(extract_meta_syntax));
-    let extract_data = stderr_unwrap(extract_info,
-        parse(&extract_meta_rules, extract_info));
+    let mut extract_data = vec![];
+    stderr_unwrap(extract_info,
+        parse(&extract_meta_rules, extract_info, &mut extract_data));
 
     let mut ignored = vec![];
     let list = try!(convert_extract_info(&extract_data, &mut ignored)
