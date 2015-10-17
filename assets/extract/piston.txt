@@ -197,7 +197,6 @@
 
     "glutin": {
         "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml",
-        "ignore-version": "0.3.0"
     },
 
     "glfw": {
