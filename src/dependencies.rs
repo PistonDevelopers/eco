@@ -78,7 +78,7 @@ pub fn write<W: Write>(
 
 /// Converts from meta data to dependency information.
 pub fn convert(
-    mut data: &[(Range, MetaData)],
+    mut data: &[Range<MetaData>],
     ignored: &mut Vec<Range>
 ) -> Result<Vec<Package>, ()> {
     use piston_meta::bootstrap::update;
@@ -113,7 +113,7 @@ pub struct Package {
 impl Package {
     /// Converts from meta data.
     pub fn from_meta_data(
-        mut data: &[(Range, MetaData)],
+        mut data: &[Range<MetaData>],
         mut offset: usize,
         ignored: &mut Vec<Range>
     ) -> Result<(Range, Package), ()> {
@@ -174,7 +174,7 @@ impl Dependency {
     /// Converts from meta data.
     pub fn from_meta_data(
         node: &str,
-        mut data: &[(Range, MetaData)],
+        mut data: &[Range<MetaData>],
         mut offset: usize,
         ignored: &mut Vec<Range>
     ) -> Result<(Range, Dependency), ()> {

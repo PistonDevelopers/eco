@@ -18,7 +18,7 @@ pub struct Extract {
 impl Extract {
     /// Converts from meta data.
     pub fn from_meta_data(
-        mut data: &[(Range, MetaData)],
+        mut data: &[Range<MetaData>],
         mut offset: usize,
         ignored: &mut Vec<Range>
     ) -> Result<(Range, Extract), ()> {
@@ -90,7 +90,7 @@ pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
 
 /// Converts meta data into extract info.
 pub fn convert_extract_info(
-    mut data: &[(Range, MetaData)],
+    mut data: &[Range<MetaData>],
     ignored: &mut Vec<Range>
 ) -> Result<Vec<Extract>, ()> {
     use piston_meta::bootstrap::*;
@@ -112,7 +112,7 @@ pub fn convert_extract_info(
 
 /// Converts meta data into Cargo.toml information.
 pub fn convert_cargo_toml(
-    data: &[(Range, MetaData)],
+    data: &[Range<MetaData>],
     ignored: &mut Vec<Range>
 ) -> Result<Package, ()> {
     let offset = 0;
@@ -129,8 +129,9 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
     let extract_meta_syntax = include_str!("../assets/extract/syntax.txt");
     let extract_meta_rules = stderr_unwrap(extract_meta_syntax,
         syntax2(extract_meta_syntax));
-    let extract_data = stderr_unwrap(extract_info,
-        parse(&extract_meta_rules, extract_info));
+    let mut extract_data = vec![];
+    stderr_unwrap(extract_info,
+        parse(&extract_meta_rules, extract_info, &mut extract_data));
 
     let mut ignored = vec![];
     let list = try!(convert_extract_info(&extract_data, &mut ignored)
@@ -149,11 +150,12 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
         let package_data = package_data.clone();
         handles.push(thread::spawn(move || {
             let config = try!(load_text_file_from_url(&extract.url));
-            let cargo_toml_data = match parse(&cargo_toml_rules, &config) {
+            let mut cargo_toml_data = vec![];
+            match parse(&cargo_toml_rules, &config, &mut cargo_toml_data) {
                 Ok(val) => val,
-                Err((range, err)) => {
+                Err(range_err) => {
                     let mut w: Vec<u8> = vec![];
-                    ParseErrorHandler::new(&config).write(&mut w, range, err).unwrap();
+                    ParseErrorHandler::new(&config).write(&mut w, range_err).unwrap();
                     return Err(format!("{}: Syntax error in Cargo.toml for url `{}`\n{}",
                         &extract.package, &extract.url, &String::from_utf8(w).unwrap()));
                 }

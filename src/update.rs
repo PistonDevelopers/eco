@@ -209,10 +209,14 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     let dependencies_meta_syntax = include_str!("../assets/dependencies/syntax.txt");
     let dependencies_meta_rules = stderr_unwrap(dependencies_meta_syntax,
         syntax2(dependencies_meta_syntax));
-    let dependency_info = stderr_unwrap(dependency_info,
-        parse(&dependencies_meta_rules, dependency_info));
+    let mut dependency_info_meta_data = vec![];
+    stderr_unwrap(dependency_info,
+        parse(&dependencies_meta_rules,
+              dependency_info,
+              &mut dependency_info_meta_data));
     let mut ignored = vec![];
-    let dependencies_data = try!(dependencies::convert(&dependency_info, &mut ignored)
+    let dependencies_data = try!(dependencies::convert(
+        &dependency_info_meta_data, &mut ignored)
         .map_err(|_| String::from("Could not convert dependency info")));
 
     // Stores the package indices using package name as key.
