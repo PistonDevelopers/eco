@@ -27,6 +27,14 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/viewport/master/Cargo.toml"
     },
 
+    "piston-editor": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/editor/master/Cargo.toml"
+    },
+
+    "turbine": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/turbine/master/Cargo.toml"
+    },
+
     "pistoncore-glutin_window": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml"
     },
