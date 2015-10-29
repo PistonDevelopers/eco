@@ -128,7 +128,7 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
 
     let extract_meta_syntax = include_str!("../assets/extract/syntax.txt");
     let extract_meta_rules = stderr_unwrap(extract_meta_syntax,
-        syntax2(extract_meta_syntax));
+        syntax(extract_meta_syntax));
     let mut extract_data = vec![];
     stderr_unwrap(extract_info,
         parse(&extract_meta_rules, extract_info, &mut extract_data));
@@ -143,7 +143,7 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
     // Extract information.
     let cargo_toml_syntax = include_str!("../assets/cargo-toml/syntax.txt");
     let cargo_toml_rules = Arc::new(stderr_unwrap(cargo_toml_syntax,
-        syntax2(cargo_toml_syntax)));
+        syntax(cargo_toml_syntax)));
     let mut handles = vec![];
     for extract in list.into_iter() {
         let cargo_toml_rules = cargo_toml_rules.clone();
