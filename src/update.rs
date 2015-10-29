@@ -208,7 +208,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     // Parse and convert to dependencies data.
     let dependencies_meta_syntax = include_str!("../assets/dependencies/syntax.txt");
     let dependencies_meta_rules = stderr_unwrap(dependencies_meta_syntax,
-        syntax2(dependencies_meta_syntax));
+        syntax(dependencies_meta_syntax));
     let mut dependency_info_meta_data = vec![];
     stderr_unwrap(dependency_info,
         parse(&dependencies_meta_rules,
