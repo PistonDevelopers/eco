@@ -2,6 +2,7 @@
 
 use range::Range;
 use piston_meta::{ json, MetaData };
+use piston_meta::bootstrap::Convert;
 
 use std::sync::Arc;
 use std::io::{ self, Write };
@@ -78,18 +79,16 @@ pub fn write<W: Write>(
 
 /// Converts from meta data to dependency information.
 pub fn convert(
-    mut data: &[Range<MetaData>],
+    data: &[Range<MetaData>],
     ignored: &mut Vec<Range>
 ) -> Result<Vec<Package>, ()> {
-    use piston_meta::bootstrap::update;
-
-    let mut offset = 0;
+    let mut convert = Convert::new(data);
     let mut res = vec![];
     loop {
-        if let Ok((range, package)) = Package::from_meta_data(data, offset, ignored) {
-            update(range, &mut data, &mut offset);
+        if let Ok((range, package)) = Package::from_meta_data(convert, ignored) {
+            convert.update(range);
             res.push(package);
-        } else if offset < data.len() {
+        } else if convert.remaining_data_len() > 0 {
             return Err(());
         } else {
             break;
@@ -113,47 +112,48 @@ pub struct Package {
 impl Package {
     /// Converts from meta data.
     pub fn from_meta_data(
-        mut data: &[Range<MetaData>],
-        mut offset: usize,
+        mut convert: Convert,
         ignored: &mut Vec<Range>
     ) -> Result<(Range, Package), ()> {
-        use piston_meta::bootstrap::*;
-
-        let start_offset = offset;
+        let start = convert.clone();
         let node = "package";
-        let start_range = try!(start_node(node, data, offset));
-        update(start_range, &mut data, &mut offset);
+        let start_range = try!(convert.start_node(node));
+        convert.update(start_range);
 
         let mut name: Option<Arc<String>> = None;
         let mut version: Option<Arc<String>> = None;
         let mut dependencies = vec![];
         let mut dev_dependencies = vec![];
         loop {
-            if let Ok(range) = end_node(node, data, offset) {
-                update(range, &mut data, &mut offset);
+            if let Ok(range) = convert.end_node(node) {
+                convert.update(range);
                 break;
-            } else if let Ok((range, val)) = meta_string("name", data, offset) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, val)) = convert.meta_string("name") {
+                convert.update(range);
                 name = Some(val);
-            } else if let Ok((range, val)) = meta_string("version", data, offset) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, val)) = convert.meta_string("version") {
+                convert.update(range);
                 version = Some(val);
-            } else if let Ok((range, dependency)) = Dependency::from_meta_data("dependency", data, offset, ignored) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, dependency)) = Dependency::from_meta_data(
+                "dependency", convert, ignored
+            ) {
+                convert.update(range);
                 dependencies.push(dependency);
-            } else if let Ok((range, dev_dependency)) = Dependency::from_meta_data("dev_dependency", data, offset, ignored) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, dev_dependency)) = Dependency::from_meta_data(
+                "dev_dependency", convert, ignored
+            ) {
+                convert.update(range);
                 dev_dependencies.push(dev_dependency);
             } else {
-                let range = ignore(data, offset);
-                update(range, &mut data, &mut offset);
+                let range = convert.ignore();
+                convert.update(range);
                 ignored.push(range);
             }
         }
 
         let name = try!(name.ok_or(()));
         let version = try!(version.ok_or(()));
-        Ok((Range::new(start_offset, offset - start_offset), Package {
+        Ok((convert.subtract(start), Package {
             name: name,
             version: version,
             dependencies: dependencies,
@@ -174,38 +174,35 @@ impl Dependency {
     /// Converts from meta data.
     pub fn from_meta_data(
         node: &str,
-        mut data: &[Range<MetaData>],
-        mut offset: usize,
+        mut convert: Convert,
         ignored: &mut Vec<Range>
     ) -> Result<(Range, Dependency), ()> {
-        use piston_meta::bootstrap::*;
-
-        let start_offset = offset;
-        let start_range = try!(start_node(node, data, offset));
-        update(start_range, &mut data, &mut offset);
+        let start = convert.clone();
+        let start_range = try!(convert.start_node(node));
+        convert.update(start_range);
 
         let mut name: Option<Arc<String>> = None;
         let mut version: Option<Arc<String>> = None;
         loop {
-            if let Ok(range) = end_node(node, data, offset) {
-                update(range, &mut data, &mut offset);
+            if let Ok(range) = convert.end_node(node) {
+                convert.update(range);
                 break;
-            } else if let Ok((range, val)) = meta_string("name", data, offset) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, val)) = convert.meta_string("name") {
+                convert.update(range);
                 name = Some(val);
-            } else if let Ok((range, val)) = meta_string("version", data, offset) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, val)) = convert.meta_string("version") {
+                convert.update(range);
                 version = Some(val);
             } else {
-                let range = ignore(data, offset);
-                update(range, &mut data, &mut offset);
+                let range = convert.ignore();
+                convert.update(range);
                 ignored.push(range);
             }
         }
 
         let name = try!(name.ok_or(()));
         let version = try!(version.ok_or(()));
-        Ok((Range::new(start_offset, offset - start_offset), Dependency {
+        Ok((convert.subtract(start), Dependency {
             name: name,
             version: version
         }))

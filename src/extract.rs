@@ -1,6 +1,7 @@
 //! Extract dependency information from extract info.
 
 use piston_meta::MetaData;
+use piston_meta::bootstrap::Convert;
 use dependencies::{ self, Package };
 use range::Range;
 use std::sync::Arc;
@@ -18,43 +19,40 @@ pub struct Extract {
 impl Extract {
     /// Converts from meta data.
     pub fn from_meta_data(
-        mut data: &[Range<MetaData>],
-        mut offset: usize,
+        mut convert: Convert,
         ignored: &mut Vec<Range>
     ) -> Result<(Range, Extract), ()> {
-        use piston_meta::bootstrap::*;
-
-        let start_offset = offset;
+        let start = convert.clone();
         let node = "library";
-        let start_range = try!(start_node(node, data, offset));
-        update(start_range, &mut data, &mut offset);
+        let start_range = try!(convert.start_node(node));
+        convert.update(start_range);
 
         let mut package: Option<Arc<String>> = None;
         let mut url: Option<Arc<String>> = None;
         let mut ignore_version: Option<Arc<String>> = None;
         loop {
-            if let Ok(range) = end_node(node, data, offset) {
-                update(range, &mut data, &mut offset);
+            if let Ok(range) = convert.end_node(node) {
+                convert.update(range);
                 break;
-            } else if let Ok((range, val)) = meta_string("package", data, offset) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, val)) = convert.meta_string("package") {
+                convert.update(range);
                 package = Some(val);
-            } else if let Ok((range, val)) = meta_string("url", data, offset) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, val)) = convert.meta_string("url") {
+                convert.update(range);
                 url = Some(val);
-            } else if let Ok((range, val)) = meta_string("ignore_version", data, offset) {
-                update(range, &mut data, &mut offset);
+            } else if let Ok((range, val)) = convert.meta_string("ignore_version") {
+                convert.update(range);
                 ignore_version = Some(val);
             } else {
-                let range = ignore(data, offset);
-                update(range, &mut data, &mut offset);
+                let range = convert.ignore();
+                convert.update(range);
                 ignored.push(range);
             }
         }
 
         let package = try!(package.ok_or(()));
         let url = try!(url.ok_or(()));
-        Ok((Range::new(start_offset, offset - start_offset), Extract {
+        Ok((convert.subtract(start), Extract {
             package: package,
             url: url,
             ignore_version: ignore_version,
@@ -90,18 +88,18 @@ pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
 
 /// Converts meta data into extract info.
 pub fn convert_extract_info(
-    mut data: &[Range<MetaData>],
+    data: &[Range<MetaData>],
     ignored: &mut Vec<Range>
 ) -> Result<Vec<Extract>, ()> {
     use piston_meta::bootstrap::*;
 
     let mut list = vec![];
-    let mut offset = 0;
+    let mut convert = Convert::new(data);
     loop {
-        if let Ok((range, extract)) = Extract::from_meta_data(data, offset, ignored) {
-            update(range, &mut data, &mut offset);
+        if let Ok((range, extract)) = Extract::from_meta_data(convert, ignored) {
+            convert.update(range);
             list.push(extract);
-        } else if offset < data.len() {
+        } else if convert.remaining_data_len() > 0 {
             return Err(());
         } else {
             break;
@@ -115,8 +113,7 @@ pub fn convert_cargo_toml(
     data: &[Range<MetaData>],
     ignored: &mut Vec<Range>
 ) -> Result<Package, ()> {
-    let offset = 0;
-    let (_, package) = try!(Package::from_meta_data(data, offset, ignored));
+    let (_, package) = try!(Package::from_meta_data(Convert::new(data), ignored));
     Ok((package))
 }
 
