@@ -249,7 +249,7 @@
     },
 
     "gfx_debug_draw": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx-debug-draw/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_debug_draw/master/Cargo.toml"
     },
 
     "skeletal_animation": {
