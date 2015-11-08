@@ -212,8 +212,11 @@
     },
 
     "sdl2": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
-        "ignore-version": "0.8.0"
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml"
+    },
+
+    "sdl2-sys": {
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/sdl2-sys/Cargo.toml"
     },
 
     "piston-gfx_texture": {
@@ -346,5 +349,17 @@
 
     "eco": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/eco/master/Cargo.toml"
+    },
+
+    "time": {
+        "url": "https://raw.githubusercontent.com/rust-lang-deprecated/time/master/Cargo.toml"
+    },
+
+    "winapi": {
+        "url": "https://raw.githubusercontent.com/retep998/winapi-rs/master/Cargo.toml"
+    },
+
+    "libc": {
+        "url": "https://raw.githubusercontent.com/rust-lang-nursery/libc/master/Cargo.toml"
     }
 }
