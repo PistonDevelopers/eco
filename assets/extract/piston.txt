@@ -361,5 +361,21 @@
 
     "libc": {
         "url": "https://raw.githubusercontent.com/rust-lang-nursery/libc/master/Cargo.toml"
+    },
+
+    "num": {
+        "url": "https://raw.githubusercontent.com/rust-num/num/master/Cargo.toml"
+    },
+
+    "rand": {
+        "url": "https://raw.githubusercontent.com/rust-lang-nursery/rand/master/Cargo.toml"
+    },
+
+    "lzw": {
+        "url": "https://raw.githubusercontent.com/nwin/lzw/master/Cargo.toml"
+    },
+
+    "libz-sys": {
+        "url": "https://raw.githubusercontent.com/alexcrichton/libz-sys/master/Cargo.toml"
     }
 }
