@@ -187,6 +187,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/image-png/master/Cargo.toml"
     },
 
+    "inflate": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/inflate/master/Cargo.toml"
+    },
+
     "color_quant": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/color_quant/master/Cargo.toml"
     },
@@ -377,5 +381,9 @@
 
     "libz-sys": {
         "url": "https://raw.githubusercontent.com/alexcrichton/libz-sys/master/Cargo.toml"
+    },
+
+    "pkg-config": {
+        "url": "https://raw.githubusercontent.com/alexcrichton/pkg-config-rs/master/Cargo.toml"
     }
 }
