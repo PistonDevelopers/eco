@@ -385,5 +385,9 @@
 
     "pkg-config": {
         "url": "https://raw.githubusercontent.com/alexcrichton/pkg-config-rs/master/Cargo.toml"
+    },
+
+    "sdl2_mixer": {
+        "url": "https://raw.githubusercontent.com/andelf/rust-sdl2_mixer/master/Cargo.toml"
     }
 }
