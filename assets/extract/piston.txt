@@ -271,10 +271,6 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_text/master/Cargo.toml"
     },
 
-    "asset_store": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/asset_store/master/Cargo.toml"
-    },
-
     "resources_package": {
         "url": "https://raw.githubusercontent.com/tomaka/resources_package/master/Cargo.toml"
     },
