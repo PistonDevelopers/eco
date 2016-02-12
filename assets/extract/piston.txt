@@ -170,11 +170,7 @@
     "conrod": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/Cargo.toml"
     },
-
-    "elmesque": {
-        "url": "https://raw.githubusercontent.com/mitchmindtree/elmesque/master/Cargo.toml"
-    },
-
+    
     "image": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/image/master/Cargo.toml"
     },
