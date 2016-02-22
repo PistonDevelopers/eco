@@ -158,10 +158,9 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         // Ignore `>=`.
         let text = if text.starts_with(">=") {
             &text[2..]
-        } else {
-            text
-        };
-        let text = if text.starts_with("^") {
+        } else if text.starts_with("^") {
+            &text[1..]
+        } else if text.starts_with("=") {
             &text[1..]
         } else {
             text
