@@ -1,6 +1,13 @@
 #![deny(missing_docs)]
 
 //! A tool for reasoning about breaking changes in Rust ecosystems
+//!
+//! Eco helps Rust programmers to keep an ecosystem updated.
+//! An ecosystem is a collection of libraries that are relevant to a project.
+//!
+//! This library is organized into modules, where each module has its own
+//! custom text format. By using text, it is easy to customize the
+//! collecting and generating of data.
 
 extern crate range;
 extern crate piston_meta;
