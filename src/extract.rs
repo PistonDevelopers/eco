@@ -71,8 +71,10 @@ pub struct Extract {
     pub package: Arc<String>,
     /// The url of the Cargo.toml.
     pub url: Arc<String>,
-    /// Whether to override the library version to simulate breaking change.
+    /// Ignore updates to projects using this version.
     pub ignore_version: Option<Arc<String>>,
+    /// Override package version.
+    pub override_version: Option<Arc<String>>,
 }
 
 impl Extract {
@@ -89,6 +91,7 @@ impl Extract {
         let mut package: Option<Arc<String>> = None;
         let mut url: Option<Arc<String>> = None;
         let mut ignore_version: Option<Arc<String>> = None;
+        let mut override_version: Option<Arc<String>> = None;
         loop {
             if let Ok(range) = convert.end_node(node) {
                 convert.update(range);
@@ -102,6 +105,9 @@ impl Extract {
             } else if let Ok((range, val)) = convert.meta_string("ignore_version") {
                 convert.update(range);
                 ignore_version = Some(val);
+            } else if let Ok((range, val)) = convert.meta_string("override_version") {
+                convert.update(range);
+                override_version = Some(val);
             } else {
                 let range = convert.ignore();
                 convert.update(range);
@@ -115,6 +121,7 @@ impl Extract {
             package: package,
             url: url,
             ignore_version: ignore_version,
+            override_version: override_version,
         }))
     }
 }
@@ -218,11 +225,14 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
             };
 
             let mut ignored = vec![];
-            let package = try!(convert_cargo_toml(
+            let mut package = try!(convert_cargo_toml(
                 &cargo_toml_data, &mut ignored)
                 .map_err(|_| format!("Could not convert Cargo.toml data for url `{}`", &extract.url)));
             if let Some(ref ignore_version) = extract.ignore_version {
                 if ignore_version != &package.version { return Ok(()); }
+            }
+            if let Some(ref override_version) = extract.override_version {
+                package.version = override_version.clone();
             }
             package_data.lock().unwrap().push(package);
             Ok(())
