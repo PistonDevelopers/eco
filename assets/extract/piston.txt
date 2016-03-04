@@ -170,7 +170,7 @@
     "conrod": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/Cargo.toml"
     },
-    
+
     "image": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/image/master/Cargo.toml"
     },
@@ -180,7 +180,8 @@
     },
 
     "gif": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-gif/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-gif/master/Cargo.toml",
+        "ignore-version": "0.7.0"
     },
 
     "png": {

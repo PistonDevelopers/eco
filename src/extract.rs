@@ -1,4 +1,63 @@
 //! Extract dependency information from extract info.
+//!
+//! ### Extract info
+//!
+//! This is a JSON format with meta syntax `./assets/extract/syntax.txt`.
+//!
+//! It is used for collecting dependency data from raw Cargo.toml files.
+//!
+//! Example:
+//!
+//! ```json
+//! {
+//!    "pistoncore-input": {
+//!        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
+//!        "ignore-version": "0.7.0"
+//!    },
+//!
+//!    "pistoncore-window": {
+//!        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/window/Cargo.toml"
+//!    },
+//!
+//!    "pistoncore-event_loop": {
+//!        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/event_loop/Cargo.toml"
+//!    },
+//!
+//!    "piston": {
+//!        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/Cargo.toml"
+//!    }
+//! }
+//! ```
+//!
+//! Fields:
+//!
+//! - url (the url to the raw Cargo.toml data)
+//! - ignore-version (don't update projects using this version)
+//!
+//! ### Ignore version
+//!
+//! The ignore-version field is used to delay updates, to reduce frequency
+//! of breaking changes, or put them on hold until some work is done.
+//!
+//! Example:
+//!
+//! ```text
+//! A (uses B 0.7.0) -> B (0.8.0)
+//! ```
+//!
+//! A new version of library B is available, but some work might needed in A
+//! before releasing a new version. By listing "0.7.0" in the ignore-version
+//! field, there will be no recommended update for A. This will also avoid
+//! further updates for libraries depending on A triggered by this version.
+//!
+//! However, if A breaks for other reasons, there will be update actions for
+//! libraries higher up in the dependency graph.
+//!
+//! The rule used for ignoring version is: If the package has not this version,
+//! then filter it from dependency info.
+//!
+//! This might cause unsoundness (see top level documentation).
+//! Remember to remove ignore-version fields that are no longer needed.
 
 use piston_meta::MetaData;
 use piston_meta::bootstrap::Convert;
