@@ -217,7 +217,8 @@
     },
 
     "sdl2": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
+        "override-version": "0.16.0"
     },
 
     "sdl2-sys": {
