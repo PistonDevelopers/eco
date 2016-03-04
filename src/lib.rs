@@ -8,6 +8,59 @@
 //! This library is organized into modules, where each module has its own
 //! custom text format. By using text, it is easy to customize the
 //! collecting and generating of data.
+//!
+//! ### Ecosystem
+//!
+//! The definition of an ecosystem used by Eco is:
+//!
+//! ```test
+//! A list of libraries, each with a set of dependencies,
+//! forming an directed acyclic graph for dependencies and directed cyclic
+//! graph for dev-dependencies, with no holes.
+//! ```
+//!
+//! ### Example
+//!
+//! Extract info is a bird view of an ecosystem of libraries.
+//! This is used to build a dependency graph, which then is used to generate
+//! recommended update actions to keep the ecosystem healthy.
+//!
+//! ```ignore
+//! extern crate eco;
+//!
+//! fn main() {
+//!     use std::io::Read;
+//!     use std::fs::File;
+//!
+//!     // Load extract info from file.
+//!     let mut extract_info_file = File::open("assets/extract/piston.txt").unwrap();
+//!     let mut extract_info = String::new();
+//!     extract_info_file.read_to_string(&mut extract_info).unwrap();
+//!
+//!     let dependency_info = eco::extract::extract_dependency_info_from(&extract_info).unwrap();
+//!     let update_info = eco::update::generate_update_info_from(&dependency_info).unwrap();
+//!     println!("{}", update_info);
+//! }
+//! ```
+//!
+//! ### Unsoundness of holes
+//!
+//! It is important to not leave any hole in the ecosystem.
+//! A hole is when a dependency is not listed that uses a listed library.
+//!
+//! Example:
+//!
+//! ```text
+//! A (listed) -> B (not listed) -> C (listed)
+//! ```
+//!
+//! The dependencies of library B will not be analyzed because they are not
+//! listed. This will lead to a potential error since breaking changes in
+//! library C does not cause a breaking change in A.
+//!
+//! Notice it is OK to not list libraries that are lower level dependencies.
+//!
+//! As long as there are no holes, the update algorithm is sound.
 
 extern crate range;
 extern crate piston_meta;
