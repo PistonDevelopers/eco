@@ -154,7 +154,7 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     }
 
     // Tries appending zero to version to make it parse.
-    fn parse_version(text: &str) -> Result<Version, semver::ParseError> {
+    fn parse_version(text: &str) -> Result<Version, semver::SemVerError> {
         // Ignore `>=`.
         let text = if text.starts_with(">=") {
             &text[2..]

@@ -1,6 +1,6 @@
 [package]
 name = "eco"
-version = "0.11.0"
+version = "0.12.0"
 authors = [
     "bvssvni <bvssvni@gmail.com>"
 ]
@@ -16,6 +16,6 @@ path = "src/lib.rs"
 
 [dependencies]
 piston_meta = "0.26.1"
-hyper = "0.6.9"
+hyper = "0.8.1"
 range = "0.3.0"
-semver = "=0.2.0"
+semver = "0.2.3"
