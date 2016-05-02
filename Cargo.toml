@@ -1,12 +1,12 @@
 [package]
 name = "eco"
-version = "0.12.0"
+version = "0.13.0"
 authors = [
     "bvssvni <bvssvni@gmail.com>"
 ]
 keywords = ["piston", "ecosystem", "dependencies", "analysis"]
 description = "A tool for reasoning about breaking changes in Rust ecosystems"
-license = "MIT"
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/pistondevelopers/eco.git"
 homepage = "https://github.com/pistondevelopers/eco"
 

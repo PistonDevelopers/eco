@@ -45,3 +45,18 @@ where various parts are interfacing each other through text.
 Because Eco might be used for automation in the future, the algorithms are based on analysis and models.
 When something goes wrong, it should be known what error might have caused it.
 This is necessary to use it with other tools, so the overall behavior can be reasoned about.
+
+## License
+
+Licensed under either of
+
+ * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
+
+### Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any
+additional terms or conditions.
