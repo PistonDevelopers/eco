@@ -1,0 +1,53 @@
+{
+  "portaudio": {
+    "url": "https://raw.githubusercontent.com/RustAudio/rust-portaudio/master/Cargo.toml"
+  },
+  "synth": {
+    "url": "https://raw.githubusercontent.com/RustAudio/synth/master/Cargo.toml"
+  },
+  "sample": {
+    "url": "https://raw.githubusercontent.com/RustAudio/sample/master/Cargo.toml"
+  },
+  "coreaudio-rs": {
+    "url": "https://raw.githubusercontent.com/RustAudio/coreaudio-rs/master/Cargo.toml"
+  },
+  "sampler": {
+    "url": "https://raw.githubusercontent.com/RustAudio/sampler/master/Cargo.toml"
+  },
+  "volume": {
+    "url": "https://raw.githubusercontent.com/RustAudio/volume/master/Cargo.toml"
+  },
+  "dsp-chain": {
+    "url": "https://raw.githubusercontent.com/RustAudio/dsp-chain/master/Cargo.toml"
+  },
+  "rimd": {
+    "url": "https://raw.githubusercontent.com/RustAudio/rimd/master/Cargo.toml"
+  },
+  "sound_stream": {
+    "url": "https://raw.githubusercontent.com/RustAudio/sound_stream/master/Cargo.toml"
+  },
+  "pitch_calc": {
+    "url": "https://raw.githubusercontent.com/RustAudio/pitch_calc/master/Cargo.toml"
+  },
+  "rms": {
+    "url": "https://raw.githubusercontent.com/RustAudio/rms/master/Cargo.toml"
+  },
+  "time_calc": {
+    "url": "https://raw.githubusercontent.com/RustAudio/time_calc/master/Cargo.toml"
+  },
+  "coreaudio-sys": {
+    "url": "https://raw.githubusercontent.com/RustAudio/coreaudio-sys/master/Cargo.toml"
+  },
+  "envelope": {
+    "url": "https://raw.githubusercontent.com/RustAudio/envelope/master/Cargo.toml"
+  },
+  "rust-jack": {
+    "url": "https://raw.githubusercontent.com/RustAudio/rust-jack/master/Cargo.toml"
+  },
+  "musical_keyboard": {
+    "url": "https://raw.githubusercontent.com/RustAudio/musical_keyboard/master/Cargo.toml"
+  },
+  "panning": {
+    "url": "https://raw.githubusercontent.com/RustAudio/panning/master/Cargo.toml"
+  }
+}
