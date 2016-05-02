@@ -1,0 +1,41 @@
+{
+  "gfx_app": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/Cargo.toml"
+  },
+  "gfx_device_dx11": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/dx11/Cargo.toml"
+  },
+  "gfx_device_gl": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml"
+  },
+  "gfx_core": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml"
+  },
+  "gfx": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/render/Cargo.toml"
+  },
+  "gfx_window_dxgi": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/dxgi/Cargo.toml"
+  },
+  "gfx_window_glfw": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/glfw/Cargo.toml"
+  },
+  "gfx_window_glutin": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/glutin/Cargo.toml"
+  },
+  "gfx_window_sdl": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/sdl/Cargo.toml"
+  },
+  "draw_state": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml"
+  },
+  "gfx_gl": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx_gl/master/Cargo.toml"
+  },
+  "genmesh": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/genmesh/master/Cargo.toml"
+  },
+  "gfx_scene_meta": {
+    "url": "https://raw.githubusercontent.com/gfx-rs/gfx_scene/master/Cargo.toml"
+  }
+}
