@@ -91,7 +91,7 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/vecmath/master/Cargo.toml"
     },
 
-    "piston2d-cam": {
+    "piston3d-cam": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/cam/master/Cargo.toml"
     },
 
@@ -127,7 +127,7 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/camera_controllers/master/Cargo.toml"
     },
 
-    "drag_controller": {
+    "piston2d-drag_controller": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/drag_controller/master/Cargo.toml"
     },
 
@@ -180,8 +180,7 @@
     },
 
     "gif": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-gif/master/Cargo.toml",
-        "ignore-version": "0.7.0"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-gif/master/Cargo.toml"
     },
 
     "png": {
@@ -201,7 +200,8 @@
     },
 
     "freetype-rs": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/freetype-rs/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/freetype-rs/master/Cargo.toml",
+        "ignore-version": "0.7.0"
     },
 
     "freetype-sys": {
@@ -217,7 +217,8 @@
     },
 
     "sdl2": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
+        "ignore-version": "0.18.0"
     },
 
     "sdl2-sys": {
@@ -228,7 +229,7 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_texture/master/Cargo.toml"
     },
 
-    "piston-gfx_voxel": {
+    "piston3d-gfx_voxel": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_voxel/master/Cargo.toml"
     },
 
@@ -236,19 +237,20 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite/master/Cargo.toml"
     },
 
-    "hematite_nbt": {
+    "hematite-nbt": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_nbt/master/Cargo.toml"
     },
 
     "hematite_server": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_server/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_server/master/Cargo.toml",
+        "ignore-version": "0.0.1"
     },
 
     "fps_counter": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/fps_counter/master/Cargo.toml"
     },
 
-    "opengex": {
+    "piston-opengex": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/opengex/master/Cargo.toml"
     },
 
@@ -284,7 +286,7 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/current/master/Cargo.toml"
     },
 
-    "music": {
+    "piston-music": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/music/master/Cargo.toml"
     },
 
@@ -300,19 +302,27 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/mush/master/Cargo.toml"
     },
 
+    "gfx_core": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml",
+        "ignore-version": "0.3.0"
+    },
+
     "gfx": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/render/Cargo.toml",
+        "ignore-version": "0.11.0"
     },
 
     "gfx_device_gl": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml",
+        "ignore-version": "0.10.0"
     },
 
     "glium": {
-        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
+        "ignore-version": "0.14.0"
     },
 
-    "gl-rs": {
+    "gl": {
         "url": "https://raw.githubusercontent.com/bjz/gl-rs/master/gl/Cargo.toml"
     },
 
@@ -369,7 +379,8 @@
     },
 
     "sdl2_mixer": {
-        "url": "https://raw.githubusercontent.com/andelf/rust-sdl2_mixer/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/andelf/rust-sdl2_mixer/master/Cargo.toml",
+        "ignore-version": "0.17.0"
     },
 
     "gl": {
