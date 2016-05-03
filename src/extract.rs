@@ -47,18 +47,15 @@
 //! ```
 //!
 //! A new version of library B is available, but some work might be needed in A
-//! before releasing a new version. By listing "0.7.0" in the ignore-version
+//! before releasing a new version. By listing "0.8.0" in the ignore-version
 //! field, there will be no recommended update for A. This will also avoid
 //! further updates for libraries depending on A triggered by this version.
 //!
-//! However, if A breaks for other reasons, there will be update actions for
-//! libraries higher up in the dependency graph.
+//! This might cause unsoundness (see top level documentation) when done to
+//! a library that is not at the bottom of the dependency graph.
 //!
-//! The rule used for ignoring version is: If the package has not this version,
+//! The rule used for ignoring version is: If the package has this version,
 //! then filter it from dependency info.
-//!
-//! This might cause unsoundness (see top level documentation).
-//! Remember to remove ignore-version fields that are no longer needed.
 //!
 //! ### Override version
 //!
@@ -237,8 +234,12 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
             let mut package = try!(convert_cargo_toml(
                 &cargo_toml_data, &mut ignored)
                 .map_err(|_| format!("Could not convert Cargo.toml data for url `{}`", &extract.url)));
+            if extract.package != package.name {
+                return Err(format!("Wrong Cargo.toml: `{}` does not match `{}`",
+                                   extract.package, package.name));
+            }
             if let Some(ref ignore_version) = extract.ignore_version {
-                if ignore_version != &package.version { return Ok(()); }
+                if ignore_version == &package.version { return Ok(()); }
             }
             if let Some(ref override_version) = extract.override_version {
                 package.version = override_version.clone();
