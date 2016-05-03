@@ -34,6 +34,7 @@
 //! - url (the url to the raw Cargo.toml data)
 //! - ignore-version (don't update projects using this version)
 //! - override-version (replace version extracted from Cargo.toml)
+//! - ignore (ignore update of specific dependency version)
 //!
 //! ### Ignore version
 //!
@@ -64,6 +65,31 @@
 //!
 //! For example, a new library is published but the maintainer forgot
 //! to merge the changes into master.
+//!
+//! ### Ignore
+//!
+//! The ignore field specifies a collection of dependency versions to ignore.
+//! This allows precise control over which dependencies to update.
+//!
+//! Example:
+//!
+//! ```text
+//! {
+//!     "piston2d-opengl_graphics": {
+//!         "url": "https://raw.githubusercontent.com/PistonDevelopers/opengl_graphics/master/Cargo.toml",
+//!         "ignore": {
+//!             "piston-shaders_graphics2d": "0.2.1"
+//!         }
+//!     }
+//! }
+//! ```
+//!
+//! This might cause unsoundess (see top level documentation) when some of
+//! the interface of the dependency is exposed in the interface of the library.
+//!
+//! The rule used for ignoring dependencies is:
+//! If there is a recommended update to this version,
+//! then filter it from update info.
 
 use piston_meta::MetaData;
 use piston_meta::bootstrap::Convert;
@@ -81,6 +107,8 @@ pub struct Extract {
     pub ignore_version: Option<Arc<String>>,
     /// Override package version.
     pub override_version: Option<Arc<String>>,
+    /// Ignore specific dependency versions.
+    pub ignore: Vec<(Arc<String>, Arc<String>)>,
 }
 
 impl Extract {
@@ -98,6 +126,7 @@ impl Extract {
         let mut url: Option<Arc<String>> = None;
         let mut ignore_version: Option<Arc<String>> = None;
         let mut override_version: Option<Arc<String>> = None;
+        let mut ignore: Vec<(Arc<String>, Arc<String>)> = vec![];
         loop {
             if let Ok(range) = convert.end_node(node) {
                 convert.update(range);
@@ -114,6 +143,9 @@ impl Extract {
             } else if let Ok((range, val)) = convert.meta_string("override_version") {
                 convert.update(range);
                 override_version = Some(val);
+            } else if let Ok((range, val)) = ignore_from_meta_data(convert, ignored) {
+                convert.update(range);
+                ignore = val;
             } else {
                 let range = convert.ignore();
                 convert.update(range);
@@ -128,8 +160,69 @@ impl Extract {
             url: url,
             ignore_version: ignore_version,
             override_version: override_version,
+            ignore: ignore,
         }))
     }
+}
+
+fn ignore_from_meta_data(
+    mut convert: Convert,
+    ignored: &mut Vec<Range>
+) -> Result<(Range, Vec<(Arc<String>, Arc<String>)>), ()> {
+    let start = convert.clone();
+    let node = "ignore";
+    let start_range = try!(convert.start_node(node));
+    convert.update(start_range);
+
+    let mut res: Vec<(Arc<String>, Arc<String>)> = vec![];
+    loop {
+        if let Ok(range) = convert.end_node(node) {
+            convert.update(range);
+            break;
+        } else if let Ok((range, val)) = dependency_from_meta_data(convert, ignored) {
+            convert.update(range);
+            res.push(val);
+        } else {
+            let range = convert.ignore();
+            convert.update(range);
+            ignored.push(range);
+        }
+    }
+
+    Ok((convert.subtract(start), res))
+}
+
+fn dependency_from_meta_data(
+    mut convert: Convert,
+    ignored: &mut Vec<Range>
+) -> Result<(Range, (Arc<String>, Arc<String>)), ()> {
+    let start = convert.clone();
+    let node = "dependency";
+    let start_range = try!(convert.start_node(node));
+    convert.update(start_range);
+
+    let mut package: Option<Arc<String>> = None;
+    let mut version: Option<Arc<String>> = None;
+    loop {
+        if let Ok(range) = convert.end_node(node) {
+            convert.update(range);
+            break;
+        } else if let Ok((range, val)) = convert.meta_string("package") {
+            convert.update(range);
+            package = Some(val);
+        } else if let Ok((range, val)) = convert.meta_string("version") {
+            convert.update(range);
+            version = Some(val);
+        } else {
+            let range = convert.ignore();
+            convert.update(range);
+            ignored.push(range);
+        }
+    }
+
+    let package = try!(package.ok_or(()));
+    let version = try!(version.ok_or(()));
+    Ok((convert.subtract(start), (package, version)))
 }
 
 /// Loads a text file from url.
@@ -243,6 +336,18 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
             }
             if let Some(ref override_version) = extract.override_version {
                 package.version = override_version.clone();
+            }
+            for &(ref name, ref version) in &extract.ignore {
+                for dep in &mut package.dependencies {
+                    if &**dep.name == &**name {
+                        dep.ignore_version = Some(version.clone());
+                    }
+                }
+                for dep in &mut package.dev_dependencies {
+                    if &**dep.name == &**name {
+                        dep.ignore_version = Some(version.clone());
+                    }
+                }
             }
             package_data.lock().unwrap().push(package);
             Ok(())

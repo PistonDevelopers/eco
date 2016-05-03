@@ -1,6 +1,10 @@
+3 ignore_dependency = [.t!:"package" .w? ":" .w? .t!:"version"]
+2 ignore = ["{" .w? .s?([.w? "," .w?]
+    ignore_dependency:"dependency") .w? "}"]
 1 library = [.t!:"package" .w? ":" .w? "{" .w? .s?([.w? "," .w?] {
     ["\"url\"" .w? ":" .w? .t!:"url"]
     ["\"ignore-version\"" .w? ":" .w? .t!:"ignore_version"]
     ["\"override-version\"" .w? ":" .w? .t!:"override_version"]
+    ["\"ignore\"" .w? ":" .w? ignore:"ignore"]
 }) .w? "}"]
 0 document = [.w? "{" .w? .s?([.w? "," .w?] [library:"library" .w?]) "}" .w?]

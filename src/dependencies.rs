@@ -12,6 +12,28 @@ pub fn write<W: Write>(
     package_data: &[Package],
     w: &mut W
 ) -> Result<(), io::Error> {
+    let write_dep = |w: &mut W, dependency: &Dependency, has_next: bool| -> Result<(), io::Error> {
+        try!(write!(w, "   "));
+        try!(json::write_string(w, &dependency.name));
+        try!(writeln!(w, ": {{"));
+        // Version.
+        try!(write!(w, "    \"version\": "));
+        try!(json::write_string(w, &dependency.version));
+        if let Some(ref ignore_version) = dependency.ignore_version {
+            try!(writeln!(w, ","));
+            try!(write!(w, "    \"ignore-version\": "));
+            try!(json::write_string(w, ignore_version));
+        }
+        try!(writeln!(w, ""));
+        try!(write!(w, "   }}"));
+        if has_next {
+            try!(writeln!(w, ","));
+        } else {
+            try!(writeln!(w, ""));
+        }
+        Ok(())
+    };
+
     try!(writeln!(w, "{{"));
     let n0 = package_data.len();
     for (i0, package) in package_data.iter().enumerate() {
@@ -29,19 +51,7 @@ pub fn write<W: Write>(
         try!(writeln!(w, "  \"dependencies\": {{"));
         let n1 = package.dependencies.len();
         for (i1, dependency) in package.dependencies.iter().enumerate() {
-            try!(write!(w, "   "));
-            try!(json::write_string(w, &dependency.name));
-            try!(writeln!(w, ": {{"));
-            // Version.
-            try!(write!(w, "    \"version\": "));
-            try!(json::write_string(w, &dependency.version));
-            try!(writeln!(w, ""));
-            try!(write!(w, "   }}"));
-            if i1 + 1 != n1 {
-                try!(writeln!(w, ","));
-            } else {
-                try!(writeln!(w, ""));
-            }
+            try!(write_dep(w, dependency, i1 + 1 != n1));
         }
         try!(writeln!(w, "  }},"));
 
@@ -49,19 +59,7 @@ pub fn write<W: Write>(
         try!(writeln!(w, "  \"dev-dependencies\": {{"));
         let n1 = package.dev_dependencies.len();
         for (i1, dependency) in package.dev_dependencies.iter().enumerate() {
-            try!(write!(w, "   "));
-            try!(json::write_string(w, &dependency.name));
-            try!(writeln!(w, ": {{"));
-            // Version.
-            try!(write!(w, "    \"version\": "));
-            try!(json::write_string(w, &dependency.version));
-            try!(writeln!(w, ""));
-            try!(write!(w, "   }}"));
-            if i1 + 1 != n1 {
-                try!(writeln!(w, ","));
-            } else {
-                try!(writeln!(w, ""));
-            }
+            try!(write_dep(w, dependency, i1 + 1 != n1));
         }
         try!(writeln!(w, "  }}"));
 
@@ -168,6 +166,8 @@ pub struct Dependency {
     pub name: Arc<String>,
     /// The semver version of the library.
     pub version: Arc<String>,
+    /// A version to ignore.
+    pub ignore_version: Option<Arc<String>>,
 }
 
 impl Dependency {
@@ -183,6 +183,7 @@ impl Dependency {
 
         let mut name: Option<Arc<String>> = None;
         let mut version: Option<Arc<String>> = None;
+        let mut ignore_version: Option<Arc<String>> = None;
         loop {
             if let Ok(range) = convert.end_node(node) {
                 convert.update(range);
@@ -193,6 +194,9 @@ impl Dependency {
             } else if let Ok((range, val)) = convert.meta_string("version") {
                 convert.update(range);
                 version = Some(val);
+            } else if let Ok((range, val)) = convert.meta_string("ignore-version") {
+                convert.update(range);
+                ignore_version = Some(val);
             } else {
                 let range = convert.ignore();
                 convert.update(range);
@@ -204,7 +208,8 @@ impl Dependency {
         let version = try!(version.ok_or(()));
         Ok((convert.subtract(start), Dependency {
             name: name,
-            version: version
+            version: version,
+            ignore_version: ignore_version
         }))
     }
 }

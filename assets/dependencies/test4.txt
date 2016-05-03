@@ -1,0 +1,11 @@
+{
+    "pistoncore-input": {
+        "version": "0.4.0",
+        "dependencies": {
+            "bitflags": {
+                "version": "0.6.0",
+                "ignore-version": "0.7.0"
+            }
+        }
+    }
+}
