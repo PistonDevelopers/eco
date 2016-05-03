@@ -300,29 +300,12 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/mush/master/Cargo.toml"
     },
 
-    "gfx_meta": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/Cargo.toml"
-    },
-
     "gfx": {
         "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml"
     },
 
     "gfx_device_gl": {
         "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml"
-    },
-
-    "gfx_window_glutin": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/glutin/Cargo.toml"
-    },
-
-    "gfx_window_glfw": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/window/glfw/Cargo.toml"
-    },
-
-    "draw_state": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml",
-        "ignore-version": "0.2.0"
     },
 
     "glium": {

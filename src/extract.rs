@@ -33,6 +33,7 @@
 //!
 //! - url (the url to the raw Cargo.toml data)
 //! - ignore-version (don't update projects using this version)
+//! - override-version (replace version extracted from Cargo.toml)
 //!
 //! ### Ignore version
 //!
@@ -45,7 +46,7 @@
 //! A (uses B 0.7.0) -> B (0.8.0)
 //! ```
 //!
-//! A new version of library B is available, but some work might needed in A
+//! A new version of library B is available, but some work might be needed in A
 //! before releasing a new version. By listing "0.7.0" in the ignore-version
 //! field, there will be no recommended update for A. This will also avoid
 //! further updates for libraries depending on A triggered by this version.
@@ -58,6 +59,14 @@
 //!
 //! This might cause unsoundness (see top level documentation).
 //! Remember to remove ignore-version fields that are no longer needed.
+//!
+//! ### Override version
+//!
+//! The override-version field replaces the version extracted from
+//! Cargo.toml with another version.
+//!
+//! For example, a new library is published but the maintainer forgot
+//! to merge the changes into master.
 
 use piston_meta::MetaData;
 use piston_meta::bootstrap::Convert;
