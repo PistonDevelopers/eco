@@ -304,6 +304,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                     &dep.version, &dep.name, &package.name)));
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
+                if let Some(ref ignore_version) = dep.ignore_version {
+                    // Ignore update to a specific version.
+                    if &new_version.to_string() == &**ignore_version { continue; }
+                }
                 update_dependencies.push(Dependency {
                         name: dep.name.clone(),
                         bump: Bump {
@@ -353,6 +357,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                     &dep.version, &dep.name, &package.name)));
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
+                if let Some(ref ignore_version) = dep.ignore_version {
+                    // Ignore update to a specific version.
+                    if &new_version.to_string() == &**ignore_version { continue; }
+                }
                 update_package.dev_dependencies.push(Dependency {
                         name: dep.name.clone(),
                         bump: Bump {

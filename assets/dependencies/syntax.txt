@@ -1,5 +1,8 @@
 0 , = [.w? "," .w?]
-1 dependency = [.t!:"name" .w? ":" .w? "{" .w? "\"version\"" .w? ":" .w? .t!:"version" .w? "}"]
+1 dependency = [.t!:"name" .w? ":" .w? "{" .w? .s?(, {
+    ["\"version\"" .w? ":" .w? .t!:"version"]
+    ["\"ignore-version\"" .w? ":" .w? .t!:"ignore-version"]
+}) .w? "}"]
 1 package = [.t!:"name" .w? ":" .w? "{" .w? .s?(, {
     ["\"version\"" .w? ":" .w? .t!:"version"]
     ["\"dependencies\"" .w? ":" .w? "{" .w? .s?(, dependency:"dependency") .w? "}"]

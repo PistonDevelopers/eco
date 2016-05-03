@@ -1,0 +1,8 @@
+{
+    "piston2d-opengl_graphics": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/opengl_graphics/master/Cargo.toml",
+        "ignore": {
+            "piston-shaders_graphics2d": "0.2.1"
+        }
+    },
+}
