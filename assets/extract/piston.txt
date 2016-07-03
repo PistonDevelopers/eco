@@ -306,7 +306,10 @@
     },
 
     "draw_state": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml",
+        "ignore": {
+            "bitflags": "0.7.0"
+        }
     },
 
     "gfx_core": {
