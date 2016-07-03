@@ -206,8 +206,7 @@
     },
 
     "freetype-rs": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/freetype-rs/master/Cargo.toml",
-        "ignore-version": "0.7.0"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/freetype-rs/master/Cargo.toml"
     },
 
     "freetype-sys": {
@@ -223,8 +222,7 @@
     },
 
     "sdl2": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
-        "ignore-version": "0.18.0"
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml"
     },
 
     "sdl2-sys": {
@@ -249,7 +247,6 @@
 
     "hematite_server": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_server/master/Cargo.toml",
-        "ignore-version": "0.0.1"
     },
 
     "fps_counter": {
@@ -277,7 +274,7 @@
     },
 
     "gfx_text": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_text/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_text/master/Cargo.toml",
     },
 
     "resources_package": {
@@ -293,7 +290,7 @@
     },
 
     "piston-music": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/music/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/music/master/Cargo.toml",
     },
 
     "collada": {
@@ -308,24 +305,24 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/mush/master/Cargo.toml"
     },
 
+    "draw_state": {
+        "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml"
+    },
+
     "gfx_core": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml",
-        "ignore-version": "0.3.0"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml"
     },
 
     "gfx": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/render/Cargo.toml",
-        "ignore-version": "0.11.0"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/render/Cargo.toml"
     },
 
     "gfx_device_gl": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml",
-        "ignore-version": "0.10.0"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml"
     },
 
     "glium": {
-        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
-        "ignore-version": "0.14.0"
+        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml"
     },
 
     "gl": {
@@ -385,8 +382,7 @@
     },
 
     "sdl2_mixer": {
-        "url": "https://raw.githubusercontent.com/andelf/rust-sdl2_mixer/master/Cargo.toml",
-        "ignore-version": "0.17.0"
+        "url": "https://raw.githubusercontent.com/andelf/rust-sdl2_mixer/master/Cargo.toml"
     },
 
     "gl": {
