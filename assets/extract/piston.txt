@@ -323,15 +323,18 @@
     },
 
     "gfx_core": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml",
+        "override-version": "0.4.0"
     },
 
     "gfx": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/render/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/render/Cargo.toml",
+        "override-version": "0.12.0"
     },
 
     "gfx_device_gl": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml",
+        "override-version": "0.11.0"
     },
 
     "glium": {
