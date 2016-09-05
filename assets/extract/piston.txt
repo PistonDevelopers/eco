@@ -357,7 +357,7 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/freetype/Cargo.toml"
     },
 
-    "getting-started-spinning-square": {
+    "spinning-square": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/Piston-Tutorials/master/getting-started/Cargo.toml"
     },
 
