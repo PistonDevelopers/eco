@@ -51,6 +51,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/graphics/master/Cargo.toml"
     },
 
+    "piston2d-graphics_tree": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/graphics_tree/master/Cargo.toml"
+    },
+
     "piston-texture": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/texture/master/Cargo.toml"
     },
