@@ -31,10 +31,6 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/editor/master/Cargo.toml"
     },
 
-    "turbine": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/turbine/master/Cargo.toml"
-    },
-
     "pistoncore-glutin_window": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml"
     },
@@ -218,7 +214,7 @@
     },
 
     "glutin": {
-        "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml",
+        "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml"
     },
 
     "glfw": {
@@ -227,8 +223,10 @@
 
     "sdl2": {
         "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
+        "override-version": "0.25.0",
         "ignore": {
-            "bitflags": "0.7.0"
+            "bitflags": "0.7.0",
+            "sdl2-sys": "0.25.0"
         }
     },
 
@@ -240,7 +238,8 @@
     },
 
     "sdl2-sys": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/sdl2-sys/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/sdl2-sys/Cargo.toml",
+        "override-version": "0.25.0"
     },
 
     "piston-gfx_texture": {
@@ -315,10 +314,6 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/wavefront_obj/master/Cargo.toml"
     },
 
-    "mush": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/mush/master/Cargo.toml"
-    },
-
     "draw_state": {
         "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml",
         "ignore": {
@@ -342,7 +337,10 @@
     },
 
     "glium": {
-        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
+        "ignore": {
+          "glutin": "0.7.0"
+        }
     },
 
     "gl": {
