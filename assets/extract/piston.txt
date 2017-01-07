@@ -201,6 +201,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/color_quant/master/Cargo.toml"
     },
 
+    "dyon": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/dyon/master/Cargo.toml"
+    },
+
     "find_folder": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/find_folder/master/Cargo.toml"
     },
@@ -339,7 +343,7 @@
     "glium": {
         "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
         "ignore": {
-          "glutin": "0.7.0"
+          "glutin": "0.7.1"
         }
     },
 
