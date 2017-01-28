@@ -1,0 +1,20 @@
+{
+    "glutin": {
+        "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml"
+    },
+    "cocoa": {
+        "url": "https://raw.githubusercontent.com/servo/cocoa-rs/master/Cargo.toml"
+    },
+    "core-graphics": {
+        "url": "https://raw.githubusercontent.com/servo/core-graphics-rs/master/Cargo.toml"
+    },
+    "core-foundation": {
+        "url": "https://raw.githubusercontent.com/servo/core-foundation-rs/master/core-foundation/Cargo.toml"
+    },
+    "core-foundation-sys": {
+        "url": "https://raw.githubusercontent.com/servo/core-foundation-rs/master/core-foundation-sys/Cargo.toml"
+    },
+    "winit": {
+        "url": "https://raw.githubusercontent.com/tomaka/winit/master/Cargo.toml"
+    }
+}
