@@ -89,6 +89,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/button_tracker/master/Cargo.toml"
     },
 
+    "piston-button_controller": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/button_controller/master/Cargo.toml"
+    },
+
     "piston-timer_controller": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/timer_controller/master/Cargo.toml"
     },
