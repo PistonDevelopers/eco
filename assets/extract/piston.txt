@@ -93,6 +93,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/button_controller/master/Cargo.toml"
     },
 
+    "piston2d-touch_visualizer": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/touch_visualizer/master/Cargo.toml"
+    },
+
     "piston-timer_controller": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/timer_controller/master/Cargo.toml"
     },
