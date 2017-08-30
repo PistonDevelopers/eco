@@ -12,7 +12,13 @@
     ["version" ?w "=" ?w .t!:"version" ?w]
     [!"#" .."="? ?w "=" ?w ..."\n"? ?w]
 })]
-4 dependency_list_item = [!"#" .."="!:"name" ?w "=" ?w .t!:"version" ?w]
+4 dependency_list_item = [!"#" .."="!:"name" ?w "=" ?w {
+  ["{" ?w .s?.([.w? "," .w?] {
+    ["version" ?w "=" ?w .t!:"version"]
+    [...",}"!]
+  }) ?w "}"]
+  .t!:"version"
+} ?w]
 5 dependency_list = ["[dependencies]" ?w .l({
     dependency_list_item:"dependency"
 })]
