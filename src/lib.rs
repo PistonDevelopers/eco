@@ -124,6 +124,8 @@ mod tests {
             "assets/cargo-toml/test2.txt");
         let _data = load_syntax_data("assets/cargo-toml/syntax.txt",
             "assets/cargo-toml/test3.txt");
+        let _data = load_syntax_data("assets/cargo-toml/syntax.txt",
+            "assets/cargo-toml/test4.txt");
         // json::print(&_data);
     }
 
