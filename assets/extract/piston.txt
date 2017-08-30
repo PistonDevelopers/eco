@@ -202,7 +202,10 @@
     },
 
     "png": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-png/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-png/master/Cargo.toml",
+        "ignore": {
+          "inflate": "0.3.0"
+        }
     },
 
     "inflate": {
@@ -238,7 +241,10 @@
     },
 
     "sdl2": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
+        "ignore": {
+            "bitflags": "0.9.1"
+        }
     },
 
     "piston-gfx_texture": {
@@ -316,12 +322,15 @@
     "draw_state": {
         "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml",
         "ignore": {
-            "bitflags": "0.7.0"
+            "bitflags": "0.9.1"
         }
     },
 
     "gfx_core": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml",
+        "ignore": {
+          "bitflags": "0.9.1"
+        }
     },
 
     "gfx": {
@@ -335,7 +344,8 @@
     "glium": {
         "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
         "ignore": {
-          "glutin": "0.7.1"
+          "glutin": "0.8.0",
+          "image": "0.13.0"
         }
     },
 
