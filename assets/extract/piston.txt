@@ -32,7 +32,10 @@
     },
 
     "pistoncore-glutin_window": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml",
+        "ignore": {
+            "glutin": "0.10.0"
+        }
     },
 
     "pistoncore-sdl2_window": {
@@ -224,6 +227,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/dyon/master/Cargo.toml"
     },
 
+    "piston-dyon_interactive": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/dyon/master/interactive/Cargo.toml"
+    },
+
     "find_folder": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/find_folder/master/Cargo.toml"
     },
@@ -326,35 +333,35 @@
     "draw_state": {
         "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml",
         "ignore": {
-            "bitflags": "0.9.1"
+            "bitflags": "1.0.0"
         }
     },
 
     "gfx_core": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/core/Cargo.toml",
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/pre-ll/src/core/Cargo.toml",
         "ignore": {
-          "bitflags": "0.9.1"
+          "bitflags": "1.0.0"
         }
     },
 
     "gfx": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/render/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/pre-ll/src/render/Cargo.toml"
     },
 
     "gfx_device_gl": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/master/src/backend/gl/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/pre-ll/src/backend/gl/Cargo.toml"
     },
 
     "glium": {
         "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
         "ignore": {
-          "glutin": "0.8.0",
-          "image": "0.13.0"
+          "glutin": "0.10.0",
+          "image": "0.16.0"
         }
     },
 
     "gl": {
-        "url": "https://raw.githubusercontent.com/bjz/gl-rs/master/gl/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/brendanzab/gl-rs/master/gl/Cargo.toml"
     },
 
     "piston-examples": {
