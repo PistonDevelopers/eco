@@ -46,6 +46,17 @@ Because Eco might be used for automation in the future, the algorithms are based
 When something goes wrong, it should be known what error might have caused it.
 This is necessary to use it with other tools, so the overall behavior can be reasoned about.
 
+### OpenSSL issues on macOS
+
+On macOS, if you use Homebrew or MacPorts to install OpenSSL, you may need to add the following lines
+to your `.bash_profile` to resolve compile-time errors:
+
+```
+export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
+export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
+export DEP_OPENSSL_INCLUDE=`brew --prefix openssl`/include
+```
+
 ## License
 
 Licensed under either of
