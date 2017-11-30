@@ -150,6 +150,12 @@ mod tests {
         // json::print(&_data);
     }
 
+    #[test]
+    fn parse_version() {
+        let res = ::update::parse_version(">= 1.0, <= 1.3");
+        assert!(res.is_ok());
+    }
+
     /*
     #[test]
     fn from_url() {

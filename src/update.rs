@@ -122,6 +122,44 @@ pub struct Package {
     pub dev_dependencies: Vec<Dependency>,
 }
 
+/// Tries appending zero to version to make it parse.
+/// Ignores extra information after `,`.
+pub fn parse_version(text: &str) -> Result<Version, semver::SemVerError> {
+    // Ignore `>=`.
+    let mut text = if text.starts_with(">=") {
+        &text[2..]
+    } else if text.starts_with("^") {
+        &text[1..]
+    } else if text.starts_with("=") {
+        &text[1..]
+    } else {
+        text
+    };
+
+    // Ignore extra information after `,`.
+    for ch in text.char_indices() {
+        if ch.1 == ',' {
+            text = &text[..ch.0];
+        }
+    }
+
+    let text = {
+        let n = text.len();
+        if text.ends_with(".*") {
+            &text[..n - 2]
+        } else {
+            text
+        }
+    };
+    match Version::parse(text) {
+        Err(_) => {
+            let append_zero = format!("{}.0", text);
+            Version::parse(&append_zero)
+        }
+        x => x
+    }
+}
+
 /// Generates update info.
 pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String> {
     use piston_meta::*;
@@ -150,35 +188,6 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 new_depth
             }
             Some(x) => x
-        }
-    }
-
-    // Tries appending zero to version to make it parse.
-    fn parse_version(text: &str) -> Result<Version, semver::SemVerError> {
-        // Ignore `>=`.
-        let text = if text.starts_with(">=") {
-            &text[2..]
-        } else if text.starts_with("^") {
-            &text[1..]
-        } else if text.starts_with("=") {
-            &text[1..]
-        } else {
-            text
-        };
-        let text = {
-            let n = text.len();
-            if text.ends_with(".*") {
-                &text[..n - 2]
-            } else {
-                text
-            }
-        };
-        match Version::parse(text) {
-            Err(_) => {
-                let append_zero = format!("{}.0", text);
-                Version::parse(&append_zero)
-            }
-            x => x
         }
     }
 
