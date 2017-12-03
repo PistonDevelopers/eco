@@ -245,7 +245,10 @@
     },
 
     "glutin": {
-        "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml",
+        "ignore": {
+          "lazy_static": "1.0.0"
+        }
     },
 
     "glfw": {
@@ -255,7 +258,8 @@
     "sdl2": {
         "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
         "ignore": {
-            "bitflags": "1.0.0"
+            "bitflags": "1.0.0",
+            "lazy_static": "1.0.0"
         }
     },
 
@@ -356,7 +360,8 @@
     "glium": {
         "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
         "ignore": {
-          "image": "0.16.0"
+          "image": "0.16.0",
+          "lazy_static": "1.0.0"
         }
     },
 
