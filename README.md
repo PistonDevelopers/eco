@@ -57,6 +57,16 @@ export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
 export DEP_OPENSSL_INCLUDE=`brew --prefix openssl`/include
 ```
 
+## Making pull requests
+
+Prior to making a pull request on eco, make sure that you have `cargo fmt` against the
+codebase. Instructions to install `rustfmt` can be found [here](https://github.com/rust-lang-nursery/rustfmt).
+Ensure that you are installing the nightly version, since there is currently an effort
+to port `rustfmt` away from the `syntex` crate, and `rustfmt-nightly` is the latest version.
+
+Unfortunately, this also means that you will have to switch over to nightly prior to
+running `cargo fmt` against the codebase.
+
 ## License
 
 Licensed under either of
