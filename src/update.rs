@@ -2,17 +2,14 @@
 
 use std::sync::Arc;
 use std::collections::HashMap;
-use std::io::{ self, Write };
+use std::io::{self, Write};
 
-use semver::{ self, Version };
+use semver::{self, Version};
 
 use dependencies;
 
 /// Writes update info.
-pub fn write<W: Write>(
-    update_packages: &[Package],
-    w: &mut W
-) -> Result<(), io::Error> {
+pub fn write<W: Write>(update_packages: &[Package], w: &mut W) -> Result<(), io::Error> {
     use piston_meta::json;
 
     try!(writeln!(w, "{{"));
@@ -26,10 +23,16 @@ pub fn write<W: Write>(
         // Bump package.
         try!(writeln!(w, "    \"bump\": {{"));
         try!(write!(w, "      \"old\": "));
-        try!(json::write_string(w, &format!("{}", update_package.bump.old)));
+        try!(json::write_string(
+            w,
+            &format!("{}", update_package.bump.old)
+        ));
         try!(writeln!(w, ","));
         try!(write!(w, "      \"new\": "));
-        try!(json::write_string(w, &format!("{}", update_package.bump.new)));
+        try!(json::write_string(
+            w,
+            &format!("{}", update_package.bump.new)
+        ));
         try!(writeln!(w, ""));
         try!(writeln!(w, "    }},"));
 
@@ -125,7 +128,7 @@ pub struct Package {
 /// Tries appending zero to version to make it parse.
 /// Ignores extra information after `,`.
 pub fn parse_version(text: &str) -> Result<Version, semver::SemVerError> {
-    let text = if text == "1" {"1.0"} else {text};
+    let text = if text == "1" { "1.0" } else { text };
 
     // Ignore `>=`.
     let mut text = if text.starts_with(">=") {
@@ -158,7 +161,7 @@ pub fn parse_version(text: &str) -> Result<Version, semver::SemVerError> {
             let append_zero = format!("{}.0", text);
             Version::parse(&append_zero)
         }
-        x => x
+        x => x,
     }
 }
 
@@ -174,22 +177,28 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         package_index: PackageIndex,
         package_indices: &HashMap<Arc<String>, PackageIndex>,
         depths: &mut HashMap<PackageIndex, Depth>,
-        dependencies_data: &[dependencies::Package]
+        dependencies_data: &[dependencies::Package],
     ) -> Depth {
         let package = &dependencies_data[package_index];
         let d = depths.get(&package_index).map(|d| *d);
         match d {
             None => {
                 // The depth of a package equals maximum depth of the dependencies + 1.
-                let new_depth: Depth = package.dependencies.iter().map(|dep| {
-                        package_indices.get(&dep.name).map(|&p| {
-                                depth_of(p, package_indices, depths, dependencies_data)
-                            }).unwrap_or(0)
-                    }).max().unwrap_or(0) + 1;
+                let new_depth: Depth = package
+                    .dependencies
+                    .iter()
+                    .map(|dep| {
+                        package_indices
+                            .get(&dep.name)
+                            .map(|&p| depth_of(p, package_indices, depths, dependencies_data))
+                            .unwrap_or(0)
+                    })
+                    .max()
+                    .unwrap_or(0) + 1;
                 depths.insert(package_index, new_depth);
                 new_depth
             }
-            Some(x) => x
+            Some(x) => x,
         }
     }
 
@@ -200,45 +209,62 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
     // Returns true if two different versions means a breaking change.
     fn breaks(a: &Version, b: &Version) -> bool {
-        if a.major != b.major { true }
-        else if a.major != 0 { false }
-        else if a.minor != b.minor { true }
-        else if a.minor != 0 { false }
-        else if a.patch != b.patch { true }
-        else { false }
+        if a.major != b.major {
+            true
+        } else if a.major != 0 {
+            false
+        } else if a.minor != b.minor {
+            true
+        } else if a.minor != 0 {
+            false
+        } else if a.patch != b.patch {
+            true
+        } else {
+            false
+        }
     }
 
     // Increment first non-zero number.
     fn increment_version(version: &mut Version) {
-        if version.major != 0 { version.increment_major(); }
-        else if version.minor != 0 { version.increment_minor(); }
-        else { version.increment_patch(); }
+        if version.major != 0 {
+            version.increment_major();
+        } else if version.minor != 0 {
+            version.increment_minor();
+        } else {
+            version.increment_patch();
+        }
     }
 
     // Parse and convert to dependencies data.
     let dependencies_meta_syntax = include_str!("../assets/dependencies/syntax.txt");
-    let dependencies_meta_rules = stderr_unwrap(dependencies_meta_syntax,
-        syntax(dependencies_meta_syntax));
+    let dependencies_meta_rules =
+        stderr_unwrap(dependencies_meta_syntax, syntax(dependencies_meta_syntax));
     let mut dependency_info_meta_data = vec![];
-    stderr_unwrap(dependency_info,
-        parse(&dependencies_meta_rules,
-              dependency_info,
-              &mut dependency_info_meta_data));
+    stderr_unwrap(
+        dependency_info,
+        parse(
+            &dependencies_meta_rules,
+            dependency_info,
+            &mut dependency_info_meta_data,
+        ),
+    );
     let mut ignored = vec![];
-    let dependencies_data = try!(dependencies::convert(
-        &dependency_info_meta_data, &mut ignored)
-        .map_err(|_| String::from("Could not convert dependency info")));
+    let dependencies_data = try!(
+        dependencies::convert(&dependency_info_meta_data, &mut ignored)
+            .map_err(|_| String::from("Could not convert dependency info"))
+    );
 
     // Stores the package indices using package name as key.
-    let package_indices: HashMap<Arc<String>, PackageIndex> =
-        HashMap::from_iter(dependencies_data.iter().enumerate().map(
-            |(i, p)| {
-                (p.name.clone(), i)
-            }));
+    let package_indices: HashMap<Arc<String>, PackageIndex> = HashMap::from_iter(
+        dependencies_data
+            .iter()
+            .enumerate()
+            .map(|(i, p)| (p.name.clone(), i)),
+    );
 
     // Store the depths of libraries.
     let mut depths: HashMap<PackageIndex, Depth> = HashMap::new();
-    for i in 0 .. dependencies_data.len() {
+    for i in 0..dependencies_data.len() {
         let _depth = depth_of(i, &package_indices, &mut depths, &dependencies_data);
     }
 
@@ -246,11 +272,14 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
     for package in &dependencies_data {
         // Get latest version used by any dependency.
         for dep in &package.dependencies {
-            if ignore_version(&dep.version) { continue; }
+            if ignore_version(&dep.version) {
+                continue;
+            }
 
-            let version = try!(parse_version(&dep.version)
-                .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
-                    &dep.version, &dep.name, &package.name)));
+            let version = try!(parse_version(&dep.version).map_err(|_| format!(
+                "Could not parse version `{}` for dependency `{}` in `{}`",
+                &dep.version, &dep.name, &package.name
+            )));
             let v = new_versions.get(&dep.name).map(|v| v.clone());
             match v {
                 None => {
@@ -266,11 +295,14 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
         // Get latest version used by any dev dependency.
         for dep in &package.dev_dependencies {
-            if ignore_version(&dep.version) { continue; }
+            if ignore_version(&dep.version) {
+                continue;
+            }
 
-            let version = try!(parse_version(&dep.version)
-                .map_err(|_| format!("Could not parse version `{}` for dev dependency `{}` in `{}`",
-                    &dep.version, &dep.name, &package.name)));
+            let version = try!(parse_version(&dep.version).map_err(|_| format!(
+                "Could not parse version `{}` for dev dependency `{}` in `{}`",
+                &dep.version, &dep.name, &package.name
+            )));
             let v = new_versions.get(&dep.name).map(|v| v.clone());
             match v {
                 None => {
@@ -287,9 +319,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
     // Overwrite the versions used by packages.
     for package in &dependencies_data {
-        let version = try!(Version::parse(&package.version)
-            .map_err(|_| format!("Could not parse version `{}` for `{}`",
-                &package.version, &package.name)));
+        let version = try!(Version::parse(&package.version).map_err(|_| format!(
+            "Could not parse version `{}` for `{}`",
+            &package.version, &package.name
+        )));
         new_versions.insert(package.name.clone(), version);
     }
 
@@ -306,48 +339,56 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
         // Find dependencies that needs update.
         for dep in &package.dependencies {
-            if ignore_version(&dep.version) { continue; }
+            if ignore_version(&dep.version) {
+                continue;
+            }
             // Do not generate update info for dependencies starting with `>=`.
-            if dep.version.starts_with(">=") { continue; }
+            if dep.version.starts_with(">=") {
+                continue;
+            }
 
-            let old_version = try!(parse_version(&dep.version)
-                .map_err(|_| format!("Could not parse version `{}` for dependency `{}` in `{}`",
-                    &dep.version, &dep.name, &package.name)));
+            let old_version = try!(parse_version(&dep.version).map_err(|_| format!(
+                "Could not parse version `{}` for dependency `{}` in `{}`",
+                &dep.version, &dep.name, &package.name
+            )));
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
                 if let Some(ref ignore_version) = dep.ignore_version {
                     // Ignore update to a specific version.
-                    if &new_version.to_string() == &**ignore_version { continue; }
+                    if &new_version.to_string() == &**ignore_version {
+                        continue;
+                    }
                 }
                 update_dependencies.push(Dependency {
-                        name: dep.name.clone(),
-                        bump: Bump {
-                            old: old_version,
-                            new: new_version.clone(),
-                        }
-                    });
+                    name: dep.name.clone(),
+                    bump: Bump {
+                        old: old_version,
+                        new: new_version.clone(),
+                    },
+                });
             }
         }
 
         // If any dependency needs update, then the package needs update.
         if update_dependencies.len() > 0 {
-            let old_version = try!(Version::parse(&package.version)
-                .map_err(|_| format!("Could not parse version `{}` for `{}`",
-                    &package.version, &package.name)));
+            let old_version = try!(Version::parse(&package.version).map_err(|_| format!(
+                "Could not parse version `{}` for `{}`",
+                &package.version, &package.name
+            )));
             let new_version = new_versions.get_mut(&package.name).unwrap();
             if *new_version == old_version {
                 increment_version(new_version);
             }
             update_packages.push(Package {
-                    name: package.name.clone(),
-                    order: order,
-                    bump: Bump {
-                        old: old_version,
-                        new: new_version.clone(),
-                    },
-                    dependencies: update_dependencies,
-                    dev_dependencies: vec![],
-                });
+                name: package.name.clone(),
+                order: order,
+                bump: Bump {
+                    old: old_version,
+                    new: new_version.clone(),
+                },
+                dependencies: update_dependencies,
+                dev_dependencies: vec![],
+            });
         }
     }
 
@@ -359,26 +400,33 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         let package = &dependencies_data[package_index];
 
         for dep in &package.dev_dependencies {
-            if ignore_version(&dep.version) { continue; }
+            if ignore_version(&dep.version) {
+                continue;
+            }
             // Do not generate update info for dependencies starting with `>=`.
-            if dep.version.starts_with(">=") { continue; }
+            if dep.version.starts_with(">=") {
+                continue;
+            }
 
-            let old_version = try!(parse_version(&dep.version)
-                .map_err(|_| format!("Could not parse version `{}` for dev dependency `{}` in `{}`",
-                    &dep.version, &dep.name, &package.name)));
+            let old_version = try!(parse_version(&dep.version).map_err(|_| format!(
+                "Could not parse version `{}` for dev dependency `{}` in `{}`",
+                &dep.version, &dep.name, &package.name
+            )));
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
                 if let Some(ref ignore_version) = dep.ignore_version {
                     // Ignore update to a specific version.
-                    if &new_version.to_string() == &**ignore_version { continue; }
+                    if &new_version.to_string() == &**ignore_version {
+                        continue;
+                    }
                 }
                 update_package.dev_dependencies.push(Dependency {
-                        name: dep.name.clone(),
-                        bump: Bump {
-                            old: old_version,
-                            new: new_version.clone(),
-                        }
-                    });
+                    name: dep.name.clone(),
+                    bump: Bump {
+                        old: old_version,
+                        new: new_version.clone(),
+                    },
+                });
             }
         }
     }
