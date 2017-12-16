@@ -1,17 +1,14 @@
 //! Dependency info.
 
 use range::Range;
-use piston_meta::{ json, MetaData };
+use piston_meta::{json, MetaData};
 use piston_meta::bootstrap::Convert;
 
 use std::sync::Arc;
-use std::io::{ self, Write };
+use std::io::{self, Write};
 
 /// Writes the dependency info.
-pub fn write<W: Write>(
-    package_data: &[Package],
-    w: &mut W
-) -> Result<(), io::Error> {
+pub fn write<W: Write>(package_data: &[Package], w: &mut W) -> Result<(), io::Error> {
     let write_dep = |w: &mut W, dependency: &Dependency, has_next: bool| -> Result<(), io::Error> {
         try!(write!(w, "   "));
         try!(json::write_string(w, &dependency.name));
@@ -76,10 +73,7 @@ pub fn write<W: Write>(
 }
 
 /// Converts from meta data to dependency information.
-pub fn convert(
-    data: &[Range<MetaData>],
-    ignored: &mut Vec<Range>
-) -> Result<Vec<Package>, ()> {
+pub fn convert(data: &[Range<MetaData>], ignored: &mut Vec<Range>) -> Result<Vec<Package>, ()> {
     let mut convert = Convert::new(data);
     let mut res = vec![];
     loop {
@@ -111,7 +105,7 @@ impl Package {
     /// Converts from meta data.
     pub fn from_meta_data(
         mut convert: Convert,
-        ignored: &mut Vec<Range>
+        ignored: &mut Vec<Range>,
     ) -> Result<(Range, Package), ()> {
         let start = convert.clone();
         let node = "package";
@@ -132,14 +126,14 @@ impl Package {
             } else if let Ok((range, val)) = convert.meta_string("version") {
                 convert.update(range);
                 version = Some(val);
-            } else if let Ok((range, dependency)) = Dependency::from_meta_data(
-                "dependency", convert, ignored
-            ) {
+            } else if let Ok((range, dependency)) =
+                Dependency::from_meta_data("dependency", convert, ignored)
+            {
                 convert.update(range);
                 dependencies.push(dependency);
-            } else if let Ok((range, dev_dependency)) = Dependency::from_meta_data(
-                "dev_dependency", convert, ignored
-            ) {
+            } else if let Ok((range, dev_dependency)) =
+                Dependency::from_meta_data("dev_dependency", convert, ignored)
+            {
                 convert.update(range);
                 dev_dependencies.push(dev_dependency);
             } else {
@@ -151,12 +145,15 @@ impl Package {
 
         let name = try!(name.ok_or(()));
         let version = try!(version.ok_or(()));
-        Ok((convert.subtract(start), Package {
-            name: name,
-            version: version,
-            dependencies: dependencies,
-            dev_dependencies: dev_dependencies,
-        }))
+        Ok((
+            convert.subtract(start),
+            Package {
+                name: name,
+                version: version,
+                dependencies: dependencies,
+                dev_dependencies: dev_dependencies,
+            },
+        ))
     }
 }
 
@@ -175,7 +172,7 @@ impl Dependency {
     pub fn from_meta_data(
         node: &str,
         mut convert: Convert,
-        ignored: &mut Vec<Range>
+        ignored: &mut Vec<Range>,
     ) -> Result<(Range, Dependency), ()> {
         let start = convert.clone();
         let start_range = try!(convert.start_node(node));
@@ -206,10 +203,13 @@ impl Dependency {
 
         let name = try!(name.ok_or(()));
         let version = try!(version.ok_or(()));
-        Ok((convert.subtract(start), Dependency {
-            name: name,
-            version: version,
-            ignore_version: ignore_version
-        }))
+        Ok((
+            convert.subtract(start),
+            Dependency {
+                name: name,
+                version: version,
+                ignore_version: ignore_version,
+            },
+        ))
     }
 }
