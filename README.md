@@ -1,4 +1,6 @@
 # eco
+[![Build Status](https://travis-ci.org/PistonDevelopers/eco.svg?branch=master)](https://travis-ci.org/PistonDevelopers/eco)
+
 A tool for reasoning about breaking changes in Rust ecosystems
 
 Eco processes custom JSON formats about Rust ecosystems.
