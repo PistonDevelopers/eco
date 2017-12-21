@@ -6,6 +6,8 @@ before_install:
 matrix:
   include:
   - rust: nightly
+    install:
+    - cargo install rustfmt-nightly -f
     script:
     - cargo fmt -- --write-mode="diff"
   - os: linux
