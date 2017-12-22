@@ -41,7 +41,7 @@
   "envelope": {
     "url": "https://raw.githubusercontent.com/RustAudio/envelope/master/Cargo.toml"
   },
-  "rust-jack": {
+  "jack": {
     "url": "https://raw.githubusercontent.com/RustAudio/rust-jack/master/Cargo.toml"
   },
   "musical_keyboard": {
