@@ -114,7 +114,6 @@ mod tests {
             "assets/dependencies/syntax.txt",
             "assets/dependencies/test4.txt",
         );
-        // json::print(&_data);
     }
 
     #[test]
@@ -132,7 +131,6 @@ mod tests {
             "assets/cargo-toml/syntax.txt",
             "assets/cargo-toml/test4.txt",
         );
-        // json::print(&_data);
     }
 
     #[test]
@@ -147,7 +145,6 @@ mod tests {
         let _data = load_syntax_data("assets/update/syntax.txt", "assets/update/test.txt");
         let _data = load_syntax_data("assets/update/syntax.txt", "assets/update/test2.txt");
         let _data = load_syntax_data("assets/update/syntax.txt", "assets/update/test3.txt");
-        // json::print(&_data);
     }
 
     #[test]
@@ -155,14 +152,4 @@ mod tests {
         let res = ::update::parse_version(">= 1.0, <= 1.3");
         assert!(res.is_ok());
     }
-
-    /*
-    #[test]
-    fn from_url() {
-        use super::*;
-
-        let data = load_text_file_from_url("https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml");
-        assert!(data.is_ok());
-    }
-    */
 }

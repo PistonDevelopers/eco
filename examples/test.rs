@@ -11,6 +11,4 @@ fn main() {
 
     let dependency_info = eco::extract::extract_dependency_info_from(&extract_info).unwrap();
     println!("{}", dependency_info);
-    // let update_info = eco::update::generate_update_info_from(&dependency_info).unwrap();
-    // println!("{}", update_info);
 }
