@@ -86,7 +86,6 @@ mod tests {
         let _data = load_syntax_data("assets/extract/syntax.txt", "assets/extract/test.txt");
         let _data = load_syntax_data("assets/extract/syntax.txt", "assets/extract/test2.txt");
         let _data = load_syntax_data("assets/extract/syntax.txt", "assets/extract/test3.txt");
-        // json::print(&_data);
     }
 
     #[test]
