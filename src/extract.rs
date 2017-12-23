@@ -119,7 +119,7 @@ impl Extract {
     ) -> Result<(Range, Extract), ()> {
         let start = convert.clone();
         let node = "library";
-        let start_range = try!(convert.start_node(node));
+        let start_range = convert.start_node(node)?;
         convert.update(start_range);
 
         let mut package: Option<Arc<String>> = None;
@@ -153,8 +153,8 @@ impl Extract {
             }
         }
 
-        let package = try!(package.ok_or(()));
-        let url = try!(url.ok_or(()));
+        let package = package.ok_or(())?;
+        let url = url.ok_or(())?;
         Ok((
             convert.subtract(start),
             Extract {
@@ -174,7 +174,7 @@ fn ignore_from_meta_data(
 ) -> Result<(Range, Vec<(Arc<String>, Arc<String>)>), ()> {
     let start = convert.clone();
     let node = "ignore";
-    let start_range = try!(convert.start_node(node));
+    let start_range = convert.start_node(node)?;
     convert.update(start_range);
 
     let mut res: Vec<(Arc<String>, Arc<String>)> = vec![];
@@ -201,7 +201,7 @@ fn dependency_from_meta_data(
 ) -> Result<(Range, (Arc<String>, Arc<String>)), ()> {
     let start = convert.clone();
     let node = "dependency";
-    let start_range = try!(convert.start_node(node));
+    let start_range = convert.start_node(node)?;
     convert.update(start_range);
 
     let mut package: Option<Arc<String>> = None;
@@ -223,8 +223,8 @@ fn dependency_from_meta_data(
         }
     }
 
-    let package = try!(package.ok_or(()));
-    let version = try!(version.ok_or(()));
+    let package = package.ok_or(())?;
+    let version = version.ok_or(())?;
     Ok((convert.subtract(start), (package, version)))
 }
 
@@ -235,21 +235,21 @@ pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
     use hyper::status::StatusCode;
     use std::io::Read;
 
-    let url_address = try!(Url::parse(url).map_err(|e| format!("Error parsing url: {}", e)));
+    let url_address = Url::parse(url).map_err(|e| format!("Error parsing url: {}", e))?;
     let client = Client::new();
     let request = client.get(url_address);
-    let mut response = try!(request.send().map_err(|e| format!(
+    let mut response = request.send().map_err(|e| format!(
         "Error fetching file over http {}: {}",
         url,
         e.to_string()
-    )));
+    ))?;
     if response.status == StatusCode::Ok {
         let mut data = String::new();
-        try!(response.read_to_string(&mut data).map_err(|e| format!(
+        response.read_to_string(&mut data).map_err(|e| format!(
             "Error fetching file over http {}: {}",
             url,
             e.to_string()
-        )));
+        ))?;
         Ok(data)
     } else {
         Err(format!(
@@ -286,7 +286,7 @@ pub fn convert_cargo_toml(
     data: &[Range<MetaData>],
     ignored: &mut Vec<Range>,
 ) -> Result<Package, ()> {
-    let (_, package) = try!(Package::from_meta_data(Convert::new(data), ignored));
+    let (_, package) = Package::from_meta_data(Convert::new(data), ignored)?;
     Ok((package))
 }
 
@@ -305,10 +305,9 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
     );
 
     let mut ignored = vec![];
-    let list = try!(
+    let list =
         convert_extract_info(&extract_data, &mut ignored)
-            .map_err(|_| String::from("Could not convert extract data"))
-    );
+            .map_err(|_| String::from("Could not convert extract data"))?;
 
     // Stores package and dependency information extracted from Cargo.toml.
     let package_data = Arc::new(Mutex::new(vec![]));
@@ -321,7 +320,7 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
         let cargo_toml_rules = cargo_toml_rules.clone();
         let package_data = package_data.clone();
         handles.push(thread::spawn(move || {
-            let config = try!(load_text_file_from_url(&extract.url));
+            let config = load_text_file_from_url(&extract.url)?;
             let mut cargo_toml_data = vec![];
             match parse(&cargo_toml_rules, &config, &mut cargo_toml_data) {
                 Ok(val) => val,
@@ -340,12 +339,12 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
             };
 
             let mut ignored = vec![];
-            let mut package = try!(convert_cargo_toml(&cargo_toml_data, &mut ignored).map_err(
+            let mut package = convert_cargo_toml(&cargo_toml_data, &mut ignored).map_err(
                 |_| format!(
                     "Could not convert Cargo.toml data for url `{}`",
                     &extract.url
                 )
-            ));
+            )?;
             if extract.package != package.name {
                 return Err(format!(
                     "Wrong Cargo.toml: `{}` does not match `{}`",
@@ -377,13 +376,13 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
         }))
     }
     for handle in handles.into_iter() {
-        try!(handle.join().unwrap().map_err(|e| e));
+        handle.join().unwrap().map_err(|e| e)?;
     }
 
     let mut res: Vec<u8> = vec![];
     dependencies::write(&package_data.lock().unwrap(), &mut res).unwrap();
 
-    let res = try!(String::from_utf8(res).map_err(|e| format!("UTF8 error: {}", e)));
+    let res = String::from_utf8(res).map_err(|e| format!("UTF8 error: {}", e))?;
 
     Ok(res)
 }

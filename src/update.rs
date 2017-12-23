@@ -12,86 +12,86 @@ use dependencies;
 pub fn write<W: Write>(update_packages: &[Package], w: &mut W) -> Result<(), io::Error> {
     use piston_meta::json;
 
-    try!(writeln!(w, "{{"));
+    writeln!(w, "{{")?;
     let n0 = update_packages.len();
     for (i0, update_package) in update_packages.iter().enumerate() {
-        try!(write!(w, "  "));
-        try!(json::write_string(w, &update_package.name));
-        try!(writeln!(w, ": {{"));
-        try!(writeln!(w, "    \"order\": {},", update_package.order));
+        write!(w, "  ")?;
+        json::write_string(w, &update_package.name)?;
+        writeln!(w, ": {{")?;
+        writeln!(w, "    \"order\": {},", update_package.order)?;
 
         // Bump package.
-        try!(writeln!(w, "    \"bump\": {{"));
-        try!(write!(w, "      \"old\": "));
-        try!(json::write_string(
+        writeln!(w, "    \"bump\": {{")?;
+        write!(w, "      \"old\": ")?;
+        json::write_string(
             w,
             &format!("{}", update_package.bump.old)
-        ));
-        try!(writeln!(w, ","));
-        try!(write!(w, "      \"new\": "));
-        try!(json::write_string(
+        )?;
+        writeln!(w, ",")?;
+        write!(w, "      \"new\": ")?;
+        json::write_string(
             w,
             &format!("{}", update_package.bump.new)
-        ));
-        try!(writeln!(w, ""));
-        try!(writeln!(w, "    }},"));
+        )?;
+        writeln!(w, "")?;
+        writeln!(w, "    }},")?;
 
         // Dependencies.
-        try!(writeln!(w, "    \"dependencies\": {{"));
+        writeln!(w, "    \"dependencies\": {{")?;
         let n1 = update_package.dependencies.len();
         for (i1, dep) in update_package.dependencies.iter().enumerate() {
-            try!(write!(w, "      "));
-            try!(json::write_string(w, &dep.name));
-            try!(writeln!(w, ": {{"));
-            try!(writeln!(w, "        \"bump\": {{"));
-            try!(write!(w, "          \"old\": "));
-            try!(json::write_string(w, &format!("{}", dep.bump.old)));
-            try!(writeln!(w, ","));
-            try!(write!(w, "          \"new\": "));
-            try!(json::write_string(w, &format!("{}", dep.bump.new)));
-            try!(writeln!(w, ""));
-            try!(writeln!(w, "        }}"));
-            try!(write!(w, "      }}"));
+            write!(w, "      ")?;
+            json::write_string(w, &dep.name)?;
+            writeln!(w, ": {{")?;
+            writeln!(w, "        \"bump\": {{")?;
+            write!(w, "          \"old\": ")?;
+            json::write_string(w, &format!("{}", dep.bump.old))?;
+            writeln!(w, ",")?;
+            write!(w, "          \"new\": ")?;
+            json::write_string(w, &format!("{}", dep.bump.new))?;
+            writeln!(w, "")?;
+            writeln!(w, "        }}")?;
+            write!(w, "      }}")?;
             if i1 + 1 < n1 {
-                try!(writeln!(w, ","));
+                writeln!(w, ",")?;
             } else {
-                try!(writeln!(w, ""));
+                writeln!(w, "")?;
             }
         }
-        try!(writeln!(w, "    }},"));
+        writeln!(w, "    }},")?;
 
         // Dev dependencies.
-        try!(writeln!(w, "    \"dev-dependencies\": {{"));
+        writeln!(w, "    \"dev-dependencies\": {{")?;
         let n1 = update_package.dev_dependencies.len();
         for (i1, dep) in update_package.dev_dependencies.iter().enumerate() {
-            try!(write!(w, "      "));
-            try!(json::write_string(w, &dep.name));
-            try!(writeln!(w, ": {{"));
-            try!(writeln!(w, "        \"bump\": {{"));
-            try!(write!(w, "          \"old\": "));
-            try!(json::write_string(w, &format!("{}", dep.bump.old)));
-            try!(writeln!(w, ","));
-            try!(write!(w, "          \"new\": "));
-            try!(json::write_string(w, &format!("{}", dep.bump.new)));
-            try!(writeln!(w, ""));
-            try!(writeln!(w, "        }}"));
-            try!(write!(w, "      }}"));
+            write!(w, "      ")?;
+            json::write_string(w, &dep.name)?;
+            writeln!(w, ": {{")?;
+            writeln!(w, "        \"bump\": {{")?;
+            write!(w, "          \"old\": ")?;
+            json::write_string(w, &format!("{}", dep.bump.old))?;
+            writeln!(w, ",")?;
+            write!(w, "          \"new\": ")?;
+            json::write_string(w, &format!("{}", dep.bump.new))?;
+            writeln!(w, "")?;
+            writeln!(w, "        }}")?;
+            write!(w, "      }}")?;
             if i1 + 1 < n1 {
-                try!(writeln!(w, ","));
+                writeln!(w, ",")?;
             } else {
-                try!(writeln!(w, ""));
+                writeln!(w, "")?;
             }
         }
-        try!(writeln!(w, "    }}"));
+        writeln!(w, "    }}")?;
 
-        try!(write!(w, "  }}"));
+        write!(w, "  }}")?;
         if i0 + 1 < n0 {
-            try!(writeln!(w, ","));
+            writeln!(w, ",")?;
         } else {
-            try!(writeln!(w, ""));
+            writeln!(w, "")?;
         }
     }
-    try!(writeln!(w, "}}"));
+    writeln!(w, "}}")?;
     Ok(())
 }
 
@@ -249,10 +249,9 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         ),
     );
     let mut ignored = vec![];
-    let dependencies_data = try!(
+    let dependencies_data =
         dependencies::convert(&dependency_info_meta_data, &mut ignored)
-            .map_err(|_| String::from("Could not convert dependency info"))
-    );
+            .map_err(|_| String::from("Could not convert dependency info"))?;
 
     // Stores the package indices using package name as key.
     let package_indices: HashMap<Arc<String>, PackageIndex> = HashMap::from_iter(
@@ -276,10 +275,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let version = try!(parse_version(&dep.version).map_err(|_| format!(
+            let version = parse_version(&dep.version).map_err(|_| format!(
                 "Could not parse version `{}` for dependency `{}` in `{}`",
                 &dep.version, &dep.name, &package.name
-            )));
+            ))?;
             let v = new_versions.get(&dep.name).map(|v| v.clone());
             match v {
                 None => {
@@ -299,10 +298,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let version = try!(parse_version(&dep.version).map_err(|_| format!(
+            let version = parse_version(&dep.version).map_err(|_| format!(
                 "Could not parse version `{}` for dev dependency `{}` in `{}`",
                 &dep.version, &dep.name, &package.name
-            )));
+            ))?;
             let v = new_versions.get(&dep.name).map(|v| v.clone());
             match v {
                 None => {
@@ -319,10 +318,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
     // Overwrite the versions used by packages.
     for package in &dependencies_data {
-        let version = try!(Version::parse(&package.version).map_err(|_| format!(
+        let version = Version::parse(&package.version).map_err(|_| format!(
             "Could not parse version `{}` for `{}`",
             &package.version, &package.name
-        )));
+        ))?;
         new_versions.insert(package.name.clone(), version);
     }
 
@@ -347,10 +346,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let old_version = try!(parse_version(&dep.version).map_err(|_| format!(
+            let old_version = parse_version(&dep.version).map_err(|_| format!(
                 "Could not parse version `{}` for dependency `{}` in `{}`",
                 &dep.version, &dep.name, &package.name
-            )));
+            ))?;
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
                 if let Some(ref ignore_version) = dep.ignore_version {
@@ -371,10 +370,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
         // If any dependency needs update, then the package needs update.
         if update_dependencies.len() > 0 {
-            let old_version = try!(Version::parse(&package.version).map_err(|_| format!(
+            let old_version = Version::parse(&package.version).map_err(|_| format!(
                 "Could not parse version `{}` for `{}`",
                 &package.version, &package.name
-            )));
+            ))?;
             let new_version = new_versions.get_mut(&package.name).unwrap();
             if *new_version == old_version {
                 increment_version(new_version);
@@ -408,10 +407,10 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let old_version = try!(parse_version(&dep.version).map_err(|_| format!(
+            let old_version = parse_version(&dep.version).map_err(|_| format!(
                 "Could not parse version `{}` for dev dependency `{}` in `{}`",
                 &dep.version, &dep.name, &package.name
-            )));
+            ))?;
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
                 if let Some(ref ignore_version) = dep.ignore_version {
