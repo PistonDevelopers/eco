@@ -23,16 +23,10 @@ pub fn write<W: Write>(update_packages: &[Package], w: &mut W) -> Result<(), io:
         // Bump package.
         writeln!(w, "    \"bump\": {{")?;
         write!(w, "      \"old\": ")?;
-        json::write_string(
-            w,
-            &format!("{}", update_package.bump.old)
-        )?;
+        json::write_string(w, &format!("{}", update_package.bump.old))?;
         writeln!(w, ",")?;
         write!(w, "      \"new\": ")?;
-        json::write_string(
-            w,
-            &format!("{}", update_package.bump.new)
-        )?;
+        json::write_string(w, &format!("{}", update_package.bump.new))?;
         writeln!(w, "")?;
         writeln!(w, "    }},")?;
 
@@ -249,9 +243,8 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
         ),
     );
     let mut ignored = vec![];
-    let dependencies_data =
-        dependencies::convert(&dependency_info_meta_data, &mut ignored)
-            .map_err(|_| String::from("Could not convert dependency info"))?;
+    let dependencies_data = dependencies::convert(&dependency_info_meta_data, &mut ignored)
+        .map_err(|_| String::from("Could not convert dependency info"))?;
 
     // Stores the package indices using package name as key.
     let package_indices: HashMap<Arc<String>, PackageIndex> = HashMap::from_iter(
@@ -275,10 +268,12 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let version = parse_version(&dep.version).map_err(|_| format!(
-                "Could not parse version `{}` for dependency `{}` in `{}`",
-                &dep.version, &dep.name, &package.name
-            ))?;
+            let version = parse_version(&dep.version).map_err(|_| {
+                format!(
+                    "Could not parse version `{}` for dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name
+                )
+            })?;
             let v = new_versions.get(&dep.name).map(|v| v.clone());
             match v {
                 None => {
@@ -298,10 +293,12 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let version = parse_version(&dep.version).map_err(|_| format!(
-                "Could not parse version `{}` for dev dependency `{}` in `{}`",
-                &dep.version, &dep.name, &package.name
-            ))?;
+            let version = parse_version(&dep.version).map_err(|_| {
+                format!(
+                    "Could not parse version `{}` for dev dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name
+                )
+            })?;
             let v = new_versions.get(&dep.name).map(|v| v.clone());
             match v {
                 None => {
@@ -318,10 +315,12 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
     // Overwrite the versions used by packages.
     for package in &dependencies_data {
-        let version = Version::parse(&package.version).map_err(|_| format!(
-            "Could not parse version `{}` for `{}`",
-            &package.version, &package.name
-        ))?;
+        let version = Version::parse(&package.version).map_err(|_| {
+            format!(
+                "Could not parse version `{}` for `{}`",
+                &package.version, &package.name
+            )
+        })?;
         new_versions.insert(package.name.clone(), version);
     }
 
@@ -346,10 +345,12 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let old_version = parse_version(&dep.version).map_err(|_| format!(
-                "Could not parse version `{}` for dependency `{}` in `{}`",
-                &dep.version, &dep.name, &package.name
-            ))?;
+            let old_version = parse_version(&dep.version).map_err(|_| {
+                format!(
+                    "Could not parse version `{}` for dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name
+                )
+            })?;
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
                 if let Some(ref ignore_version) = dep.ignore_version {
@@ -370,10 +371,12 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
 
         // If any dependency needs update, then the package needs update.
         if update_dependencies.len() > 0 {
-            let old_version = Version::parse(&package.version).map_err(|_| format!(
-                "Could not parse version `{}` for `{}`",
-                &package.version, &package.name
-            ))?;
+            let old_version = Version::parse(&package.version).map_err(|_| {
+                format!(
+                    "Could not parse version `{}` for `{}`",
+                    &package.version, &package.name
+                )
+            })?;
             let new_version = new_versions.get_mut(&package.name).unwrap();
             if *new_version == old_version {
                 increment_version(new_version);
@@ -407,10 +410,12 @@ pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String
                 continue;
             }
 
-            let old_version = parse_version(&dep.version).map_err(|_| format!(
-                "Could not parse version `{}` for dev dependency `{}` in `{}`",
-                &dep.version, &dep.name, &package.name
-            ))?;
+            let old_version = parse_version(&dep.version).map_err(|_| {
+                format!(
+                    "Could not parse version `{}` for dev dependency `{}` in `{}`",
+                    &dep.version, &dep.name, &package.name
+                )
+            })?;
             let new_version = new_versions.get(&dep.name).unwrap();
             if breaks(new_version, &old_version) {
                 if let Some(ref ignore_version) = dep.ignore_version {

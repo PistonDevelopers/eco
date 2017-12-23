@@ -238,18 +238,14 @@ pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
     let url_address = Url::parse(url).map_err(|e| format!("Error parsing url: {}", e))?;
     let client = Client::new();
     let request = client.get(url_address);
-    let mut response = request.send().map_err(|e| format!(
-        "Error fetching file over http {}: {}",
-        url,
-        e.to_string()
-    ))?;
+    let mut response = request
+        .send()
+        .map_err(|e| format!("Error fetching file over http {}: {}", url, e.to_string()))?;
     if response.status == StatusCode::Ok {
         let mut data = String::new();
-        response.read_to_string(&mut data).map_err(|e| format!(
-            "Error fetching file over http {}: {}",
-            url,
-            e.to_string()
-        ))?;
+        response
+            .read_to_string(&mut data)
+            .map_err(|e| format!("Error fetching file over http {}: {}", url, e.to_string()))?;
         Ok(data)
     } else {
         Err(format!(
@@ -305,9 +301,8 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
     );
 
     let mut ignored = vec![];
-    let list =
-        convert_extract_info(&extract_data, &mut ignored)
-            .map_err(|_| String::from("Could not convert extract data"))?;
+    let list = convert_extract_info(&extract_data, &mut ignored)
+        .map_err(|_| String::from("Could not convert extract data"))?;
 
     // Stores package and dependency information extracted from Cargo.toml.
     let package_data = Arc::new(Mutex::new(vec![]));
@@ -339,12 +334,12 @@ pub fn extract_dependency_info_from(extract_info: &str) -> Result<String, String
             };
 
             let mut ignored = vec![];
-            let mut package = convert_cargo_toml(&cargo_toml_data, &mut ignored).map_err(
-                |_| format!(
+            let mut package = convert_cargo_toml(&cargo_toml_data, &mut ignored).map_err(|_| {
+                format!(
                     "Could not convert Cargo.toml data for url `{}`",
                     &extract.url
                 )
-            )?;
+            })?;
             if extract.package != package.name {
                 return Err(format!(
                     "Wrong Cargo.toml: `{}` does not match `{}`",
