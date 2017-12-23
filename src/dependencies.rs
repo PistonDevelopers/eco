@@ -10,65 +10,65 @@ use std::io::{self, Write};
 /// Writes the dependency info.
 pub fn write<W: Write>(package_data: &[Package], w: &mut W) -> Result<(), io::Error> {
     let write_dep = |w: &mut W, dependency: &Dependency, has_next: bool| -> Result<(), io::Error> {
-        try!(write!(w, "   "));
-        try!(json::write_string(w, &dependency.name));
-        try!(writeln!(w, ": {{"));
+        write!(w, "   ")?;
+        json::write_string(w, &dependency.name)?;
+        writeln!(w, ": {{")?;
         // Version.
-        try!(write!(w, "    \"version\": "));
-        try!(json::write_string(w, &dependency.version));
+        write!(w, "    \"version\": ")?;
+        json::write_string(w, &dependency.version)?;
         if let Some(ref ignore_version) = dependency.ignore_version {
-            try!(writeln!(w, ","));
-            try!(write!(w, "    \"ignore-version\": "));
-            try!(json::write_string(w, ignore_version));
+            writeln!(w, ",")?;
+            write!(w, "    \"ignore-version\": ")?;
+            json::write_string(w, ignore_version)?;
         }
-        try!(writeln!(w, ""));
-        try!(write!(w, "   }}"));
+        writeln!(w, "")?;
+        write!(w, "   }}")?;
         if has_next {
-            try!(writeln!(w, ","));
+            writeln!(w, ",")?;
         } else {
-            try!(writeln!(w, ""));
+            writeln!(w, "")?;
         }
         Ok(())
     };
 
-    try!(writeln!(w, "{{"));
+    writeln!(w, "{{")?;
     let n0 = package_data.len();
     for (i0, package) in package_data.iter().enumerate() {
         // Package name.
-        try!(write!(w, " "));
-        try!(json::write_string(w, &package.name));
-        try!(writeln!(w, ": {{"));
+        write!(w, " ")?;
+        json::write_string(w, &package.name)?;
+        writeln!(w, ": {{")?;
 
         // Version.
-        try!(write!(w, "  \"version\": "));
-        try!(json::write_string(w, &package.version));
-        try!(writeln!(w, ","));
+        write!(w, "  \"version\": ")?;
+        json::write_string(w, &package.version)?;
+        writeln!(w, ",")?;
 
         // Dependencies.
-        try!(writeln!(w, "  \"dependencies\": {{"));
+        writeln!(w, "  \"dependencies\": {{")?;
         let n1 = package.dependencies.len();
         for (i1, dependency) in package.dependencies.iter().enumerate() {
-            try!(write_dep(w, dependency, i1 + 1 != n1));
+            write_dep(w, dependency, i1 + 1 != n1)?;
         }
-        try!(writeln!(w, "  }},"));
+        writeln!(w, "  }},")?;
 
         // Dev dependencies.
-        try!(writeln!(w, "  \"dev-dependencies\": {{"));
+        writeln!(w, "  \"dev-dependencies\": {{")?;
         let n1 = package.dev_dependencies.len();
         for (i1, dependency) in package.dev_dependencies.iter().enumerate() {
-            try!(write_dep(w, dependency, i1 + 1 != n1));
+            write_dep(w, dependency, i1 + 1 != n1)?;
         }
-        try!(writeln!(w, "  }}"));
+        writeln!(w, "  }}")?;
 
         // End package.
-        try!(write!(w, " }}"));
+        write!(w, " }}")?;
         if i0 + 1 != n0 {
-            try!(writeln!(w, ","));
+            writeln!(w, ",")?;
         } else {
-            try!(writeln!(w, ""));
+            writeln!(w, "")?;
         }
     }
-    try!(writeln!(w, "}}"));
+    writeln!(w, "}}")?;
     Ok(())
 }
 
@@ -109,7 +109,7 @@ impl Package {
     ) -> Result<(Range, Package), ()> {
         let start = convert.clone();
         let node = "package";
-        let start_range = try!(convert.start_node(node));
+        let start_range = convert.start_node(node)?;
         convert.update(start_range);
 
         let mut name: Option<Arc<String>> = None;
@@ -143,8 +143,8 @@ impl Package {
             }
         }
 
-        let name = try!(name.ok_or(()));
-        let version = try!(version.ok_or(()));
+        let name = name.ok_or(())?;
+        let version = version.ok_or(())?;
         Ok((
             convert.subtract(start),
             Package {
@@ -175,7 +175,7 @@ impl Dependency {
         ignored: &mut Vec<Range>,
     ) -> Result<(Range, Dependency), ()> {
         let start = convert.clone();
-        let start_range = try!(convert.start_node(node));
+        let start_range = convert.start_node(node)?;
         convert.update(start_range);
 
         let mut name: Option<Arc<String>> = None;
@@ -201,8 +201,8 @@ impl Dependency {
             }
         }
 
-        let name = try!(name.ok_or(()));
-        let version = try!(version.ok_or(()));
+        let name = name.ok_or(())?;
+        let version = version.ok_or(())?;
         Ok((
             convert.subtract(start),
             Dependency {

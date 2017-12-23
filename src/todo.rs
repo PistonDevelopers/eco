@@ -22,10 +22,8 @@ pub fn todo_from_extract_info(extract_info: &str) -> Result<String, String> {
     );
 
     let mut ignored = vec![];
-    let list = try!(
-        convert_extract_info(&extract_data, &mut ignored)
-            .map_err(|_| String::from("Could not convert extract data"))
-    );
+    let list = convert_extract_info(&extract_data, &mut ignored)
+        .map_err(|_| String::from("Could not convert extract data"))?;
 
     let mut res: Vec<u8> = vec![];
     for package in &list {
