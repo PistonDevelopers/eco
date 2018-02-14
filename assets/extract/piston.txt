@@ -36,7 +36,10 @@
     },
 
     "pistoncore-winit_window": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/winit_window/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/winit_window/master/Cargo.toml",
+        "ignore": {
+            "winit": "0.10.0"
+        }
     },
 
     "pistoncore-sdl2_window": {
@@ -198,7 +201,10 @@
     },
 
     "image": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/image/master/Cargo.toml",
+        "ignore": {
+            "num-traits": "0.2.0"
+        }
     },
 
     "imageproc": {
@@ -259,7 +265,8 @@
         "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
         "ignore": {
             "bitflags": "1.0.0",
-            "lazy_static": "1.0.0"
+            "lazy_static": "1.0.0",
+            "rand": "0.4.2"
         }
     },
 
