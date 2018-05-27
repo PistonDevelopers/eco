@@ -32,13 +32,16 @@
     },
 
     "pistoncore-glutin_window": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml",
+        "ignore": {
+          "glutin": "0.15.0"
+        }
     },
 
     "pistoncore-winit_window": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/winit_window/master/Cargo.toml",
         "ignore": {
-            "winit": "0.10.0"
+            "winit": "0.13.1"
         }
     },
 
@@ -193,11 +196,17 @@
     },
 
     "piston_window": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston_window/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston_window/master/Cargo.toml",
+        "ignore": {
+          "gfx_device_gl": "0.16.0"
+        }
     },
 
     "conrod": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/Cargo.toml",
+        "ignore": {
+          "glutin": "0.15.0"
+        }
     },
 
     "image": {
@@ -208,7 +217,10 @@
     },
 
     "imageproc": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/imageproc/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/imageproc/master/Cargo.toml",
+        "ignore": {
+          "rand": "0.5.0"
+        }
     },
 
     "gif": {
@@ -266,7 +278,7 @@
         "ignore": {
             "bitflags": "1.0.0",
             "lazy_static": "1.0.0",
-            "rand": "0.4.2"
+            "rand": "0.5.0"
         }
     },
 
@@ -279,7 +291,10 @@
     },
 
     "hematite": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite/master/Cargo.toml",
+        "ignore": {
+          "gfx_device_gl": "0.16.0"
+        }
     },
 
     "hematite-nbt": {
@@ -288,6 +303,10 @@
 
     "hematite_server": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_server/master/Cargo.toml",
+        "ignore": {
+          "uuid":"0.6.0",
+          "rand":"0.5.0"
+        }
     },
 
     "fps_counter": {
@@ -311,7 +330,10 @@
     },
 
     "skeletal_animation_demo": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation_demo/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation_demo/master/Cargo.toml",
+        "ignore": {
+          "gfx_device_gl": "0.16.0"
+        }
     },
 
     "gfx_text": {
@@ -368,7 +390,8 @@
         "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
         "ignore": {
           "image": "0.16.0",
-          "lazy_static": "1.0.0"
+          "lazy_static": "1.0.0",
+          "glutin":"0.15.0"
         }
     },
 
@@ -377,7 +400,10 @@
     },
 
     "piston-examples": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/Cargo.toml",
+        "ignore": {
+          "gfx_device_gl": "0.16.0"
+        }
     },
 
     "piston-example-user_input": {

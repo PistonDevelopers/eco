@@ -283,7 +283,7 @@ pub fn convert_cargo_toml(
     ignored: &mut Vec<Range>,
 ) -> Result<Package, ()> {
     let (_, package) = Package::from_meta_data(Convert::new(data), ignored)?;
-    Ok((package))
+    Ok(package)
 }
 
 /// Extracts dependency info.
