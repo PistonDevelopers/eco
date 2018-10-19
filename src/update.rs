@@ -123,6 +123,7 @@ pub struct Package {
 /// Ignores extra information after `,`.
 pub fn parse_version(text: &str) -> Result<Version, semver::SemVerError> {
     let text = if text == "1" { "1.0" } else { text };
+    let text = if text == "^1" { "1.0" } else { text };
 
     // Ignore `>=`.
     let mut text = if text.starts_with(">=") {
