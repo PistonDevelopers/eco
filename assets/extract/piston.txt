@@ -211,6 +211,9 @@
 
     "image": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/image/master/Cargo.toml",
+        "ignore": {
+          "png": "0.13.1"
+        }
     },
 
     "imageproc": {
@@ -459,5 +462,9 @@
 
     "gl": {
         "url": "https://raw.githubusercontent.com/bjz/gl-rs/master/gl/Cargo.toml"
+    },
+
+    "turbine_scene3d": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/turbine/master/scene3d/Cargo.toml"
     }
 }
