@@ -202,11 +202,8 @@
         }
     },
 
-    "conrod": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/Cargo.toml",
-        "ignore": {
-          "glutin": "0.15.0"
-        }
+    "conrod_core": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/conrod_core/Cargo.toml"
     },
 
     "image": {
