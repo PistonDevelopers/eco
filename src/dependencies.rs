@@ -1,8 +1,6 @@
 //! Dependency info.
 
-use range::Range;
-use piston_meta::{json, MetaData};
-use piston_meta::bootstrap::Convert;
+use piston_meta::{json, MetaData, Convert, Range};
 
 use std::sync::Arc;
 use std::io::{self, Write};

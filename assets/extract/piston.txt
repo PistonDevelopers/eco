@@ -27,22 +27,8 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/viewport/master/Cargo.toml"
     },
 
-    "piston-editor": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/editor/master/Cargo.toml"
-    },
-
     "pistoncore-glutin_window": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml",
-        "ignore": {
-          "glutin": "0.15.0"
-        }
-    },
-
-    "pistoncore-winit_window": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/winit_window/master/Cargo.toml",
-        "ignore": {
-            "winit": "0.13.1"
-        }
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/glutin_window/master/Cargo.toml"
     },
 
     "pistoncore-sdl2_window": {
@@ -70,17 +56,11 @@
     },
 
     "piston2d-opengl_graphics": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/opengl_graphics/master/Cargo.toml",
-        "ignore": {
-            "piston-shaders_graphics2d": "0.2.1"
-        }
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/opengl_graphics/master/Cargo.toml"
     },
 
     "piston2d-glium_graphics": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/glium_graphics/master/Cargo.toml",
-        "ignore": {
-          "piston-shaders_graphics2d": "0.2.1"
-        }
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/glium_graphics/master/Cargo.toml"
     },
 
     "piston-ai_behavior": {
@@ -139,16 +119,8 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/texture_packer/master/Cargo.toml"
     },
 
-    "table": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/table/master/Cargo.toml"
-    },
-
     "piston2d-shapes": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/shapes/master/Cargo.toml"
-    },
-
-    "array": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/array/master/Cargo.toml"
     },
 
     "select_color": {
@@ -206,39 +178,6 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/conrod_core/Cargo.toml"
     },
 
-    "image": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image/master/Cargo.toml",
-        "ignore": {
-          "png": "0.13.1"
-        }
-    },
-
-    "imageproc": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/imageproc/master/Cargo.toml",
-        "ignore": {
-          "rand": "0.5.0"
-        }
-    },
-
-    "gif": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-gif/master/Cargo.toml"
-    },
-
-    "png": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-png/master/Cargo.toml",
-        "ignore": {
-          "inflate": "0.3.0"
-        }
-    },
-
-    "tiff": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/image-tiff/master/Cargo.toml"
-    },
-
-    "inflate": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/inflate/master/Cargo.toml"
-    },
-
     "color_quant": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/color_quant/master/Cargo.toml"
     },
@@ -263,25 +202,8 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/freetype-sys/master/Cargo.toml"
     },
 
-    "glutin": {
-        "url": "https://raw.githubusercontent.com/tomaka/glutin/master/Cargo.toml",
-        "ignore": {
-          "lazy_static": "1.0.0"
-        }
-    },
-
     "glfw": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/glfw-rs/master/Cargo.toml"
-    },
-
-    "sdl2": {
-        "url": "https://raw.githubusercontent.com/AngryLawyer/rust-sdl2/master/Cargo.toml",
-        "ignore": {
-            "bitflags": "1.0.0",
-            "lazy_static": "1.0.0",
-            "rand": "0.5.5",
-            "num": "0.2.0"
-        }
     },
 
     "piston-gfx_texture": {
@@ -299,24 +221,8 @@
         }
     },
 
-    "hematite-nbt": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_nbt/master/Cargo.toml"
-    },
-
-    "hematite_server": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite_server/master/Cargo.toml",
-        "ignore": {
-          "uuid":"0.6.0",
-          "rand":"0.5.0"
-        }
-    },
-
     "fps_counter": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/fps_counter/master/Cargo.toml"
-    },
-
-    "piston-opengex": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/opengex/master/Cargo.toml"
     },
 
     "dev_menu": {
@@ -342,14 +248,6 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_text/master/Cargo.toml",
     },
 
-    "resources_package": {
-        "url": "https://raw.githubusercontent.com/tomaka/resources_package/master/Cargo.toml"
-    },
-
-    "resources_package_package": {
-        "url": "https://raw.githubusercontent.com/tomaka/resources_package/master/package/Cargo.toml"
-    },
-
     "current": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/current/master/Cargo.toml"
     },
@@ -373,34 +271,6 @@
         }
     },
 
-    "gfx_core": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/pre-ll/src/core/Cargo.toml",
-        "ignore": {
-          "bitflags": "1.0.0"
-        }
-    },
-
-    "gfx": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/pre-ll/src/render/Cargo.toml"
-    },
-
-    "gfx_device_gl": {
-        "url": "https://raw.githubusercontent.com/gfx-rs/gfx/pre-ll/src/backend/gl/Cargo.toml"
-    },
-
-    "glium": {
-        "url": "https://raw.githubusercontent.com/tomaka/glium/master/Cargo.toml",
-        "ignore": {
-          "image": "0.16.0",
-          "lazy_static": "1.0.0",
-          "glutin":"0.15.0"
-        }
-    },
-
-    "gl": {
-        "url": "https://raw.githubusercontent.com/brendanzab/gl-rs/master/gl/Cargo.toml"
-    },
-
     "piston-examples": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/Cargo.toml",
         "ignore": {
@@ -422,43 +292,6 @@
 
     "eco": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/eco/master/Cargo.toml"
-    },
-
-    "time": {
-        "url": "https://raw.githubusercontent.com/rust-lang-deprecated/time/master/Cargo.toml"
-    },
-
-    "winapi": {
-        "url": "https://raw.githubusercontent.com/retep998/winapi-rs/master/Cargo.toml"
-    },
-
-    "libc": {
-        "url": "https://raw.githubusercontent.com/rust-lang-nursery/libc/master/Cargo.toml"
-    },
-
-    "num": {
-        "url": "https://raw.githubusercontent.com/rust-num/num/master/Cargo.toml"
-    },
-
-    "rand": {
-        "url": "https://raw.githubusercontent.com/rust-lang-nursery/rand/master/Cargo.toml",
-        "ignore-version": "0.6.0-pre.0"
-    },
-
-    "lzw": {
-        "url": "https://raw.githubusercontent.com/nwin/lzw/master/Cargo.toml"
-    },
-
-    "libz-sys": {
-        "url": "https://raw.githubusercontent.com/alexcrichton/libz-sys/master/Cargo.toml"
-    },
-
-    "pkg-config": {
-        "url": "https://raw.githubusercontent.com/alexcrichton/pkg-config-rs/master/Cargo.toml"
-    },
-
-    "gl": {
-        "url": "https://raw.githubusercontent.com/bjz/gl-rs/master/gl/Cargo.toml"
     },
 
     "turbine_scene3d": {

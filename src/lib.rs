@@ -64,7 +64,6 @@
 
 extern crate hyper;
 extern crate piston_meta;
-extern crate range;
 extern crate semver;
 
 pub mod extract;
