@@ -91,10 +91,8 @@
 //! If there is a recommended update to this version,
 //! then filter it from update info.
 
-use piston_meta::MetaData;
-use piston_meta::bootstrap::Convert;
+use piston_meta::{MetaData, Range, Convert};
 use dependencies::{self, Package};
-use range::Range;
 use std::sync::Arc;
 
 /// Stores extract information.
