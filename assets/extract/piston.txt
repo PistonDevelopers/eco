@@ -1,6 +1,10 @@
 {
+    "piston-graphics_api_version": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/graphics_api_version/master/Cargo.toml"
+    },
+
     "pistoncore-input": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml"
     },
 
     "pistoncore-window": {
@@ -13,6 +17,10 @@
 
     "piston": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/Cargo.toml"
+    },
+
+    "piston-fake_dpi": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/fake_dpi/master/Cargo.toml"
     },
 
     "shader_version": {
@@ -69,6 +77,10 @@
 
     "piston2d-sprite": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/sprite/master/Cargo.toml"
+    },
+
+    "piston2d-deform_grid": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/deform_grid/master/Cargo.toml"
     },
 
     "interpolation": {
