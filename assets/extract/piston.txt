@@ -291,11 +291,11 @@
     },
 
     "piston-example-user_input": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/user_input/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/examples/user_input/Cargo.toml"
     },
 
     "piston-example-freetype": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/freetype/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston-examples/master/examples/freetype/Cargo.toml"
     },
 
     "spinning-square": {
