@@ -71,6 +71,10 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/glium_graphics/master/Cargo.toml"
     },
 
+    "piston2d-wgpu_graphics": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/wgpu_graphics/master/Cargo.toml"
+    },
+
     "piston-ai_behavior": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/ai_behavior/master/Cargo.toml"
     },
