@@ -11,7 +11,7 @@
 pub fn todo_from_extract_info(extract_info: &str) -> Result<String, String> {
     use std::io::Write;
     use piston_meta::*;
-    use extract::*;
+    use crate::extract::*;
 
     let extract_meta_syntax = include_str!("../assets/extract/syntax.txt");
     let extract_meta_rules = stderr_unwrap(extract_meta_syntax, syntax(extract_meta_syntax));

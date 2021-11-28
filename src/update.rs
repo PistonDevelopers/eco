@@ -6,7 +6,7 @@ use std::io::{self, Write};
 
 use semver::{self, Version};
 
-use dependencies;
+use crate::dependencies;
 
 /// Writes update info.
 pub fn write<W: Write>(update_packages: &[Package], w: &mut W) -> Result<(), io::Error> {
@@ -163,7 +163,6 @@ pub fn parse_version(text: &str) -> Result<Version, semver::SemVerError> {
 /// Generates update info.
 pub fn generate_update_info_from(dependency_info: &str) -> Result<String, String> {
     use piston_meta::*;
-    use std::iter::FromIterator;
 
     type PackageIndex = usize;
     type Depth = u32;
