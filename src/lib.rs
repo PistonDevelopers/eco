@@ -62,7 +62,6 @@
 //!
 //! As long as there are no holes, the update algorithm is sound.
 
-extern crate hyper;
 extern crate piston_meta;
 extern crate semver;
 

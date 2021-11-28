@@ -9,6 +9,7 @@ description = "A tool for reasoning about breaking changes in Rust ecosystems"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/pistondevelopers/eco.git"
 homepage = "https://github.com/pistondevelopers/eco"
+edition = "2021"
 
 [lib]
 name = "eco"
@@ -16,5 +17,5 @@ path = "src/lib.rs"
 
 [dependencies]
 piston_meta = "2.0.0"
-hyper = "0.9.7"
+reqwest = { version = "0.11", features = ["blocking"] }
 semver = "0.2.3"

@@ -92,7 +92,7 @@
 //! then filter it from update info.
 
 use piston_meta::{MetaData, Range, Convert};
-use dependencies::{self, Package};
+use crate::dependencies::{self, Package};
 use std::sync::Arc;
 
 /// Stores extract information.
@@ -228,18 +228,12 @@ fn dependency_from_meta_data(
 
 /// Loads a text file from url.
 pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
-    use hyper::client::Client;
-    use hyper::Url;
-    use hyper::status::StatusCode;
+    use reqwest::StatusCode;
     use std::io::Read;
 
-    let url_address = Url::parse(url).map_err(|e| format!("Error parsing url: {}", e))?;
-    let client = Client::new();
-    let request = client.get(url_address);
-    let mut response = request
-        .send()
+    let mut response = reqwest::blocking::get(url)
         .map_err(|e| format!("Error fetching file over http {}: {}", url, e.to_string()))?;
-    if response.status == StatusCode::Ok {
+    if response.status() == StatusCode::OK {
         let mut data = String::new();
         response
             .read_to_string(&mut data)
@@ -248,7 +242,7 @@ pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
     } else {
         Err(format!(
             "Error fetching file over http {}: {}",
-            url, response.status
+            url, response.status()
         ))
     }
 }
