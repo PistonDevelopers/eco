@@ -4,7 +4,10 @@
     },
 
     "pistoncore-input": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml"
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/piston/master/src/input/Cargo.toml",
+        "ignore": {
+            "bitflags": "2.4.0"
+        }
     },
 
     "pistoncore-window": {
@@ -33,6 +36,10 @@
 
     "piston-viewport": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/viewport/master/Cargo.toml"
+    },
+
+    "pistoncore-winit_window": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/winit_window/master/Cargo.toml"
     },
 
     "pistoncore-glutin_window": {
@@ -190,10 +197,6 @@
         }
     },
 
-    "conrod_core": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/conrod/master/conrod_core/Cargo.toml"
-    },
-
     "color_quant": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/color_quant/master/Cargo.toml"
     },
@@ -226,17 +229,6 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_texture/master/Cargo.toml"
     },
 
-    "piston3d-gfx_voxel": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_voxel/master/Cargo.toml"
-    },
-
-    "hematite": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/hematite/master/Cargo.toml",
-        "ignore": {
-          "gfx_device_gl": "0.16.0"
-        }
-    },
-
     "fps_counter": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/fps_counter/master/Cargo.toml"
     },
@@ -245,31 +237,8 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/dev_menu/master/Cargo.toml"
     },
 
-    "gfx_debug_draw": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_debug_draw/master/Cargo.toml"
-    },
-
-    "skeletal_animation": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation/master/Cargo.toml"
-    },
-
-    "skeletal_animation_demo": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/skeletal_animation_demo/master/Cargo.toml",
-        "ignore": {
-          "gfx_device_gl": "0.16.0"
-        }
-    },
-
-    "gfx_text": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/gfx_text/master/Cargo.toml",
-    },
-
     "current": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/current/master/Cargo.toml"
-    },
-
-    "piston-music": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/music/master/Cargo.toml",
     },
 
     "collada": {
@@ -283,7 +252,7 @@
     "draw_state": {
         "url": "https://raw.githubusercontent.com/gfx-rs/draw_state/master/Cargo.toml",
         "ignore": {
-            "bitflags": "1.0.0"
+            "bitflags": "2.4.0"
         }
     },
 
@@ -306,11 +275,31 @@
         "url": "https://raw.githubusercontent.com/PistonDevelopers/Piston-Tutorials/master/getting-started/Cargo.toml"
     },
 
-    "eco": {
-        "url": "https://raw.githubusercontent.com/PistonDevelopers/eco/master/Cargo.toml"
+    "sudoku": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/Piston-Tutorials/refs/heads/master/sudoku/Cargo.toml"
+    },
+
+    "roguelike": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/Piston-Tutorials/refs/heads/master/roguelike/Cargo.toml"
+    },
+
+    "turbine": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/turbine/refs/heads/master/Cargo.toml"
     },
 
     "turbine_scene3d": {
         "url": "https://raw.githubusercontent.com/PistonDevelopers/turbine/master/scene3d/Cargo.toml"
+    },
+
+    "turbine_scene3d-opengl": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/turbine/refs/heads/master/scene3d/backends/opengl/Cargo.toml"
+    },
+
+    "turbine_scene3d-wgpu": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/turbine/refs/heads/master/scene3d/backends/wgpu/Cargo.toml"
+    },
+
+    "eco": {
+        "url": "https://raw.githubusercontent.com/PistonDevelopers/eco/master/Cargo.toml"
     }
 }

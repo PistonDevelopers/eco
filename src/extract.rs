@@ -226,6 +226,7 @@ fn dependency_from_meta_data(
     Ok((convert.subtract(start), (package, version)))
 }
 
+/*
 /// Loads a text file from url.
 pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
     use reqwest::StatusCode;
@@ -245,6 +246,17 @@ pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
             url, response.status()
         ))
     }
+}
+*/
+
+/// Loads a text file from url.
+pub fn load_text_file_from_url(url: &str) -> Result<String, String> {
+    use isahc::prelude::*;
+
+    let mut response = isahc::get(url)
+        .map_err(|e| format!("Error fetching file over http {}: {}", url, e.to_string()))?;
+    response.text()
+        .map_err(|e| format!("Error fetching file over http {}: {}", url, e.to_string()))
 }
 
 /// Converts meta data into extract info.
